@@ -4,6 +4,7 @@ from datetime import datetime
 from models.match import Match
 from models.player import Player
 from models.round import Round
+from models.tournament import Tournament
 
 
 def main():
@@ -24,11 +25,19 @@ def main():
     round1 = Round("Round 1", datetime.today(), datetime.today(),
                    round_players, matches=[match1, match2])
 
+    tournament = Tournament("Tournoi Chess 75", "Paris 09", datetime.today(),
+                            datetime.today(),"Tournoi de Paris 09. "
+                                             "Inscriptions des candidats en "
+                                             "ligne ou sur place dès 8h00 à "
+                                             "l'entrée du bâtiment Hall A")
+
+    tournament.rounds.append(round1)
+    for player in round_players:
+        tournament.players.append(player)
+
+
     # Output
-    print("Joueurs de la base club:")
-    for player in players:
-        print(f"\t{player}")
-    print(round1)
+    print(tournament)
 
 
 if __name__ == "__main__":
