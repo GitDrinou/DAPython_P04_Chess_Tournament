@@ -1,6 +1,7 @@
 """Entry point of the application."""
 from datetime import datetime
 
+from controllers.player import PlayerController
 from models.match import Match
 from models.player import Player
 from models.round import Round
@@ -15,6 +16,8 @@ def main():
     player2 = Player("A67890", "DOE","Jane")
     player3 = Player("B67890", "SMITH","Luke")
     player4 = Player("H45264", "HALL","Bob")
+    player5 = Player("L98524", "JOHN","Anna")
+
 
     players = [player1, player2, player3, player4]
     round_players = players
@@ -32,9 +35,10 @@ def main():
                                              "l'entrée du bâtiment Hall A")
 
     tournament.rounds.append(round1)
-    for player in round_players:
-        tournament.players.append(player)
 
+    player_controller = PlayerController(players)
+    player_controller.add_player(player5)
+    player_controller.write_players_to_file()
 
     # Output
     print(tournament)
