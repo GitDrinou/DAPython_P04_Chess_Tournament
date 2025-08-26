@@ -1,4 +1,6 @@
 """Entry point of the application."""
+import json
+import os
 from datetime import datetime
 
 from controllers.player import PlayerController
@@ -6,7 +8,18 @@ from models.match import Match
 from models.player import Player
 from models.round import Round
 from models.tournament import Tournament
+from utils.constants import PATH_DATA_JSON_FILE
 
+
+def initialize():
+    """Initialize the application."""
+    default_json = {
+        "players": [],
+        "tournaments": [],
+    }
+    if not os.path.isfile(PATH_DATA_JSON_FILE):
+        with open(PATH_DATA_JSON_FILE, "w", encoding="utf-8") as json_file:
+            json.dump(default_json, json_file, indent=4)
 
 def main():
     """Main entry point of the application."""
@@ -37,7 +50,6 @@ def main():
     tournament.rounds.append(round1)
 
     player_controller = PlayerController(players)
-    player_controller.add_player(player5)
     player_controller.write_players_to_file()
 
     # Output
@@ -45,4 +57,5 @@ def main():
 
 
 if __name__ == "__main__":
+    initialize()
     main()
