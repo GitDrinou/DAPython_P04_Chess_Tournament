@@ -5,9 +5,9 @@ from utils.constants import PATH_DATA_JSON_FILE
 
 class PlayerController:
     """Controller class for the player"""
-    def __init__(self, players):
+    def __init__(self):
         """Initialise the controller with the a list of players"""
-        self.players = players
+        self.players = []
 
     def add_player(self, player):
         """Add a player to the tournament"""
@@ -36,4 +36,3 @@ class PlayerController:
         with (open(PATH_DATA_JSON_FILE, "w") as
               players_file):
             json.dump(data, players_file, indent=4)
-

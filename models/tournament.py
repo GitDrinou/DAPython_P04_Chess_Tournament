@@ -1,7 +1,13 @@
 class Tournament:
     """Tournament class"""
-    def __init__(self, name, location, start_date, end_date, description,
-               number_of_round=4, round_number=0):
+    def __init__(self,
+                 name,
+                 location,
+                 start_date,
+                 end_date,
+                 description,
+                 number_of_round=4,
+                 round_number=0):
         """Initialize tournament with:
             name,
             location,
@@ -17,7 +23,7 @@ class Tournament:
         self.end_date = end_date
         self.description = description
         self.number_of_round = number_of_round
-        self.round_number = 0
+        self.round_number = round_number
 
         # lists of rounds and players by tournament
         self.rounds = []
