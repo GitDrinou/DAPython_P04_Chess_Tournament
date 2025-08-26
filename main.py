@@ -31,6 +31,8 @@ def main():
     player3 = Player("B67890", "SMITH", "Luke")
     player4 = Player("H45264", "HALL", "Bob")
     player5 = Player("L98524", "JOHN", "Anna")
+    player6 = Player("W57894", "BURTON", "Charles")
+    player7 = Player("D98766", "JAMES", "Olivia")
 
     # add player to players
     player_controller = PlayerController()
@@ -39,6 +41,8 @@ def main():
     player_controller.add_player(player3)
     player_controller.add_player(player4)
     player_controller.add_player(player5)
+    player_controller.add_player(player6)
+    player_controller.add_player(player7)
 
     player_controller.write_players_to_file()
     json_players = player_controller.read_players_from_file()

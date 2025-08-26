@@ -11,7 +11,11 @@ class PlayerController:
 
     def add_player(self, player):
         """Add a player to the tournament"""
-        self.players.append(player)
+        if player.national_id[0].isalpha():
+            self.players.append(player)
+            print("OK")
+        else:
+            self.players.append(player)
 
     def read_players_from_file(self):
         """Read players from JSON file"""
