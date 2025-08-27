@@ -4,39 +4,20 @@ from utils.constants import PATH_DATA_JSON_FILE
 
 
 class PlayerController:
-    """Controller class for the player"""
-    def __init__(self):
-        """Initialise the controller with the a list of players"""
-        self.players = []
 
-    def add_player(self, player):
+    @staticmethod
+    def add_player(player):
         """Add a player to the tournament"""
+        with open(PATH_DATA_JSON_FILE, "r") as players_file:
+            data = json.load(players_file)
+
         if player.national_id[0].isalpha():
-            self.players.append(player)
-            print("OK")
+            data["players"].append({
+                "national_id": player.national_id,
+                "last_name": player.last_name,
+                "first_name": player.first_name
+            })
+            with open(PATH_DATA_JSON_FILE, "w") as players_file:
+                json.dump(data, players_file, indent=4)
         else:
-            self.players.append(player)
-
-    def read_players_from_file(self):
-        """Read players from JSON file"""
-        try:
-            with open(PATH_DATA_JSON_FILE, "r") as players_file:
-                data = json.load(players_file)
-                data["players"] = self.players
-                return data
-        except FileNotFoundError:
-            print("No players data found.")
-
-    def write_players_to_file(self):
-        """Write player to JSON file"""
-
-        players_for_json = []
-        for player in self.players:
-            players_for_json.append(player.to_dict())
-
-        data = self.read_players_from_file()
-        data["players"] = players_for_json
-
-        with (open(PATH_DATA_JSON_FILE, "w") as
-              players_file):
-            json.dump(data, players_file, indent=4)
+            print("Le format de l'identitifant national est incorrect.")
