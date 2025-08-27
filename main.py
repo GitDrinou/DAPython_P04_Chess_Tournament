@@ -1,13 +1,9 @@
 """Entry point of the application."""
 import json
 import os
-import random
-from datetime import datetime
 
 from controllers.player import PlayerController
 from models.player import Player
-from models.round import Round
-from models.tournament import Tournament
 from utils.constants import PATH_DATA_JSON_FILE
 
 
@@ -25,7 +21,6 @@ def initialize():
     #         default_json = json.load(json_file)
 
 
-
 def main():
     """Main entry point of the application."""
     print("Ajouter un nouveau joueur:")
@@ -33,11 +28,9 @@ def main():
     last_name = input("Saisissez son nom de famille: ")
     first_name = input("Saisissez son prénom: ")
 
-
     # add player to players
     player_controller = PlayerController()
     player_controller.add_player(Player(national_id, last_name, first_name))
-
 
 
 if __name__ == "__main__":
