@@ -1,6 +1,7 @@
 import json
 
 from utils.constants import PATH_DATA_JSON_FILE
+from utils.file_utils import read_file, write_file
 
 
 class PlayerController:
@@ -26,19 +27,20 @@ class PlayerController:
 
     def add_player(self, player):
         """Add a player to the tournament"""
-        with open(PATH_DATA_JSON_FILE, "r") as players_file:
-            data = json.load(players_file)
+        data = read_file(PATH_DATA_JSON_FILE)
 
         if self.check_format_national_id(player.national_id) is not None:
-            if self.check_player_is_exist(player.national_id):
+            if not self.check_player_is_exist(player.national_id):
+                national_id = (player.national_id[0].upper() +
+                               player.national_id[1:])
                 data["players"].append({
-                    "national_id": player.national_id[0].upper() +
-                                   player.national_id[1:],
+                    "national_id": national_id,
                     "last_name": player.last_name.upper(),
                     "first_name": player.first_name.capitalize(),
                 })
-                with open(PATH_DATA_JSON_FILE, "w") as players_file:
-                    json.dump(data, players_file, indent=4)
+
+                write_file(PATH_DATA_JSON_FILE, data)
+
             else:
                 print("Ce joueur existe déjà dans la base des joueurs "
                       "d'échecs.")
