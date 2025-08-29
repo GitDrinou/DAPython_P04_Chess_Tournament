@@ -9,8 +9,13 @@ class PlayerController:
     @staticmethod
     def check_format_national_id(national_id):
         """Check the format of the national id (1 letter + 5 numbers)"""
-        if national_id[0].isalpha() and national_id[1:].isdigit():
-            return national_id
+        first_part = national_id[0]
+        second_part = national_id[1:]
+        if first_part.isalpha():
+            if second_part.isdigit() and len(second_part) == 5:
+                return national_id
+            else:
+                return None
         else:
             return None
 
