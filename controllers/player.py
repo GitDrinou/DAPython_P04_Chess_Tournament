@@ -1,4 +1,5 @@
 import json
+import re
 
 from utils.constants import PATH_DATA_JSON_FILE
 from utils.file_utils import read_file, write_file
@@ -9,13 +10,8 @@ class PlayerController:
     @staticmethod
     def check_format_national_id(national_id):
         """Check the format of the national id (1 letter + 5 numbers)"""
-        first_part = national_id[0]
-        second_part = national_id[1:]
-        if first_part.isalpha():
-            if second_part.isdigit() and len(second_part) == 5:
-                return national_id
-            else:
-                return None
+        if re.fullmatch(r'^[A-Za-z]\d{5}$', national_id):
+               return national_id
         else:
             return None
 
