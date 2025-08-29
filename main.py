@@ -22,13 +22,12 @@ def initialize():
 def main():
     """Main entry point of the application."""
     print("Ajouter un nouveau joueur:")
-    national_id = input("Saisissez son identifiant national: ")
     last_name = input("Saisissez son nom de famille: ")
     first_name = input("Saisissez son prénom: ")
 
     # add player to players
     player_controller = PlayerController()
-    player_controller.add_player(Player(national_id, last_name, first_name))
+    player_controller.add_player(Player(last_name, first_name))
 
     data = read_file(PATH_DATA_JSON_FILE)
     print(f"JSON Players: {len(data['players'])}")

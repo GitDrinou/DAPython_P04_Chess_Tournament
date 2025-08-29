@@ -1,5 +1,7 @@
 import json
+import random
 import re
+import string
 
 from utils.constants import PATH_DATA_JSON_FILE
 from utils.file_utils import read_file, write_file
@@ -30,10 +32,12 @@ class PlayerController:
         """Add a player to the tournament"""
         data = read_file(PATH_DATA_JSON_FILE)
 
-        if self.check_format_national_id(player.national_id) is not None:
-            if not self.check_player_is_exist(player.national_id):
-                national_id = (player.national_id[0].upper() +
-                               player.national_id[1:])
+        # automatic creation of the national identifiant
+        letter = random.choice(string.ascii_uppercase)
+        numbers = ''.join(random.choices(string.digits, k=5))
+        national_id = letter + numbers
+        if self.check_format_national_id(national_id) is not None:
+            if not self.check_player_is_exist(national_id):
                 data["players"].append({
                     "national_id": national_id,
                     "last_name": player.last_name.upper(),
