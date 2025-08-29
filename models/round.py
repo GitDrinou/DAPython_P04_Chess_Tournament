@@ -1,13 +1,16 @@
 class Round:
     """Round class"""
-    def __init__(self, name, start_date, end_date, players, matches=None):
+    def __init__(self, round_id, name, start_date, end_date, players,
+                 matches=None):
         """Initialise player with:
+            round_id,
             name,
             start_date,
             end_date
         """
         if matches is None:
             matches = []
+        self.round_id = round_id
         self.name = name
         self.start_date = start_date
         self.end_date = end_date

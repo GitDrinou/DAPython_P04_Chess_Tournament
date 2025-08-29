@@ -1,6 +1,7 @@
 class Tournament:
     """Tournament class"""
     def __init__(self,
+                 tournament_id,
                  name,
                  location,
                  start_date,
@@ -9,6 +10,7 @@ class Tournament:
                  number_of_round=4,
                  round_number=0):
         """Initialize tournament with:
+            tournament_id,
             name,
             location,
             start_date,
@@ -17,6 +19,7 @@ class Tournament:
             number of round (by default : 4)
             round number (by default : 0)
         """
+        self.tournament_id = tournament_id
         self.name = name
         self.location = location
         self.start_date = start_date
