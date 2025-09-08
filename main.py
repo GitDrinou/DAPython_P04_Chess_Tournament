@@ -3,7 +3,9 @@ import json
 import os
 
 from controllers.player import PlayerController
+from controllers.tournament import TournamentController
 from models.player import Player
+from models.tournament import Tournament
 from utils.constants import PATH_DATA_JSON_FILE
 from utils.file_utils import read_file
 
@@ -21,16 +23,38 @@ def initialize():
 
 def main():
     """Main entry point of the application."""
-    print("Ajouter un nouveau joueur:")
-    last_name = input("Saisissez son nom de famille: ")
-    first_name = input("Saisissez son prénom: ")
+    # # Ajout d'un nouveau joueur dans la base JSON
+    # print("Ajouter un nouveau joueur:")
+    # last_name = input("Saisissez son nom de famille: ")
+    # first_name = input("Saisissez son prénom: ")
+    #
+    # # add player to players
+    # player_controller = PlayerController()
+    # player_controller.add_player(Player(last_name, first_name))
 
-    # add player to players
-    player_controller = PlayerController()
-    player_controller.add_player(Player(last_name, first_name))
+    print("Ajouter un nouveau tournoi:")
+    tournament_name = input("Saisissez le nom du tournoi:")
+    tournament_location = input("Saisissez la localisation du tournoi:")
+    tournament_start_date = input("Saisissez la date de début du tournoi:")
+    tournament_end_date = input("Saisissez la date de fin du tournoi:")
+    tournament_description = input("Saisissez la description du tournoi:")
+    tournament_number_of_rounds = input("Saisissez le nombre de tours (si "
+                                        "différent des 4 tours minimums par "
+                                        "défaut:")
+
+    # Add a new tournament
+    tournament_controller = TournamentController()
+    tournament_controller.add_tournament(Tournament(tournament_name,
+                                                    tournament_location,
+                                                    tournament_start_date,
+                                                    tournament_end_date,
+                                                    tournament_description,
+                                                    tournament_number_of_rounds))
+
 
     data = read_file(PATH_DATA_JSON_FILE)
     print(f"JSON Players: {len(data['players'])}")
+    print(f"JSON Players: {len(data['tournaments'])}")
 
 
 if __name__ == "__main__":

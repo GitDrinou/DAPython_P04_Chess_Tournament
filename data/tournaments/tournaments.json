@@ -76,5 +76,16 @@
             "first_name": "Joyce"
         }
     ],
-    "tournaments": []
+    "tournaments": [
+        {
+            "tournament_id": 1,
+            "name": "LE TOURNOI DE BELLE MAMAN",
+            "location": "Salers",
+            "start_date": "09/09/2025",
+            "end_date": "10/09:2025",
+            "description": "le tournoi aura lieu dans la salle communale de la mairie de Salers. L'entr\u00e9e des joueurs dse fera d\u00e8s 8h00 et le tournoi d\u00e9butera \u00e0 9h00. Tous les retardataires seront \u00e9limin\u00e9s du tournoi .",
+            "number_of_rounds": 4,
+            "round_number": 0
+        }
+    ]
 }
