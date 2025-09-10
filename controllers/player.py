@@ -4,7 +4,7 @@ import re
 import string
 
 from utils.constants import PATH_DATA_JSON_FILE
-from utils.file_utils import read_file, write_file
+from utils.file_utils import save_to_json
 
 
 class PlayerController:
@@ -30,7 +30,6 @@ class PlayerController:
 
     def add_player(self, player):
         """Add a player to the tournament"""
-        data = read_file(PATH_DATA_JSON_FILE)
 
         # automatic creation of the national identifiant
         letter = random.choice(string.ascii_uppercase)
@@ -38,14 +37,11 @@ class PlayerController:
         national_id = letter + numbers
         if self.check_format_national_id(national_id) is not None:
             if not self.check_player_is_exist(national_id):
-                data["players"].append({
-                    "national_id": national_id,
-                    "last_name": player.last_name.upper(),
-                    "first_name": player.first_name.capitalize(),
-                })
 
-                write_file(PATH_DATA_JSON_FILE, data)
-
+                save_to_json("players",
+                             national_id=national_id,
+                             last_name=player.last_name,
+                             first_name=player.first_name,)
             else:
                 print("Ce joueur existe déjà dans la base des joueurs "
                       "d'échecs.")
