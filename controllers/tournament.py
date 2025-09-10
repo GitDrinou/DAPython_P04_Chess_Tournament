@@ -33,6 +33,9 @@ class TournamentController:
             random_players = random.sample(data["players"],
                                            int(number_of_players))
 
+            for player in random_players:
+                player["points"] = 0
+
             data["tournaments"].append({
                 "tournament_id": tournament_id,
                 "name": tournament.name.upper(),
