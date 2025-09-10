@@ -13,7 +13,7 @@ class PlayerController:
     def check_format_national_id(national_id):
         """Check the format of the national id (1 letter + 5 numbers)"""
         if re.fullmatch(r'^[A-Za-z]\d{5}$', national_id):
-               return national_id
+            return national_id
         else:
             return None
 

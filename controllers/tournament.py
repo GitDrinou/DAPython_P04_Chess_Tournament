@@ -1,3 +1,5 @@
+import random
+
 from utils.constants import PATH_DATA_JSON_FILE
 from utils.date_utils import validate_date, checks_dates
 from utils.file_utils import read_file, write_file
@@ -6,7 +8,7 @@ from utils.file_utils import read_file, write_file
 class TournamentController:
 
     @staticmethod
-    def add_tournament(tournament):
+    def add_tournament(tournament, number_of_players):
         """Add a new tournament"""
         data = read_file(PATH_DATA_JSON_FILE)
 
@@ -26,7 +28,10 @@ class TournamentController:
         start_date = validate_date(tournament.start_date)
         end_date = validate_date(tournament.end_date)
 
-        if (start_date and end_date )and checks_dates(start_date, end_date):
+        if (start_date and end_date) and checks_dates(start_date, end_date):
+
+            random_players = random.sample(data["players"],
+                                           int(number_of_players))
 
             data["tournaments"].append({
                 "tournament_id": tournament_id,
@@ -37,7 +42,7 @@ class TournamentController:
                 "description": tournament.description,
                 "number_of_rounds": tournament.number_of_rounds,
                 "round_number": tournament.round_number,
+                "players": random_players
             })
 
             write_file(PATH_DATA_JSON_FILE, data)
-
