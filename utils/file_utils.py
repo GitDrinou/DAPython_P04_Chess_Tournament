@@ -34,7 +34,8 @@ def save_to_json(key, *args, **kwargs):
             "description": kwargs["description"],
             "number_of_rounds": kwargs["number_of_rounds"],
             "round_number": kwargs["round_number"],
-            "players": kwargs["random_players"]
+            "players": kwargs["players"],
+            "rounds": kwargs["rounds"]
         })
     else:
         data["players"].append({

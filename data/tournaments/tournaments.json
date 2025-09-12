@@ -135,6 +135,85 @@
                     "points": 0
                 }
             ]
+        },
+        {
+            "tournament_id": 2,
+            "name": "LE TOURNOI DES \u00c9TOILES",
+            "location": "Salle des festivit\u00e9s de l'\u00e9toile de la mort",
+            "start_date": "2025-09-20 00:00:00",
+            "end_date": "2025-09-20 00:00:00",
+            "description": "ouverture des portes \u00e0 8h00.",
+            "number_of_rounds": "4",
+            "round_number": 0,
+            "players": [
+                {
+                    "national_id": "S94503",
+                    "last_name": "MARY",
+                    "first_name": "Bianca",
+                    "points": 0
+                },
+                {
+                    "national_id": "M00004",
+                    "last_name": "THOMAS",
+                    "first_name": "Paul",
+                    "points": 0
+                },
+                {
+                    "national_id": "Y66674",
+                    "last_name": "MORGAN",
+                    "first_name": "John",
+                    "points": 0
+                },
+                {
+                    "national_id": "F17367",
+                    "last_name": "DANAHUE",
+                    "first_name": "Joyce",
+                    "points": 0
+                }
+            ],
+            "rounds": [
+                {
+                    "name": "Round 1",
+                    "round_start_date": "2025-09-12 15:36:08.701097",
+                    "round_end_date": "2025-09-12 15:36:08.701100",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "player1": {
+                                "national_id": "S94503",
+                                "last_name": "MARY",
+                                "first_name": "Bianca",
+                                "points": 0
+                            },
+                            "score1": 0,
+                            "player2": {
+                                "national_id": "M00004",
+                                "last_name": "THOMAS",
+                                "first_name": "Paul",
+                                "points": 0
+                            },
+                            "score2": 0
+                        },
+                        {
+                            "match_id": 2,
+                            "player1": {
+                                "national_id": "Y66674",
+                                "last_name": "MORGAN",
+                                "first_name": "John",
+                                "points": 0
+                            },
+                            "score1": 0,
+                            "player2": {
+                                "national_id": "F17367",
+                                "last_name": "DANAHUE",
+                                "first_name": "Joyce",
+                                "points": 0
+                            },
+                            "score2": 0
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

@@ -1,8 +1,10 @@
 import random
 
+from models.match import Match
+from models.round import Round
 from utils.constants import PATH_DATA_JSON_FILE
 from utils.date_utils import validate_date, checks_dates
-from utils.file_utils import read_file, save_to_json
+from utils.file_utils import read_file
 
 
 class TournamentController:
@@ -18,11 +20,8 @@ class TournamentController:
 
         # check if the number of rounds is empty or under de default number
         if (tournament_detail.number_of_rounds == ""
-                or tournament_detail.number_of_rounds < 4):
+                or int(tournament_detail.number_of_rounds) < 4):
             tournament_detail.number_of_rounds = 4
-        else:
-            tournament_detail.number_of_rounds = int(tournament_detail.
-                                                     number_of_rounds)
 
         start_date = validate_date(tournament_detail.start_date)
         end_date = validate_date(tournament_detail.end_date)
@@ -35,14 +34,50 @@ class TournamentController:
             for player in random_players:
                 player["points"] = 0
 
-            save_to_json("tournaments",
-                         tournament_id=tournament_id,
-                         name=tournament_detail.name.upper(),
-                         location=tournament_detail.location.capitalize(),
-                         start_date=str(start_date),
-                         end_date=str(end_date),
-                         description=tournament_detail.description,
-                         number_of_rounds=tournament_detail.number_of_rounds,
-                         round_number=tournament_detail.round_number,
-                         random_players=random_players
-                         )
+            return {
+                "tournament_id": tournament_id,
+                "name": tournament_detail.name.upper(),
+                "location": tournament_detail.location.capitalize(),
+                "start_date": str(start_date),
+                "end_date": str(end_date),
+                "description": tournament_detail.description,
+                "number_of_rounds": tournament_detail.number_of_rounds,
+                "round_number": tournament_detail.round_number,
+                "players": random_players
+            }
+
+        else:
+            return print("L'enregistrement du tournoi n'a pas abouti. "
+                         "Veuillez renouveler votre saisie.")
+
+    @staticmethod
+    def generate_round(number_of_rounds, round_number, players):
+        """Generate a random tournament round"""
+        match = None
+
+        if int(round_number) > int(number_of_rounds):
+            return None
+
+        round_number += 1
+        round_name = "Round {}".format(round_number)
+        round_detail = Round(round_name)
+
+        if round_number == 1:
+            random.shuffle(players)
+        else:
+            players.sort(key=lambda player: player["points"], reverse=True)
+        id_match = 1
+        for i in range(0, len(players), 2):
+            match = Match(id_match, player1=players[i], score1=players[i][
+                "points"], player2=players[i+1], score2=players[i+1][
+                "points"]).to_dict()
+
+            id_match += 1
+            round_detail.matches.append(match)
+
+        return {
+                "name": round_name,
+                "round_start_date": str(round_detail.start_date),
+                "round_end_date": str(round_detail.end_date),
+                "matchs": round_detail.matches
+            }
