@@ -9,6 +9,7 @@ from utils.file_utils import read_file
 
 
 class TournamentController:
+    """Tournament controller class"""
 
     @staticmethod
     def add_new_tournament(tournament_detail, number_of_players):

@@ -92,15 +92,25 @@ def main():
         #              rounds=[round_detail]
         #              )
 
-        last_tournament = load_last_tournament(
-            PATH_DATA_TOURNAMENTS_JSON_FILE, "tournaments")
+        last_tournament = load_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE)
         last_round = last_tournament["rounds"][-1]
+
+        # start a round and update data json
+        # round_controller = RoundController()
+        # round_start = round_controller.start_round()
+        # round_number = last_round["name"][-1]
+        # last_tournament["round_number"] = round_number
+        # last_round["round_start_date"] = round_start
+        # update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+        #                        last_tournament["tournament_id"],
+        #                        last_tournament)
+
+        # end a round and update data json
         round_controller = RoundController()
-        round_start = round_controller.start_round()
-        round_number = last_round["name"][-1]
-        last_tournament["round_number"] = round_number
-        last_round["round_start_date"] = round_start
+        round_end = round_controller.end_round()
+        last_round["round_end_date"] = round_end
         update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                               last_tournament["tournament_id"],
                                last_tournament)
 
 

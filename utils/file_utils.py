@@ -50,17 +50,24 @@ def save_to_json(key, **kwargs):
     write_file(path, data)
 
 
-def load_last_tournament(path_file, key):
+def load_last_tournament(path_file):
     """Load the last tournament data from the json file"""
     with open(path_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
-        datas = data.get(key, [])
+        datas = data.get("tournaments", [])
         if datas:
-            return data[key][-1]
+            return data["tournaments"][-1]
         else:
             return None
 
 
-def update_last_tournament(path_file, last_tournament):
+def update_last_tournament(path_file, tournament_id, new_value):
     """Update the last tournament data from the json file"""
-    write_file(path_file, last_tournament)
+    data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+
+    for index, tournament in enumerate(data["tournaments"]):
+        if tournament.get("tournament_id") == int(tournament_id):
+            data["tournaments"][index] = new_value
+            break
+
+    write_file(path_file, data)
