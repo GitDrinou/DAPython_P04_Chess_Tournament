@@ -68,9 +68,18 @@ class TournamentController:
             players.sort(key=lambda player: player["points"], reverse=True)
         id_match = 1
         for i in range(0, len(players), 2):
-            match = Match(id_match, player1=players[i], score1=players[i][
-                "points"], player2=players[i+1], score2=players[i+1][
-                "points"]).to_dict()
+            player1 = {
+                "national_id": players[i]["national_id"],
+                "points": players[i + 1]["points"]
+            }
+            player2 = {
+                "national_id": players[i+1]["national_id"],
+                "points": players[i+1]["points"]
+            }
+            match = Match(id_match, player1=player1["national_id"],
+                          score1=player1[
+                "points"], player2=player2["national_id"],
+                          score2=player2["points"]).to_dict()
 
             id_match += 1
             round_detail.matches.append(match)

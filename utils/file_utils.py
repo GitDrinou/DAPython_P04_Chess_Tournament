@@ -19,7 +19,7 @@ def write_file(path_file, data):
         json.dump(data, f, indent=4)
 
 
-def save_to_json(key, *args, **kwargs):
+def save_to_json(key, **kwargs):
     """Save specific data to the json file"""
 
     data = read_file(PATH_DATA_JSON_FILE)
@@ -45,3 +45,19 @@ def save_to_json(key, *args, **kwargs):
         })
 
     write_file(PATH_DATA_JSON_FILE, data)
+
+
+def load_last_tournament(path_file, key):
+    """Load the last tournament data from the json file"""
+    with open(path_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+        datas = data.get(key, [])
+        if datas:
+            return data[key][-1]
+        else:
+            return None
+
+
+def update_last_tournament(path_file, last_tournament):
+    """Update the last tournament data from the json file"""
+    write_file(path_file, last_tournament)

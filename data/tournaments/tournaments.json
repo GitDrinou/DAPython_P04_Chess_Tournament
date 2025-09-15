@@ -1,217 +1,57 @@
 {
+    "tournament_id": 1,
+    "name": "SQDFQS",
+    "location": "Qfqds",
+    "start_date": "2025-09-18 00:00:00",
+    "end_date": "2025-09-19 00:00:00",
+    "description": "qsfdqsd",
+    "number_of_rounds": 4,
+    "round_number": 0,
     "players": [
         {
-            "national_id": "X88457",
-            "last_name": "DUPONT",
-            "first_name": "Mark"
-        },
-        {
-            "national_id": "W57894",
-            "last_name": "BURTON",
-            "first_name": "Charles",
+            "national_id": "X58661",
+            "last_name": "BERNARHD",
+            "first_name": "Jenny",
             "points": 0
         },
         {
-            "national_id": "D98766",
-            "last_name": "JAMES",
-            "first_name": "Olivia",
-            "points": 0
-        },
-        {
-            "national_id": "L98524",
-            "last_name": "JOHN",
-            "first_name": "Anna",
-            "points": 0
-        },
-        {
-            "national_id": "B67890",
-            "last_name": "SMITH",
-            "first_name": "Luke"
-        },
-        {
-            "national_id": "A67890",
-            "last_name": "DOE",
-            "first_name": "Jane",
-            "points": 0
-        },
-        {
-            "national_id": "A12345",
-            "last_name": "DOE",
-            "first_name": "John",
+            "national_id": "S94503",
+            "last_name": "MARY",
+            "first_name": "Bianca",
             "points": 0
         },
         {
             "national_id": "J55987",
             "last_name": "SKYWALKER",
-            "first_name": "Luke"
-        },
-        {
-            "national_id": "M00556",
-            "last_name": "JUNES",
-            "first_name": "Dehlia"
-        },
-        {
-            "national_id": "Y66674",
-            "last_name": "MORGAN",
-            "first_name": "John"
-        },
-        {
-            "national_id": "L00032",
-            "last_name": "WALKER",
-            "first_name": "Paula"
-        },
-        {
-            "national_id": "S94503",
-            "last_name": "MARY",
-            "first_name": "Bianca"
-        },
-        {
-            "national_id": "M00004",
-            "last_name": "THOMAS",
-            "first_name": "Paul"
-        },
-        {
-            "national_id": "A45872",
-            "last_name": "BROWN",
-            "first_name": "Andy"
-        },
-        {
-            "national_id": "F17367",
-            "last_name": "DANAHUE",
-            "first_name": "Joyce",
+            "first_name": "Luke",
             "points": 0
         },
         {
-            "national_id": "X58661",
-            "last_name": "BERNARHD",
-            "first_name": "Jenny"
+            "national_id": "X88457",
+            "last_name": "DUPONT",
+            "first_name": "Mark",
+            "points": 0
         }
     ],
-    "tournaments": [
+    "rounds": [
         {
-            "tournament_id": 1,
-            "name": "LE TOURNOI DE LA BELLE-M\u00c8RE",
-            "location": "La salle des f\u00eates de chassland",
-            "start_date": "2025-09-15 00:00:00",
-            "end_date": "2025-09-17 00:00:00",
-            "description": "le tournoi ouvrira ses portes \u00e0 8h30.",
-            "number_of_rounds": 4,
-            "round_number": 0,
-            "players": [
+            "name": "Round 1",
+            "round_start_date": "15-09-2025 11:51:28",
+            "round_end_date": "",
+            "matchs": [
                 {
-                    "national_id": "A12345",
-                    "last_name": "DOE",
-                    "first_name": "John",
-                    "points": 0
+                    "match_id": 1,
+                    "player1": "X58661",
+                    "score1": 0,
+                    "player2": "S94503",
+                    "score2": 0
                 },
                 {
-                    "national_id": "D98766",
-                    "last_name": "JAMES",
-                    "first_name": "Olivia",
-                    "points": 0
-                },
-                {
-                    "national_id": "W57894",
-                    "last_name": "BURTON",
-                    "first_name": "Charles",
-                    "points": 0
-                },
-                {
-                    "national_id": "A67890",
-                    "last_name": "DOE",
-                    "first_name": "Jane",
-                    "points": 0
-                },
-                {
-                    "national_id": "L98524",
-                    "last_name": "JOHN",
-                    "first_name": "Anna",
-                    "points": 0
-                },
-                {
-                    "national_id": "F17367",
-                    "last_name": "DANAHUE",
-                    "first_name": "Joyce",
-                    "points": 0
-                }
-            ]
-        },
-        {
-            "tournament_id": 2,
-            "name": "LE TOURNOI DES \u00c9TOILES",
-            "location": "Salle des festivit\u00e9s de l'\u00e9toile de la mort",
-            "start_date": "2025-09-20 00:00:00",
-            "end_date": "2025-09-20 00:00:00",
-            "description": "ouverture des portes \u00e0 8h00.",
-            "number_of_rounds": "4",
-            "round_number": 0,
-            "players": [
-                {
-                    "national_id": "S94503",
-                    "last_name": "MARY",
-                    "first_name": "Bianca",
-                    "points": 0
-                },
-                {
-                    "national_id": "M00004",
-                    "last_name": "THOMAS",
-                    "first_name": "Paul",
-                    "points": 0
-                },
-                {
-                    "national_id": "Y66674",
-                    "last_name": "MORGAN",
-                    "first_name": "John",
-                    "points": 0
-                },
-                {
-                    "national_id": "F17367",
-                    "last_name": "DANAHUE",
-                    "first_name": "Joyce",
-                    "points": 0
-                }
-            ],
-            "rounds": [
-                {
-                    "name": "Round 1",
-                    "round_start_date": "2025-09-12 15:36:08.701097",
-                    "round_end_date": "2025-09-12 15:36:08.701100",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "player1": {
-                                "national_id": "S94503",
-                                "last_name": "MARY",
-                                "first_name": "Bianca",
-                                "points": 0
-                            },
-                            "score1": 0,
-                            "player2": {
-                                "national_id": "M00004",
-                                "last_name": "THOMAS",
-                                "first_name": "Paul",
-                                "points": 0
-                            },
-                            "score2": 0
-                        },
-                        {
-                            "match_id": 2,
-                            "player1": {
-                                "national_id": "Y66674",
-                                "last_name": "MORGAN",
-                                "first_name": "John",
-                                "points": 0
-                            },
-                            "score1": 0,
-                            "player2": {
-                                "national_id": "F17367",
-                                "last_name": "DANAHUE",
-                                "first_name": "Joyce",
-                                "points": 0
-                            },
-                            "score2": 0
-                        }
-                    ]
+                    "match_id": 2,
+                    "player1": "J55987",
+                    "score1": 0,
+                    "player2": "X88457",
+                    "score2": 0
                 }
             ]
         }

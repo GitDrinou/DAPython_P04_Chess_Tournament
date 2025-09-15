@@ -1,6 +1,3 @@
-import datetime
-
-
 class Round:
     """Round class"""
     def __init__(self, name):
@@ -11,15 +8,15 @@ class Round:
         """
 
         self.name = name
-        self.start_date = datetime.datetime.now()
-        self.end_date = datetime.datetime.now()
+        self.start_date = ""
+        self.end_date = ""
         self.matches = []
 
     def to_dict(self):
         return {
             "name": self.name,
-            "start_date": self.start_date.isoformat(),
-            "end_date": self.end_date.isoformat(),
+            "start_date": self.start_date,
+            "end_date": self.end_date,
             "matches": self.matches
         }
 
