@@ -1,6 +1,7 @@
 import json
 
-from utils.constants import PATH_DATA_JSON_FILE
+from utils.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
+                             PATH_DATA_PLAYERS_JSON_FILE)
 
 
 def read_file(path_file):
@@ -22,9 +23,9 @@ def write_file(path_file, data):
 def save_to_json(key, **kwargs):
     """Save specific data to the json file"""
 
-    data = read_file(PATH_DATA_JSON_FILE)
-
     if key == "tournaments":
+        data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        path = PATH_DATA_TOURNAMENTS_JSON_FILE
         data["tournaments"].append({
             "tournament_id": kwargs["tournament_id"],
             "name": kwargs["name"].upper(),
@@ -38,13 +39,15 @@ def save_to_json(key, **kwargs):
             "rounds": kwargs["rounds"]
         })
     else:
+        data = read_file(PATH_DATA_PLAYERS_JSON_FILE)
+        path = PATH_DATA_PLAYERS_JSON_FILE
         data["players"].append({
             "national_id": kwargs["national_id"],
             "last_name": kwargs["last_name"].upper(),
             "first_name": kwargs["first_name"].capitalize(),
         })
 
-    write_file(PATH_DATA_JSON_FILE, data)
+    write_file(path, data)
 
 
 def load_last_tournament(path_file, key):

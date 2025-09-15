@@ -3,7 +3,7 @@ import random
 import re
 import string
 
-from utils.constants import PATH_DATA_JSON_FILE
+from utils.constants import PATH_DATA_PLAYERS_JSON_FILE
 from utils.file_utils import save_to_json
 
 
@@ -20,7 +20,7 @@ class PlayerController:
     @staticmethod
     def check_player_is_exist(national_id):
         """Check if the national id is exist in JSON file"""
-        with open(PATH_DATA_JSON_FILE, "r") as json_file:
+        with open(PATH_DATA_PLAYERS_JSON_FILE, "r") as json_file:
             data = json.load(json_file)
 
         for player in data["players"]:
