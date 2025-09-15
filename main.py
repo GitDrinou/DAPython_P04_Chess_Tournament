@@ -23,8 +23,9 @@ def initialize():
             json.dump(default_data, json_file, indent=4)
 
     if not os.path.isfile(PATH_DATA_TOURNAMENTS_JSON_FILE):
-        default_data = {"tournaments": [],}
-        with open(PATH_DATA_TOURNAMENTS_JSON_FILE, "w", encoding="utf-8") as json_file:
+        default_data = {"tournaments": [], }
+        with (open(PATH_DATA_TOURNAMENTS_JSON_FILE, "w", encoding="utf-8")
+              as json_file):
             json.dump(default_data, json_file, indent=4)
 
 
@@ -99,7 +100,8 @@ def main():
         round_number = last_round["name"][-1]
         last_tournament["round_number"] = round_number
         last_round["round_start_date"] = round_start
-        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE, last_tournament)
+        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                               last_tournament)
 
 
 if __name__ == "__main__":
