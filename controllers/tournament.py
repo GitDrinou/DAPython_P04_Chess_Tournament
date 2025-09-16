@@ -79,7 +79,7 @@ class TournamentController:
                 "national_id": players[i+1]["national_id"],
                 "points": players[i+1]["points"]
             }
-            match = Match(player1=player1["national_id"],
+            match = Match(id_match, player1=player1["national_id"],
                           score1=player1[
                 "points"], player2=player2["national_id"],
                           score2=player2["points"]).to_dict()

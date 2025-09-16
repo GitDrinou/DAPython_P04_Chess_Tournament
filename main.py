@@ -2,15 +2,16 @@
 import json
 import os
 
-from controllers.round import RoundController
+from controllers.match import MatchController
+# from controllers.round import RoundController
+# from controllers.tournament import TournamentController
 # from controllers.player import PlayerController
 # from controllers.tournament import TournamentController
 # from models.player import Player
 # from models.tournament import Tournament
 from utils.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
                              PATH_DATA_PLAYERS_JSON_FILE)
-from utils.file_utils import (read_file, load_last_tournament,
-                              update_last_tournament)
+from utils.file_utils import (read_file, load_last_tournament)
 
 
 def initialize():
@@ -113,12 +114,19 @@ def main():
         #                        last_tournament)
 
         # end a round and update data json
-        round_controller = RoundController()
-        round_end = round_controller.end_round()
-        last_round["round_end_date"] = round_end
-        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                               last_tournament["tournament_id"],
-                               last_tournament)
+        # round_controller = RoundController()
+        # round_end = round_controller.end_round()
+        # last_round["round_end_date"] = round_end
+        # update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+        #                        last_tournament["tournament_id"],
+        #                        last_tournament)
+
+        # # save score for match
+        match_controller = MatchController()
+        match_controller.save_score(last_tournament, last_round,
+                                    user_match_id="1", score1="1", score2="0")
+        match_controller.save_score(last_tournament, last_round,
+                                    user_match_id="2", score1="1", score2="1")
 
 
 if __name__ == "__main__":
