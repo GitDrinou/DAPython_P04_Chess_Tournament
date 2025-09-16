@@ -6,20 +6,20 @@
             "location": "Salle des f\u00eates de l'\u00e9toile de la mort",
             "start_date": "2025-09-20 00:00:00",
             "end_date": "2025-09-20 00:00:00",
-            "description": "ouverture des pprtes \u00e0 8h00. Invit\u00e9 sp\u00e9cial et membre du jury : Obiwan Kenobi",
+            "description": "ouverture des portes \u00e0 8h00.",
             "number_of_rounds": 4,
             "round_number": "1",
             "players": [
                 {
-                    "national_id": "M00004",
-                    "last_name": "THOMAS",
-                    "first_name": "Paul",
+                    "national_id": "B67890",
+                    "last_name": "SMITH",
+                    "first_name": "Luke",
                     "points": 0
                 },
                 {
-                    "national_id": "W57894",
-                    "last_name": "BURTON",
-                    "first_name": "Charles",
+                    "national_id": "J55987",
+                    "last_name": "SKYWALKER",
+                    "first_name": "Luke",
                     "points": 0
                 },
                 {
@@ -29,32 +29,38 @@
                     "points": 0
                 },
                 {
-                    "national_id": "B67890",
-                    "last_name": "SMITH",
-                    "first_name": "Luke",
+                    "national_id": "W57894",
+                    "last_name": "BURTON",
+                    "first_name": "Charles",
                     "points": 0
                 }
             ],
             "rounds": [
                 {
                     "name": "Round 1",
-                    "round_start_date": "15-09-2025 15:58:09",
-                    "round_end_date": "15-09-2025 15:59:36",
+                    "round_start_date": "16-09-2025 09:58:51",
+                    "round_end_date": "16-09-2025 10:04:14",
                     "matchs": [
-                        {
-                            "match_id": 1,
-                            "player1": "M00004",
-                            "score1": 0,
-                            "player2": "W57894",
-                            "score2": 0
-                        },
-                        {
-                            "match_id": 2,
-                            "player1": "L98524",
-                            "score1": 0,
-                            "player2": "B67890",
-                            "score2": 0
-                        }
+                        [
+                            [
+                                "B67890",
+                                0
+                            ],
+                            [
+                                "J55987",
+                                0
+                            ]
+                        ],
+                        [
+                            [
+                                "L98524",
+                                0
+                            ],
+                            [
+                                "W57894",
+                                0
+                            ]
+                        ]
                     ]
                 }
             ]

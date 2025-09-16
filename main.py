@@ -65,7 +65,7 @@ def main():
         #                                      f"joueurs inscrits au tournoi ("
         #                                      f"maximum de {total_players} "
         #                                      f"joueurs) :")
-        # #  Add a new tournament
+        #  Add a new tournament
         # tournament_controller = TournamentController()
         # tournament_detail = tournament_controller.add_new_tournament(
         #       Tournament(tournament_name, tournament_location,
@@ -73,11 +73,6 @@ def main():
         #                  tournament_description, tournament_number_of_rounds
         #                  ),
         #       tournament_number_of_players)
-        #
-        # tournament_controller_round = TournamentController()
-        # round_detail = tournament_controller_round.generate_round(
-        #     tournament_detail["number_of_rounds"], 0,
-        #     tournament_detail["players"])
         #
         # save_to_json("tournaments",
         #              tournament_id=tournament_detail["tournament_id"],
@@ -89,13 +84,25 @@ def main():
         #              number_of_rounds=tournament_detail["number_of_rounds"],
         #              round_number=tournament_detail["round_number"],
         #              players=tournament_detail["players"],
-        #              rounds=[round_detail]
+        #              # rounds=[round_detail]
         #              )
 
         last_tournament = load_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        last_round = last_tournament["rounds"][-1]
+
+        # generate a round
+        # tournament_controller_round = TournamentController()
+        # round_detail = tournament_controller_round.generate_round(
+        #     last_tournament["number_of_rounds"], 0,
+        #     last_tournament["players"])
+        # last_tournament["rounds"].append(round_detail)
+        #
+        # update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+        #                        last_tournament["tournament_id"],
+        #                        last_tournament)
 
         # start a round and update data json
+        last_round = last_tournament["rounds"][-1]
+
         # round_controller = RoundController()
         # round_start = round_controller.start_round()
         # round_number = last_round["name"][-1]

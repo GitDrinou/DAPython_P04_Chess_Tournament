@@ -21,7 +21,7 @@ def write_file(path_file, data):
 
 
 def save_to_json(key, **kwargs):
-    """Save specific data to the json file"""
+    """Save specific (tournament or player) data to the json file"""
 
     if key == "tournaments":
         data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
@@ -36,7 +36,7 @@ def save_to_json(key, **kwargs):
             "number_of_rounds": kwargs["number_of_rounds"],
             "round_number": kwargs["round_number"],
             "players": kwargs["players"],
-            "rounds": kwargs["rounds"]
+            "rounds": []
         })
     else:
         data = read_file(PATH_DATA_PLAYERS_JSON_FILE)
