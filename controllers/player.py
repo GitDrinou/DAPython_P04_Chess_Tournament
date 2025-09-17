@@ -19,7 +19,7 @@ class PlayerController:
 
     @staticmethod
     def check_player_is_exist(national_id):
-        """Check if the national id is exist in JSON file"""
+        """Check if the national id is existed in JSON file"""
         with open(PATH_DATA_PLAYERS_JSON_FILE, "r") as json_file:
             data = json.load(json_file)
 
@@ -42,6 +42,9 @@ class PlayerController:
                              national_id=national_id,
                              last_name=player.last_name,
                              first_name=player.first_name,)
+
+                print("---------------------------")
+                print("Le nouveau joueur a été enregistré avec succès.\n")
             else:
                 print("Ce joueur existe déjà dans la base des joueurs "
                       "d'échecs.")

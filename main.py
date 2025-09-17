@@ -2,16 +2,19 @@
 import json
 import os
 
+from controllers.application import ApplicationController
 from controllers.match import MatchController
+from controllers.player import PlayerController
+from controllers.round import RoundController
+from controllers.tournament import TournamentController
 # from controllers.round import RoundController
 # from controllers.tournament import TournamentController
-# from controllers.player import PlayerController
 # from controllers.tournament import TournamentController
-# from models.player import Player
 # from models.tournament import Tournament
 from utils.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
                              PATH_DATA_PLAYERS_JSON_FILE)
-from utils.file_utils import (read_file, load_last_tournament)
+from utils.file_utils import (read_file)
+from views.menu import MenuView
 
 
 def initialize():
@@ -32,15 +35,6 @@ def initialize():
 
 def main():
     """Main entry point of the application."""
-    # # Ajout d'un nouveau joueur dans la base JSON
-    # print("Ajouter un nouveau joueur:")
-    # last_name = input("Saisissez son nom de famille: ")
-    # first_name = input("Saisissez son prénom: ")
-    #
-    # # # add player to players
-    # player_controller = PlayerController()
-    # player_controller.add_player(Player(last_name, first_name))
-
     data_players = read_file(PATH_DATA_PLAYERS_JSON_FILE)
     # data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
 
@@ -50,6 +44,18 @@ def main():
               "Veuillez en saisir en utilisant l'option indiquée dans le "
               "menu.")
     else:
+        player_controller = PlayerController()
+        tournament_controller = TournamentController()
+        round_controller = RoundController()
+        match_controller = MatchController()
+        menu = MenuView()
+        application_controller = ApplicationController(player_controller,
+                                                       tournament_controller,
+                                                       round_controller,
+                                                       match_controller,
+                                                       menu)
+        application_controller.run()
+
         # print("Ajouter un nouveau tournoi:")
         # tournament_name = input("Saisissez le nom du tournoi:")
         # tournament_location = input("Saisissez la localisation du tournoi:")
@@ -88,7 +94,8 @@ def main():
         #              # rounds=[round_detail]
         #              )
 
-        last_tournament = load_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        # last_tournament = load_last_tournament(
+        # PATH_DATA_TOURNAMENTS_JSON_FILE)
 
         # generate a round
         # tournament_controller_round = TournamentController()
@@ -102,7 +109,7 @@ def main():
         #                        last_tournament)
 
         # start a round and update data json
-        last_round = last_tournament["rounds"][-1]
+        # last_round = last_tournament["rounds"][-1]
 
         # round_controller = RoundController()
         # round_start = round_controller.start_round()
@@ -122,11 +129,13 @@ def main():
         #                        last_tournament)
 
         # # save score for match
-        match_controller = MatchController()
-        match_controller.save_score(last_tournament, last_round,
-                                    user_match_id="1", score1="1", score2="0")
-        match_controller.save_score(last_tournament, last_round,
-                                    user_match_id="2", score1="1", score2="1")
+        # match_controller = MatchController()
+        # match_controller.save_score(last_tournament, last_round,
+        #                             user_match_id="1", score1="1",
+        #                             score2="0")
+        # match_controller.save_score(last_tournament, last_round,
+        #                             user_match_id="2", score1="1",
+        #                             score2="1")
 
 
 if __name__ == "__main__":
