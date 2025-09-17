@@ -44,7 +44,7 @@ class PlayerController:
                              first_name=player.first_name,)
 
                 print("---------------------------")
-                print("Le nouveau joueur a été enregistré avec succès.\n")
+                print("Le nouveau joueur a été enregistré avec succès.")
             else:
                 print("Ce joueur existe déjà dans la base des joueurs "
                       "d'échecs.")

@@ -5,7 +5,7 @@ from models.round import Round
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
     PATH_DATA_PLAYERS_JSON_FILE
 from utils.date_utils import validate_date, checks_dates
-from utils.file_utils import read_file
+from utils.file_utils import read_file, save_to_json
 
 
 class TournamentController:
@@ -37,18 +37,20 @@ class TournamentController:
             for player in random_players:
                 player["points"] = 0
 
-            return {
-                "tournament_id": tournament_id,
-                "name": tournament_detail.name.upper(),
-                "location": tournament_detail.location.capitalize(),
-                "start_date": str(start_date),
-                "end_date": str(end_date),
-                "description": tournament_detail.description,
-                "number_of_rounds": tournament_detail.number_of_rounds,
-                "round_number": tournament_detail.round_number,
-                "players": random_players
-            }
+            save_to_json("tournaments",
+                         tournament_id=tournament_id,
+                         name=tournament_detail.name.upper(),
+                         location=tournament_detail.location.capitalize(),
+                         start_date=str(start_date),
+                         end_date=str(end_date),
+                         description=tournament_detail.description,
+                         number_of_rounds=tournament_detail.number_of_rounds,
+                         round_number=tournament_detail.round_number,
+                         players=random_players
+                         )
 
+            message = "Le nouveau tournoi a été enregistré avec succès."
+            return print("---------------------------\n" + message)
         else:
             return print("L'enregistrement du tournoi n'a pas abouti. "
                          "Veuillez renouveler votre saisie.")

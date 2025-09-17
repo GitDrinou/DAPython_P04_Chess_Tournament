@@ -56,22 +56,6 @@ def main():
                                                        menu)
         application_controller.run()
 
-        # print("Ajouter un nouveau tournoi:")
-        # tournament_name = input("Saisissez le nom du tournoi:")
-        # tournament_location = input("Saisissez la localisation du tournoi:")
-        # tournament_start_date = input("Saisissez la date de début du
-        # tournoi: ")
-        # tournament_end_date = input("Saisissez la date de fin du tournoi:")
-        # tournament_description = input("Saisissez la description du
-        # tournoi: ")
-        # tournament_number_of_rounds = input("Saisissez le nombre de tours
-        # (si"
-        #                                     "différent des 4 tours minimums "
-        #                                     "par défaut:")
-        # tournament_number_of_players = input(f"Saisissez le nombre de "
-        #                                      f"joueurs inscrits au tournoi ("
-        #                                      f"maximum de {total_players} "
-        #                                      f"joueurs) :")
         #  Add a new tournament
         # tournament_controller = TournamentController()
         # tournament_detail = tournament_controller.add_new_tournament(
