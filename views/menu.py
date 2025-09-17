@@ -15,6 +15,7 @@ class MenuView:
         print("*************************************************")
         print("1. Ajouter un nouveau joueur")
         print("2. Ajouter un nouveau tournoi")
+        print("3. Générer un tour")
         print("*************************************************")
 
     @staticmethod

@@ -58,8 +58,6 @@ class TournamentController:
     @staticmethod
     def generate_round(number_of_rounds, round_number, players):
         """Generate a random tournament round"""
-        match = None
-
         if int(round_number) > int(number_of_rounds):
             return None
 
