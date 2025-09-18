@@ -48,12 +48,12 @@ def main():
         tournament_controller = TournamentController()
         round_controller = RoundController()
         match_controller = MatchController()
-        menu = MenuView()
+        main_menu = MenuView()
         application_controller = ApplicationController(player_controller,
                                                        tournament_controller,
                                                        round_controller,
                                                        match_controller,
-                                                       menu)
+                                                       main_menu)
         application_controller.run()
 
         # start a round and update data json

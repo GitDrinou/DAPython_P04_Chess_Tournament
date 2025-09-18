@@ -19,7 +19,7 @@ class MenuView:
         print("*************************************************")
 
     @staticmethod
-    def prompt_choice():
+    def prompt_main_choice():
         """Prompt the user to select an option"""
         return input("Choisissez une option ou tapez 'Q' pour quitter "
                      "l'application: ")
@@ -64,3 +64,23 @@ class MenuView:
             "number_of_rounds": number_of_rounds,
             "number_of_players": number_of_players
         }
+
+    @staticmethod
+    def show_submenu(theme):
+        """Display the submenu for a specific theme"""
+        if theme == "round":
+            print("GESTION D'UN TOUR:")
+            print("*************************************************")
+            print("1. Démarrer un tour")
+            print("2. Mettre en pause un tour")
+            print("3. Terminer un tour")
+            print("4. Inscrire les scores des matchs du tour")
+            print("*************************************************")
+        else:
+            print("Sous-menu pour les rapports")
+
+    @staticmethod
+    def prompt_round_choice():
+        """Prompt the user to select an option of the round menu"""
+        return input("Choisissez une option ou tapez 'R' pour retourner au "
+                     "menu principal de l'application: ")
