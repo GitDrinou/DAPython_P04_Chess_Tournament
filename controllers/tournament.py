@@ -13,7 +13,7 @@ class TournamentController:
     data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
     data_players = read_file(PATH_DATA_PLAYERS_JSON_FILE)
 
-    def add_new_tournament(self,tournament_detail, number_of_players):
+    def add_new_tournament(self, tournament_detail, number_of_players):
         """Add a new tournament"""
 
         tournaments = self.data_tournaments['tournaments']

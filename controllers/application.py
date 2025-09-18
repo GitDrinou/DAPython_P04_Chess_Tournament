@@ -9,20 +9,20 @@ from utils.file_utils import load_last_tournament
 class ApplicationController:
     """ Application class controller"""
     def __init__(self, player_controller, tournament_controller,
-                 round_controller, match_controller, menu_view):
+                 round_controller, match_controller, menu_view, report_view):
         """ Initialize the application controller """
         self.player_controller = player_controller
         self.tournament_controller = tournament_controller
         self.round_controller = round_controller
         self.match_controller = match_controller
         self.menu_view = menu_view
+        self.report_view = report_view
 
     def run(self):
         """ Main method of the application controller """
 
         self.menu_view.show_menu()
-        user_choice = self.menu_view.prompt_main_choice()
-        # user_round_choice = self.menu_view.prompt_round_choice()
+        user_choice = self.menu_view.prompt_choice()
         last_tournament = load_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE)
 
         # user choice for main menu
@@ -55,16 +55,16 @@ class ApplicationController:
                 last_tournament["players"])
             time.sleep(2)
             self.menu_view.clear_console()
-            # self.menu_view.show_submenu("round")
-            # self.menu_view.prompt_choice()
+            round_choice = self.menu_view.round_prompt()
+            if round_choice == "11":
+                round_detail = self.round_controller.start_round()
+                time.sleep(2)
+                self.menu_view.clear_console()
+                self.report_view.display_round_details(round_detail)
+                self.menu_view.round_prompt()
             # TODO: display the round-detail
             # TODO: display the start and end match menu
         elif user_choice.upper() == "Q":
             print("Au revoir et à bientôt 👋.")
         else:
             print("Votre choix est invalide.")
-
-        # user choice for the round submenu
-        # if user_round_choice == "1":
-        #     self.round_controller.start_round()
-        #     self.menu_view.show_submenu("round")

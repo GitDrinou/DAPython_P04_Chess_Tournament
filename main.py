@@ -15,6 +15,7 @@ from utils.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
                              PATH_DATA_PLAYERS_JSON_FILE)
 from utils.file_utils import (read_file)
 from views.menu import MenuView
+from views.report import ReportView
 
 
 def initialize():
@@ -48,12 +49,13 @@ def main():
         tournament_controller = TournamentController()
         round_controller = RoundController()
         match_controller = MatchController()
-        main_menu = MenuView()
+        main_view = MenuView()
+        report_view = ReportView()
         application_controller = ApplicationController(player_controller,
                                                        tournament_controller,
                                                        round_controller,
                                                        match_controller,
-                                                       main_menu)
+                                                       main_view, report_view)
         application_controller.run()
 
         # start a round and update data json
