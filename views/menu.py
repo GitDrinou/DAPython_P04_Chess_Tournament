@@ -81,15 +81,14 @@ class MenuView:
         return round_choice
 
     @staticmethod
-    def match_prompt():
+    def match_prompt(match_id):
         """Prompt the user to enter the match's scores"""
-        print("\nINSCRIRE LES SCORES DES MATCHS")
-        match_id = input("Saisissez le numéro du match: ")
+        print(f"INSCRIRE LES SCORES DU MATCH N°{match_id}")
+        print("*************************************************")
         score1 = input("Saisissez le score du joueur 1 - Score 1 (0 ou 1): ")
         score2 = input("Saisissez le score du joueur 2 - Score 2 (0 ou 1): ")
 
         return {
-            "match_id": match_id,
             "score1": score1,
             "score2": score2
         }

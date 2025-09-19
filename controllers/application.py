@@ -77,15 +77,15 @@ class ApplicationController:
                         index = 0
                         while index < len(last_round["matchs"]):
                             self.report_view.display_round_details(last_round)
-                            match = self.menu_view.match_prompt()
+                            match_id = index + 1
+                            match = self.menu_view.match_prompt(match_id)
                             self.match_controller.save_score(
                                 last_tournament,
-                                user_match_id=match["match_id"],
+                                user_match_id=match_id,
                                 score1=match["score1"],
                                 score2=match["score2"])
                             self.menu_view.clear_console()
                             index += 1
-                        time.sleep(2)
                         self.menu_view.clear_console()
                         self.report_view.display_round_details(last_round)
                     elif round_choice == "15":

@@ -58,15 +58,6 @@ def main():
                                                        main_view, report_view)
         application_controller.run()
 
-        # # save score for match
-        # match_controller = MatchController()
-        # match_controller.save_score(last_tournament, last_round,
-        #                             user_match_id="1", score1="1",
-        #                             score2="0")
-        # match_controller.save_score(last_tournament, last_round,
-        #                             user_match_id="2", score1="1",
-        #                             score2="1")
-
 
 if __name__ == "__main__":
     initialize()
