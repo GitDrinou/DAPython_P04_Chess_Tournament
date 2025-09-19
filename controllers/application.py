@@ -69,7 +69,6 @@ class ApplicationController:
                         time.sleep(2)
                         self.menu_view.clear_console()
                         self.report_view.display_round_details(round_detail)
-                    elif round_choice == "14":
                         self.menu_view.clear_console()
                         last_tournament = load_last_tournament(
                             PATH_DATA_TOURNAMENTS_JSON_FILE)
