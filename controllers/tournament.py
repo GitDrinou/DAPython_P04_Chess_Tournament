@@ -100,4 +100,4 @@ class TournamentController:
                                last_tournament["tournament_id"],
                                last_tournament)
 
-        return print("Le round a été généré et enregistré avec succès.")
+        return print("Le tour a été généré et enregistré avec succès.")
