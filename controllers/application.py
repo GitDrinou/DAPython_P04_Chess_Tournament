@@ -69,6 +69,25 @@ class ApplicationController:
                         time.sleep(2)
                         self.menu_view.clear_console()
                         self.report_view.display_round_details(round_detail)
+                    elif round_choice == "14":
+                        self.menu_view.clear_console()
+                        last_tournament = load_last_tournament(
+                            PATH_DATA_TOURNAMENTS_JSON_FILE)
+                        last_round = last_tournament["rounds"][-1]
+                        index = 0
+                        while index < len(last_round["matchs"]):
+                            self.report_view.display_round_details(last_round)
+                            match = self.menu_view.match_prompt()
+                            self.match_controller.save_score(
+                                last_tournament,
+                                user_match_id=match["match_id"],
+                                score1=match["score1"],
+                                score2=match["score2"])
+                            self.menu_view.clear_console()
+                            index += 1
+                        time.sleep(2)
+                        self.menu_view.clear_console()
+                        self.report_view.display_round_details(last_round)
                     elif round_choice == "15":
                         self.menu_view.clear_console()
                         break
