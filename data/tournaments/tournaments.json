@@ -14,42 +14,42 @@
                     "national_id": "Y66674",
                     "last_name": "MORGAN",
                     "first_name": "John",
-                    "points": 0
+                    "points": 0.5
                 },
                 {
                     "national_id": "B67890",
                     "last_name": "SMITH",
                     "first_name": "Luke",
-                    "points": 0
+                    "points": 0.5
                 },
                 {
                     "national_id": "L00032",
                     "last_name": "WALKER",
                     "first_name": "Paula",
-                    "points": 0
+                    "points": 0.5
                 },
                 {
                     "national_id": "L98524",
                     "last_name": "JOHN",
                     "first_name": "Anna",
-                    "points": 0
+                    "points": 0.5
                 }
             ],
             "rounds": [
                 {
                     "name": "Round 1",
-                    "round_start_date": "19-09-2025 15:05:28",
-                    "round_end_date": "19-09-2025 15:05:33",
+                    "round_start_date": "19-09-2025 17:04:21",
+                    "round_end_date": "19-09-2025 17:04:28",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "Y66674",
-                                    "0"
+                                    "L98524",
+                                    "1"
                                 ],
                                 [
-                                    "L98524",
+                                    "Y66674",
                                     "1"
                                 ]
                             ]

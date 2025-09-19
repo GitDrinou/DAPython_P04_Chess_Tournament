@@ -85,8 +85,9 @@ class ApplicationController:
                                 score2=match["score2"])
                             self.menu_view.clear_console()
                             index += 1
+                        self.tournament_controller.update_player_points()
+                        time.sleep(2)
                         self.menu_view.clear_console()
-                        self.report_view.display_round_details(last_round)
                     elif round_choice == "15":
                         self.menu_view.clear_console()
                         break

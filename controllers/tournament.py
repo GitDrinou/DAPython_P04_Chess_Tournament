@@ -101,3 +101,40 @@ class TournamentController:
                                last_tournament)
 
         return print("Le tour a été généré et enregistré avec succès.")
+
+    @staticmethod
+    def update_player_points():
+        """Update player's points"""
+        data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        last_tournament = data["tournaments"][-1]
+        players = {player["national_id"]: player for player in
+                   last_tournament["players"]}
+
+        for round_detail in last_tournament["rounds"]:
+            for match_detail in round_detail["matchs"]:
+                player1_id, player1_score = match_detail["match"][0]
+                player2_id, player2_score = match_detail["match"][1]
+                player1_score = float(player1_score)
+                player2_score = float(player2_score)
+
+                # Points conditions (win = 1, lose = 0, draw = 0,5)
+                if player1_score == player2_score:
+                    players[player1_id]["points"] += 0.5
+                    players[player2_id]["points"] += 0.5
+                else:
+                    if player1_score > player2_score:
+                        players[player1_id]["points"] += 1
+                    else:
+                        players[player2_id]["points"] += 1
+
+        # save update to json file
+        for player in last_tournament["players"]:
+            if player["national_id"] == players[player["national_id"]][
+                            "national_id"]:
+                player["points"] = players[player["national_id"]]["points"]
+
+        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                               last_tournament["tournament_id"],
+                               last_tournament)
+
+        return print("Les points ont été mis à jour.\n")
