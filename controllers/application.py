@@ -21,10 +21,9 @@ class ApplicationController:
     def run(self):
         """ Main method of the application controller """
         while True:
+            self.menu_view.clear_console()
             self.menu_view.show_menu()
             user_choice = self.menu_view.prompt_choice()
-            last_tournament = load_last_tournament(
-                PATH_DATA_TOURNAMENTS_JSON_FILE)
 
             # user choice for main menu
             if user_choice == "1":
@@ -50,8 +49,15 @@ class ApplicationController:
                 self.menu_view.clear_console()
             elif user_choice == "3":
                 self.menu_view.clear_console()
+                last_tournament = load_last_tournament(
+                    PATH_DATA_TOURNAMENTS_JSON_FILE)
+                last_round = last_tournament["rounds"]
+                if len(last_round) == 0:
+                    round_number = 0
+                else:
+                    round_number = len(last_round)
                 self.tournament_controller.generate_round(
-                    last_tournament["number_of_rounds"], 0,
+                    last_tournament["number_of_rounds"], round_number,
                     last_tournament["players"])
                 time.sleep(2)
                 self.menu_view.clear_console()
@@ -85,9 +91,10 @@ class ApplicationController:
                                 score2=match["score2"])
                             self.menu_view.clear_console()
                             index += 1
-                        self.tournament_controller.update_player_points()
+                        # self.tournament_controller.update_player_points()
                         time.sleep(2)
                         self.menu_view.clear_console()
+                        break
                     elif round_choice == "15":
                         self.menu_view.clear_console()
                         break

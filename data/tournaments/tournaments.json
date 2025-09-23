@@ -8,68 +8,34 @@
             "end_date": "2025-09-22 00:00:00",
             "description": "ouverture des portes \u00e0 8h00. Le tournoi d\u00e9marrera \u00e0 10h.",
             "number_of_rounds": "4",
-            "round_number": "1",
+            "round_number": "2",
             "players": [
                 {
                     "national_id": "Y66674",
                     "last_name": "MORGAN",
                     "first_name": "John",
-                    "points": 0.5
+                    "points": 0.0
                 },
                 {
                     "national_id": "B67890",
                     "last_name": "SMITH",
                     "first_name": "Luke",
-                    "points": 0.5
+                    "points": 0.0
                 },
                 {
                     "national_id": "L00032",
                     "last_name": "WALKER",
                     "first_name": "Paula",
-                    "points": 0.5
+                    "points": 0.0
                 },
                 {
                     "national_id": "L98524",
                     "last_name": "JOHN",
                     "first_name": "Anna",
-                    "points": 0.5
+                    "points": 0.0
                 }
             ],
-            "rounds": [
-                {
-                    "name": "Round 1",
-                    "round_start_date": "19-09-2025 17:04:21",
-                    "round_end_date": "19-09-2025 17:04:28",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "L98524",
-                                    "1"
-                                ],
-                                [
-                                    "Y66674",
-                                    "1"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "B67890",
-                                    "1"
-                                ],
-                                [
-                                    "L00032",
-                                    "1"
-                                ]
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "rounds": []
         }
     ]
 }

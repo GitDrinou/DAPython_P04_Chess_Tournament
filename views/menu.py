@@ -11,13 +11,15 @@ class MenuView:
     @staticmethod
     def show_menu():
         """Display the menu for the user"""
-        print("Menu de l'application:")
-        print("*************************************************")
+        print("G E S T I O N N A I R E   D E   T O U R N O I S   D ' É C H "
+              "E C S\n")
+        print("Menu principal:")
+        print("=====================================================")
         print("1. Ajouter un nouveau joueur")
         print("2. Ajouter un nouveau tournoi")
         print("3. Générer un tour")
         print("Q. Quitter l'application")
-        print("*************************************************")
+        print("=====================================================")
 
     @staticmethod
     def prompt_choice():

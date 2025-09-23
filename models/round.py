@@ -1,12 +1,13 @@
 class Round:
     """Round class"""
-    def __init__(self, name):
+    def __init__(self, round_id, name):
         """Initialise player with:
+            round_id,
             name,
             start_date,
             end_date
         """
-
+        self.round_id = round_id
         self.name = name
         self.start_date = ""
         self.end_date = ""
@@ -14,6 +15,7 @@ class Round:
 
     def to_dict(self):
         return {
+            "round_id": self.round_id,
             "name": self.name,
             "start_date": self.start_date,
             "end_date": self.end_date,

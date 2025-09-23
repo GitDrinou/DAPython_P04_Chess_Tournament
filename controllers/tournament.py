@@ -33,7 +33,7 @@ class TournamentController:
             random_players = random.sample(self.data_players["players"],
                                            int(number_of_players))
             for player in random_players:
-                player["points"] = 0
+                player["points"] = 0.0
 
             save_to_json("tournaments",
                          tournament_id=tournament_id,
@@ -56,16 +56,17 @@ class TournamentController:
     def generate_round(self, number_of_rounds, round_number, players):
         """Generate a random tournament round"""
         if int(round_number) > int(number_of_rounds):
-            return None
+            return print("Vous avez atteint le nombre de tours du tournoi.")
 
         round_number += 1
         round_name = "Round {}".format(round_number)
-        round_detail = Round(round_name)
+        round_detail = Round(round_number, round_name)
 
         if round_number == 1:
             random.shuffle(players)
         else:
             players.sort(key=lambda player: player["points"], reverse=True)
+
         id_match = 1
         data_round = {}
         for i in range(0, len(players), 2):
@@ -77,7 +78,8 @@ class TournamentController:
                 "national_id": players[i+1]["national_id"],
                 "points": players[i+1]["points"]
             }
-            match = Match(id_match, player1=player1["national_id"],
+            match = Match(round_number, id_match, player1=player1[
+                "national_id"],
                           score1=player1[
                 "points"], player2=player2["national_id"],
                           score2=player2["points"]).to_dict()
@@ -137,4 +139,5 @@ class TournamentController:
                                last_tournament["tournament_id"],
                                last_tournament)
 
-        return print("Les points ont été mis à jour.\n")
+        return print("Les points ont été mis à jour.\nVous allez être "
+                     "redirigé vers le menu principal.")
