@@ -3,18 +3,18 @@
         {
             "tournament_id": 1,
             "name": "LE TOURNOI DE LA BELLE \u00c9TOILE",
-            "location": "Salle des festivit\u00e9s de l'\u00e9toile de la mort",
+            "location": "Salle des f\u00eates de l'\u00e9toile de la mort",
             "start_date": "2025-09-22 00:00:00",
             "end_date": "2025-09-22 00:00:00",
-            "description": "ouverture des portes \u00e0 8h00. Le tournoi d\u00e9marrera \u00e0 10h.",
+            "description": "ouverture des portes \u00e0 8h00.",
             "number_of_rounds": "4",
             "round_number": "2",
             "players": [
                 {
-                    "national_id": "Y66674",
-                    "last_name": "MORGAN",
-                    "first_name": "John",
-                    "points": 0.0
+                    "national_id": "L00032",
+                    "last_name": "WALKER",
+                    "first_name": "Paula",
+                    "points": 2.0
                 },
                 {
                     "national_id": "B67890",
@@ -23,19 +23,88 @@
                     "points": 0.0
                 },
                 {
-                    "national_id": "L00032",
-                    "last_name": "WALKER",
-                    "first_name": "Paula",
-                    "points": 0.0
+                    "national_id": "M00004",
+                    "last_name": "THOMAS",
+                    "first_name": "Paul",
+                    "points": 1.0
                 },
                 {
-                    "national_id": "L98524",
-                    "last_name": "JOHN",
-                    "first_name": "Anna",
-                    "points": 0.0
+                    "national_id": "P19319",
+                    "last_name": "SMITH",
+                    "first_name": "Sam",
+                    "points": 3.0
                 }
             ],
-            "rounds": []
+            "rounds": [
+                {
+                    "round_id": 1,
+                    "name": "Round 1",
+                    "round_start_date": "23-09-2025 16:17:02",
+                    "round_end_date": "23-09-2025 16:17:07",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "P19319",
+                                    "1"
+                                ],
+                                [
+                                    "M00004",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "L00032",
+                                    "1"
+                                ],
+                                [
+                                    "B67890",
+                                    "0"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 2,
+                    "name": "Round 2",
+                    "round_start_date": "23-09-2025 16:24:17",
+                    "round_end_date": "23-09-2025 16:24:23",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "L00032",
+                                    "0"
+                                ],
+                                [
+                                    "P19319",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "B67890",
+                                    "0"
+                                ],
+                                [
+                                    "M00004",
+                                    "1"
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

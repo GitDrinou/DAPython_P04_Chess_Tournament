@@ -10,13 +10,13 @@ from utils.file_utils import read_file, save_to_json, update_last_tournament
 
 class TournamentController:
     """Tournament controller class"""
-    data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-    data_players = read_file(PATH_DATA_PLAYERS_JSON_FILE)
 
-    def add_new_tournament(self, tournament_detail, number_of_players):
+    @staticmethod
+    def add_new_tournament(tournament_detail, number_of_players):
         """Add a new tournament"""
-
-        tournaments = self.data_tournaments['tournaments']
+        data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        data_players = read_file(PATH_DATA_PLAYERS_JSON_FILE)
+        tournaments = data_tournaments['tournaments']
         tournament_id = max(1, len(tournaments) + 1)
 
         # check if the number of rounds is empty or under de default number
@@ -30,7 +30,7 @@ class TournamentController:
         if (start_date and end_date) and checks_dates(start_date, end_date):
 
             # randomize players from data with default points to 0
-            random_players = random.sample(self.data_players["players"],
+            random_players = random.sample(data_players["players"],
                                            int(number_of_players))
             for player in random_players:
                 player["points"] = 0.0
@@ -47,14 +47,17 @@ class TournamentController:
                          players=random_players
                          )
 
-            message = "Le nouveau tournoi a été enregistré avec succès."
+            message = ("Le nouveau tournoi a été enregistré avec succès.\n"
+                       "Vous pouvez à présent générer le premier tour.")
             return print("---------------------------\n" + message)
         else:
             return print("L'enregistrement du tournoi n'a pas abouti. "
                          "Veuillez renouveler votre saisie.")
 
-    def generate_round(self, number_of_rounds, round_number, players):
+    @staticmethod
+    def generate_round(number_of_rounds, round_number, players):
         """Generate a random tournament round"""
+        data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         if int(round_number) > int(number_of_rounds):
             return print("Vous avez atteint le nombre de tours du tournoi.")
 
@@ -68,33 +71,30 @@ class TournamentController:
             players.sort(key=lambda player: player["points"], reverse=True)
 
         id_match = 1
-        data_round = {}
+        # data_round = {}
         for i in range(0, len(players), 2):
             player1 = {
-                "national_id": players[i]["national_id"],
-                "points": players[i + 1]["points"]
+                "national_id": players[i]["national_id"]
             }
             player2 = {
-                "national_id": players[i+1]["national_id"],
-                "points": players[i+1]["points"]
+                "national_id": players[i+1]["national_id"]
             }
-            match = Match(round_number, id_match, player1=player1[
-                "national_id"],
-                          score1=player1[
-                "points"], player2=player2["national_id"],
-                          score2=player2["points"]).to_dict()
+            match = Match(id_match, player1=player1["national_id"],
+                          score1=0.0, player2=player2["national_id"],
+                          score2=0.0).to_dict()
 
             id_match += 1
             round_detail.matches.append(match)
 
-            data_round = {
-                "name": round_name,
-                "round_start_date": str(round_detail.start_date),
-                "round_end_date": str(round_detail.end_date),
-                "matchs": round_detail.matches
-            }
+        data_round = {
+            "round_id": round_number,
+            "name": round_name,
+            "round_start_date": str(round_detail.start_date),
+            "round_end_date": str(round_detail.end_date),
+            "matchs": round_detail.matches
+        }
 
-        last_tournament = self.data_tournaments["tournaments"][-1]
+        last_tournament = data_tournaments["tournaments"][-1]
         last_tournament["rounds"].append(data_round)
 
         # save round to JSON file

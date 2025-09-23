@@ -86,12 +86,13 @@ class ApplicationController:
                             match = self.menu_view.match_prompt(match_id)
                             self.match_controller.save_score(
                                 last_tournament,
+                                last_round["round_id"],
                                 user_match_id=match_id,
                                 score1=match["score1"],
                                 score2=match["score2"])
                             self.menu_view.clear_console()
                             index += 1
-                        # self.tournament_controller.update_player_points()
+                        self.tournament_controller.update_player_points()
                         time.sleep(2)
                         self.menu_view.clear_console()
                         break
