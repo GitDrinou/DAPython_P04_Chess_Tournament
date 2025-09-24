@@ -27,12 +27,6 @@ class TournamentController:
 
         if (start_date and end_date) and checks_dates(start_date, end_date):
 
-            # # randomize players from data with default points to 0
-            # random_players = random.sample(data_players["players"],
-            #                                int(number_of_players))
-            # for player in random_players:
-            #     player["points"] = 0.0
-
             save_to_json("tournaments",
                          tournament_id=tournament_id,
                          name=tournament_detail.name.upper(),
@@ -141,4 +135,21 @@ class TournamentController:
                                last_tournament)
 
         return print("Les points ont été mis à jour.\nVous allez être "
-                     "redirigé vers le menu principal.")
+                     "redirigé vers le menu de gestion du tournoi.")
+
+    @staticmethod
+    def break_tournament(tournament_id):
+        """Make a break  for a tournament"""
+        data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        last_tournament = data["tournaments"][-1]
+        if last_tournament["tournament_id"] == tournament_id:
+            last_tournament["is_on_break"] = not last_tournament["is_on_break"]
+
+        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                               tournament_id, last_tournament)
+
+        if last_tournament["is_on_break"]:
+            return print("\nLe tournoi est en pause.\nVous allez être "
+                         "redirigé vers le menu principal de l'application.")
+        else:
+            return None

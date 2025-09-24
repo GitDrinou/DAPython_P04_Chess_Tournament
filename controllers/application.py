@@ -39,6 +39,10 @@ class ApplicationController:
                 self.menu_view.clear_console()
             elif user_choice == "2":
                 self.menu_view.clear_console()
+                last_tournament = load_last_tournament(
+                    PATH_DATA_TOURNAMENTS_JSON_FILE)
+                self.tournament_controller.break_tournament(
+                    last_tournament["tournament_id"])
                 while True:
                     tournament_choice = self.menu_view.tournament_menu_prompt()
                     if tournament_choice == "1":
@@ -51,7 +55,11 @@ class ApplicationController:
                         time.sleep(2)
                         self.menu_view.clear_console()
                     elif tournament_choice == "2":
-                        print("B")
+                        self.menu_view.clear_console()
+                        last_tournament = load_last_tournament(
+                            PATH_DATA_TOURNAMENTS_JSON_FILE)
+                        self.tournament_controller.break_tournament(
+                            last_tournament["tournament_id"])
                         time.sleep(2)
                         self.menu_view.clear_console()
                     elif tournament_choice == "3":
@@ -133,7 +141,12 @@ class ApplicationController:
                                         self.menu_view.clear_console()
                                         break
                     elif tournament_choice == "4":
-                        # TODO ajout d'un booléen dans le fichier json
+                        self.menu_view.clear_console()
+                        last_tournament = load_last_tournament(
+                            PATH_DATA_TOURNAMENTS_JSON_FILE)
+                        self.tournament_controller.break_tournament(
+                            last_tournament["tournament_id"])
+                        time.sleep(2)
                         self.menu_view.clear_console()
                         break
                     elif tournament_choice == "R":

@@ -6,32 +6,33 @@
             "location": "Salle des f\u00eates de l'\u00e9toile de la mort",
             "start_date": "2025-09-29 00:00:00",
             "end_date": "2025-09-29 00:00:00",
-            "description": "ouverture des portes \u00e0 8h00.",
+            "description": "Ouverture des portes \u00e0 8h00.",
             "number_of_rounds": "4",
             "round_number": "2",
+            "is_on_break": false,
             "players": [
-                {
-                    "national_id": "A45872",
-                    "last_name": "BROWN",
-                    "first_name": "Andy",
-                    "points": 1.0
-                },
-                {
-                    "national_id": "M00004",
-                    "last_name": "THOMAS",
-                    "first_name": "Paul",
-                    "points": 0.0
-                },
-                {
-                    "national_id": "S94503",
-                    "last_name": "MARY",
-                    "first_name": "Bianca",
-                    "points": 2.0
-                },
                 {
                     "national_id": "L00032",
                     "last_name": "WALKER",
                     "first_name": "Paula",
+                    "points": 1.0
+                },
+                {
+                    "national_id": "Y66674",
+                    "last_name": "MORGAN",
+                    "first_name": "John",
+                    "points": 2.0
+                },
+                {
+                    "national_id": "J55987",
+                    "last_name": "SKYWALKER",
+                    "first_name": "Luke",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "A67890",
+                    "last_name": "DOE",
+                    "first_name": "Jane",
                     "points": 1.0
                 }
             ],
@@ -39,18 +40,18 @@
                 {
                     "round_id": 1,
                     "name": "Round 1",
-                    "round_start_date": "24-09-2025 13:39:47",
-                    "round_end_date": "24-09-2025 13:39:56",
+                    "round_start_date": "24-09-2025 16:36:35",
+                    "round_end_date": "24-09-2025 16:36:41",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "L00032",
+                                    "A67890",
                                     "1"
                                 ],
                                 [
-                                    "M00004",
+                                    "J55987",
                                     "0"
                                 ]
                             ]
@@ -59,11 +60,11 @@
                             "match_id": 2,
                             "match": [
                                 [
-                                    "S94503",
+                                    "Y66674",
                                     "1"
                                 ],
                                 [
-                                    "A45872",
+                                    "L00032",
                                     "0"
                                 ]
                             ]
@@ -73,18 +74,18 @@
                 {
                     "round_id": 2,
                     "name": "Round 2",
-                    "round_start_date": "24-09-2025 14:21:47",
-                    "round_end_date": "24-09-2025 14:21:51",
+                    "round_start_date": "24-09-2025 16:39:25",
+                    "round_end_date": "24-09-2025 16:39:29",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "S94503",
+                                    "Y66674",
                                     "1"
                                 ],
                                 [
-                                    "L00032",
+                                    "A67890",
                                     "0"
                                 ]
                             ]
@@ -93,11 +94,11 @@
                             "match_id": 2,
                             "match": [
                                 [
-                                    "A45872",
+                                    "L00032",
                                     "1"
                                 ],
                                 [
-                                    "M00004",
+                                    "J55987",
                                     "0"
                                 ]
                             ]
