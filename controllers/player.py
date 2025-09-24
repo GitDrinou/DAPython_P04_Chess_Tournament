@@ -1,10 +1,9 @@
 import json
-import random
 import re
-import string
 
-from utils.constants import PATH_DATA_PLAYERS_JSON_FILE
-from utils.file_utils import save_to_json
+from utils.constants import PATH_DATA_PLAYERS_JSON_FILE, \
+    PATH_DATA_TOURNAMENTS_JSON_FILE
+from utils.file_utils import save_to_json, update_last_tournament, read_file
 
 
 class PlayerController:
@@ -31,23 +30,30 @@ class PlayerController:
     def add_player(self, player):
         """Add a player to the tournament"""
 
-        # automatic creation of the national identifiant
-        letter = random.choice(string.ascii_uppercase)
-        numbers = ''.join(random.choices(string.digits, k=5))
-        national_id = letter + numbers
-        if self.check_format_national_id(national_id) is not None:
-            if not self.check_player_is_exist(national_id):
+        if self.check_format_national_id(player.national_id) is not None:
+            # save round to JSON file
+            data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+            last_tournament = data_tournaments["tournaments"][-1]
+            last_tournament["players"].append({
+                "national_id": player.national_id.capitalize(),
+                "last_name": player.last_name.upper(),
+                "first_name": player.first_name.capitalize(),
+                "points": 0.0
+            })
 
+            update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                   last_tournament["tournament_id"],
+                                   last_tournament)
+
+            if not self.check_player_is_exist(player.national_id):
                 save_to_json("players",
-                             national_id=national_id,
-                             last_name=player.last_name,
-                             first_name=player.first_name,)
+                             national_id=player.national_id.capitalize(),
+                             last_name=player.last_name.upper(),
+                             first_name=player.first_name.capitalize())
 
-                print("---------------------------")
-                print("Le nouveau joueur a été enregistré avec succès.")
-            else:
-                print("Ce joueur existe déjà dans la base des joueurs "
-                      "d'échecs.")
+            print("=====================================================")
+            print("\nLe joueur a été inscrit au tournoi avec succès.")
+
         else:
             print("Le format de l'identitifant national est "
                   "incorrect.\nFormat attendu : 1 lettre + 5 chiffres")

@@ -1,29 +1,22 @@
 import os
 
-from utils.constants import PATH_DATA_PLAYERS_JSON_FILE, \
-    PATH_DATA_TOURNAMENTS_JSON_FILE
+from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.file_utils import read_file
 
 
 class MenuView:
     """Menu View class"""
-    data_players = read_file(PATH_DATA_PLAYERS_JSON_FILE)
 
     @staticmethod
     def show_menu():
         """Display the menu for the user"""
-        data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        last_tournament = data_tournaments["tournaments"][-1]
-        current_round_number = last_tournament["round_number"]
-        number_pf_rounds = last_tournament["number_of_rounds"]
         print("G E S T I O N N A I R E   D E   T O U R N O I S   D ' É C H "
               "E C S\n")
         print("Menu principal:")
         print("=====================================================")
-        print("1. Ajouter un nouveau joueur")
-        print("2. Ajouter un nouveau tournoi")
-        print(f"3. Générer un tour (tour {current_round_number}"
-              f"/{number_pf_rounds})")
+        print("1. Créer un nouveau tournoi")
+        print("2. Démarrer ou continuer la gestion du nouveau tournoi")
+        print("3. Rapports")
         print("Q. Quitter l'application")
         print("=====================================================")
 
@@ -40,17 +33,19 @@ class MenuView:
     @staticmethod
     def player_prompt():
         """Prompt the user to enter player's lastname and firstname"""
-        print("\nAJOUTER UN NOUVEAU JOUEUR")
-        print("----------------------------")
+        print("\nINSCRIPTION DE JOUEURS")
+        print("=====================================================")
         lastname = input("Saisissez le nom de famille du joueur: ")
         firstname = input("Saisissez le prénom du joueur: ")
-        return {"lastname": lastname, "firstname": firstname}
+        national_id = input("Saisissez l'identifiant national du joueur: ")
+        return {"national_id": national_id, "lastname": lastname,
+                "firstname": firstname}
 
-    def tournament_prompt(self):
+    @staticmethod
+    def new_tournament_prompt():
         """Prompt the user to enter tournament's details"""
-        total_players = len(self.data_players["players"])
-        print("\nAJOUTER UN NOUVEAU TOURNOI")
-        print("----------------------------")
+        print("\nCREATION D'UN NOUVEAU TOURNOI")
+        print("=====================================================")
         name = input("Saisissez le nom du tournoi: ")
         location = input("Saisissez la localisation du tournoi: ")
         start_date = input("Saisissez la date de début du tournoi (format "
@@ -60,28 +55,44 @@ class MenuView:
         description = input("Saisissez une description du tournoi: ")
         number_of_rounds = input("Saisissez le nombre de tours (par défaut: "
                                  "4): ")
-        number_of_players = input(f"Saisissez le nombre de joueurs inscrits "
-                                  f"au tournoi (maximum de {total_players} "
-                                  f"joueurs) : ")
+
         return {
             "name": name,
             "location": location,
             "start_date": start_date,
             "end_date": end_date,
             "description": description,
-            "number_of_rounds": number_of_rounds,
-            "number_of_players": number_of_players
+            "number_of_rounds": number_of_rounds
         }
+
+    @staticmethod
+    def tournament_menu_prompt():
+        """Display the submenu for the current tournament"""
+        data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        last_tournament = data_tournaments["tournaments"][-1]
+        current_round_number = last_tournament["round_number"]
+        number_pf_rounds = last_tournament["number_of_rounds"]
+        print("\nGESTION DU TOURNOI")
+        print("=====================================================")
+        print("1. Inscrire des joueurs au tournoi")
+        print("2. Supprimer un joueur du tournoi")
+        print(f"3. Générer un tour (tour {current_round_number}"
+              f"/{number_pf_rounds})")
+        print("4. Mettre en pause le tournoi")
+        print("R. Revenir au menu principal de l'application")
+        print("=====================================================")
+        tournament_choice = input("Choisissez une option: ")
+
+        return tournament_choice
 
     @staticmethod
     def round_prompt():
         """Display the submenu for a specific theme"""
-        print("GESTION D'UN TOUR:")
+        print("\nGESTION D'UN TOUR:")
         print("*************************************************")
-        print("11. Démarrer le tour")
-        print("12. Mettre en pause le tour")
-        print("13. Terminer le tour")
-        print("15. Revenir au menu principal de l'application")
+        print("1. Démarrer le tour")
+        print("2. Terminer le tour")
+        print("R. Revenir au menu principal de l'application")
         print("*************************************************")
         round_choice = input("Choisissez une option: ")
 

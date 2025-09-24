@@ -4,49 +4,49 @@
             "tournament_id": 1,
             "name": "LE TOURNOI DE LA BELLE \u00c9TOILE",
             "location": "Salle des f\u00eates de l'\u00e9toile de la mort",
-            "start_date": "2025-09-22 00:00:00",
-            "end_date": "2025-09-22 00:00:00",
+            "start_date": "2025-09-29 00:00:00",
+            "end_date": "2025-09-29 00:00:00",
             "description": "ouverture des portes \u00e0 8h00.",
             "number_of_rounds": "4",
-            "round_number": "4",
+            "round_number": "2",
             "players": [
                 {
-                    "national_id": "L00032",
-                    "last_name": "WALKER",
-                    "first_name": "Paula",
-                    "points": 2.0
-                },
-                {
-                    "national_id": "B67890",
-                    "last_name": "SMITH",
-                    "first_name": "Luke",
-                    "points": 2.0
+                    "national_id": "A45872",
+                    "last_name": "BROWN",
+                    "first_name": "Andy",
+                    "points": 1.0
                 },
                 {
                     "national_id": "M00004",
                     "last_name": "THOMAS",
                     "first_name": "Paul",
-                    "points": 1.0
+                    "points": 0.0
                 },
                 {
-                    "national_id": "P19319",
-                    "last_name": "SMITH",
-                    "first_name": "Sam",
-                    "points": 3.0
+                    "national_id": "S94503",
+                    "last_name": "MARY",
+                    "first_name": "Bianca",
+                    "points": 2.0
+                },
+                {
+                    "national_id": "L00032",
+                    "last_name": "WALKER",
+                    "first_name": "Paula",
+                    "points": 1.0
                 }
             ],
             "rounds": [
                 {
                     "round_id": 1,
                     "name": "Round 1",
-                    "round_start_date": "24-09-2025 09:12:48",
-                    "round_end_date": "24-09-2025 09:12:53",
+                    "round_start_date": "24-09-2025 13:39:47",
+                    "round_end_date": "24-09-2025 13:39:56",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "P19319",
+                                    "L00032",
                                     "1"
                                 ],
                                 [
@@ -59,12 +59,12 @@
                             "match_id": 2,
                             "match": [
                                 [
-                                    "B67890",
+                                    "S94503",
                                     "1"
                                 ],
                                 [
-                                    "L00032",
-                                    "1"
+                                    "A45872",
+                                    "0"
                                 ]
                             ]
                         }
@@ -73,14 +73,14 @@
                 {
                     "round_id": 2,
                     "name": "Round 2",
-                    "round_start_date": "24-09-2025 09:13:32",
-                    "round_end_date": "24-09-2025 09:13:39",
+                    "round_start_date": "24-09-2025 14:21:47",
+                    "round_end_date": "24-09-2025 14:21:51",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "P19319",
+                                    "S94503",
                                     "1"
                                 ],
                                 [
@@ -93,76 +93,8 @@
                             "match_id": 2,
                             "match": [
                                 [
-                                    "B67890",
+                                    "A45872",
                                     "1"
-                                ],
-                                [
-                                    "M00004",
-                                    "1"
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "round_id": 3,
-                    "name": "Round 3",
-                    "round_start_date": "24-09-2025 09:23:59",
-                    "round_end_date": "24-09-2025 09:24:10",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "P19319",
-                                    "0"
-                                ],
-                                [
-                                    "B67890",
-                                    "1"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "L00032",
-                                    "1"
-                                ],
-                                [
-                                    "M00004",
-                                    "0"
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "round_id": 4,
-                    "name": "Round 4",
-                    "round_start_date": "24-09-2025 09:24:49",
-                    "round_end_date": "24-09-2025 09:24:53",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "B67890",
-                                    "0"
-                                ],
-                                [
-                                    "P19319",
-                                    "1"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "L00032",
-                                    "0"
                                 ],
                                 [
                                     "M00004",

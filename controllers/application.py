@@ -28,82 +28,117 @@ class ApplicationController:
             # user choice for main menu
             if user_choice == "1":
                 self.menu_view.clear_console()
-                player = self.menu_view.player_prompt()
-                self.player_controller.add_player(Player(player["lastname"],
-                                                  player["firstname"]))
-                time.sleep(2)
-                self.menu_view.clear_console()
-            elif user_choice == "2":
-                self.menu_view.clear_console()
-                tournament = self.menu_view.tournament_prompt()
+                tournament = self.menu_view.new_tournament_prompt()
                 self.tournament_controller.add_new_tournament(
                     Tournament(tournament["name"], tournament["location"],
                                tournament["start_date"],
                                tournament["end_date"],
                                tournament["description"],
-                               tournament["number_of_rounds"],
-                               tournament["number_of_players"]),
-                    tournament["number_of_players"]
-                )
+                               tournament["number_of_rounds"]))
                 time.sleep(2)
                 self.menu_view.clear_console()
-            elif user_choice == "3":
+            elif user_choice == "2":
                 self.menu_view.clear_console()
-                last_tournament = load_last_tournament(
-                    PATH_DATA_TOURNAMENTS_JSON_FILE)
-                last_round = last_tournament["rounds"]
-                if len(last_round) == 0:
-                    round_number = 0
-                else:
-                    round_number = len(last_round)
-                self.tournament_controller.generate_round(
-                    last_tournament["number_of_rounds"], round_number,
-                    last_tournament["players"])
-                time.sleep(2)
-                self.menu_view.clear_console()
-                if int(last_tournament["number_of_rounds"]) > round_number:
-                    while True:
-                        round_choice = self.menu_view.round_prompt()
-                        if round_choice == "11":
-                            self.menu_view.clear_console()
-                            round_detail = self.round_controller.start_round()
+                while True:
+                    tournament_choice = self.menu_view.tournament_menu_prompt()
+                    if tournament_choice == "1":
+                        self.menu_view.clear_console()
+                        player = self.menu_view.player_prompt()
+                        self.player_controller.add_player(
+                            Player(player["national_id"],
+                                   player["lastname"],
+                                   player["firstname"]))
+                        time.sleep(2)
+                        self.menu_view.clear_console()
+                    elif tournament_choice == "2":
+                        print("B")
+                        time.sleep(2)
+                        self.menu_view.clear_console()
+                    elif tournament_choice == "3":
+                        self.menu_view.clear_console()
+                        last_tournament = load_last_tournament(
+                            PATH_DATA_TOURNAMENTS_JSON_FILE)
+                        last_round = last_tournament["rounds"]
+                        if len(last_tournament["players"]) < 4:
+                            print("..........................................")
+                            print("Vous n'avez pas assez de joueurs inscrits "
+                                  "pour pouvoir générer un tour.\nVeuillez "
+                                  "continuer à inscrire des joueurs au "
+                                  "tournoi.\nLe minimum attendu est de 4 "
+                                  "joueurs.")
+                            print("..........................................")
+                        else:
+                            if len(last_round) == 0:
+                                round_number = 0
+                            else:
+                                round_number = len(last_round)
+                            self.tournament_controller.generate_round(
+                                last_tournament["number_of_rounds"],
+                                round_number,
+                                last_tournament["players"])
                             time.sleep(2)
                             self.menu_view.clear_console()
-                            self.report_view.display_round_details(
-                                round_detail)
-                        elif round_choice == "13":
-                            self.menu_view.clear_console()
-                            round_detail = self.round_controller.end_round()
-                            time.sleep(2)
-                            self.menu_view.clear_console()
-                            self.report_view.display_round_details(
-                                round_detail)
-                            self.menu_view.clear_console()
-                            last_tournament = load_last_tournament(
-                                PATH_DATA_TOURNAMENTS_JSON_FILE)
-                            last_round = last_tournament["rounds"][-1]
-                            index = 0
-                            while index < len(last_round["matchs"]):
-                                self.report_view.display_round_details(
-                                    last_round)
-                                match_id = index + 1
-                                match = self.menu_view.match_prompt(match_id)
-                                self.match_controller.save_score(
-                                    last_tournament,
-                                    last_round["round_id"],
-                                    user_match_id=match_id,
-                                    score1=match["score1"],
-                                    score2=match["score2"])
-                                self.menu_view.clear_console()
-                                index += 1
-                            self.tournament_controller.update_player_points(
-                                last_round["round_id"])
-                            time.sleep(2)
-                            self.menu_view.clear_console()
-                            break
-                        elif round_choice == "15":
-                            self.menu_view.clear_console()
-                            break
+                            if (int(last_tournament["number_of_rounds"]) >
+                                    round_number):
+                                while True:
+                                    round_choice = (
+                                        self.menu_view.round_prompt())
+                                    if round_choice == "1":
+                                        self.menu_view.clear_console()
+                                        round_detail = (
+                                            self.round_controller
+                                            .start_round())
+                                        time.sleep(2)
+                                        self.menu_view.clear_console()
+                                        self.report_view.display_round_details(
+                                            round_detail)
+                                    elif round_choice == "2":
+                                        self.menu_view.clear_console()
+                                        round_detail = (
+                                            self.round_controller.end_round())
+                                        time.sleep(2)
+                                        self.menu_view.clear_console()
+                                        self.report_view.display_round_details(
+                                            round_detail)
+                                        self.menu_view.clear_console()
+                                        last_tournament = load_last_tournament(
+                                            PATH_DATA_TOURNAMENTS_JSON_FILE)
+                                        last_round = last_tournament[
+                                            "rounds"][-1]
+                                        index = 0
+                                        while index < len(last_round[
+                                                              "matchs"]):
+                                            (self
+                                             .report_view.
+                                             display_round_details(last_round))
+                                            match_id = index + 1
+                                            match =\
+                                                (self.menu_view
+                                                    .match_prompt(match_id))
+                                            self.match_controller.save_score(
+                                                last_tournament,
+                                                last_round["round_id"],
+                                                user_match_id=match_id,
+                                                score1=match["score1"],
+                                                score2=match["score2"])
+                                            self.menu_view.clear_console()
+                                            index += 1
+                                        (self.tournament_controller
+                                            .update_player_points(
+                                                last_round["round_id"]))
+                                        time.sleep(2)
+                                        self.menu_view.clear_console()
+                                        break
+                                    elif round_choice.upper() == "R":
+                                        self.menu_view.clear_console()
+                                        break
+                    elif tournament_choice == "4":
+                        # TODO ajout d'un booléen dans le fichier json
+                        self.menu_view.clear_console()
+                        break
+                    elif tournament_choice == "R":
+                        self.menu_view.clear_console()
+                        break
             elif user_choice.upper() == "Q":
                 print("Au revoir et à bientôt 👋.")
                 break

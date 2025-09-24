@@ -2,8 +2,7 @@ import random
 
 from models.match import Match
 from models.round import Round
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
-    PATH_DATA_PLAYERS_JSON_FILE
+from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.date_utils import validate_date, checks_dates
 from utils.file_utils import read_file, save_to_json, update_last_tournament
 
@@ -12,10 +11,9 @@ class TournamentController:
     """Tournament controller class"""
 
     @staticmethod
-    def add_new_tournament(tournament_detail, number_of_players):
+    def add_new_tournament(tournament_detail):
         """Add a new tournament"""
         data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        data_players = read_file(PATH_DATA_PLAYERS_JSON_FILE)
         tournaments = data_tournaments['tournaments']
         tournament_id = max(1, len(tournaments) + 1)
 
@@ -29,11 +27,11 @@ class TournamentController:
 
         if (start_date and end_date) and checks_dates(start_date, end_date):
 
-            # randomize players from data with default points to 0
-            random_players = random.sample(data_players["players"],
-                                           int(number_of_players))
-            for player in random_players:
-                player["points"] = 0.0
+            # # randomize players from data with default points to 0
+            # random_players = random.sample(data_players["players"],
+            #                                int(number_of_players))
+            # for player in random_players:
+            #     player["points"] = 0.0
 
             save_to_json("tournaments",
                          tournament_id=tournament_id,
@@ -44,7 +42,7 @@ class TournamentController:
                          description=tournament_detail.description,
                          number_of_rounds=tournament_detail.number_of_rounds,
                          round_number=tournament_detail.round_number,
-                         players=random_players
+                         players=[]
                          )
 
             message = ("Le nouveau tournoi a été enregistré avec succès.\n"
@@ -58,8 +56,11 @@ class TournamentController:
     def generate_round(number_of_rounds, round_number, players):
         """Generate a random tournament round"""
         data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        last_tournament = data_tournaments["tournaments"][-1]
+
         if int(round_number) == int(number_of_rounds):
-            return print("Vous avez atteint le nombre de tours du tournoi.")
+            return print("Vous avez atteint le nombre de tours pour ce "
+                         "tournoi.")
 
         round_number += 1
         round_name = "Round {}".format(round_number)
@@ -71,7 +72,7 @@ class TournamentController:
             players.sort(key=lambda player: player["points"], reverse=True)
 
         id_match = 1
-        # data_round = {}
+
         for i in range(0, len(players), 2):
             player1 = {
                 "national_id": players[i]["national_id"]
@@ -94,7 +95,6 @@ class TournamentController:
             "matchs": round_detail.matches
         }
 
-        last_tournament = data_tournaments["tournaments"][-1]
         last_tournament["rounds"].append(data_round)
 
         # save round to JSON file
