@@ -1,6 +1,7 @@
 import os
 
-from utils.constants import PATH_DATA_PLAYERS_JSON_FILE
+from utils.constants import PATH_DATA_PLAYERS_JSON_FILE, \
+    PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.file_utils import read_file
 
 
@@ -11,13 +12,18 @@ class MenuView:
     @staticmethod
     def show_menu():
         """Display the menu for the user"""
+        data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        last_tournament = data_tournaments["tournaments"][-1]
+        current_round_number = last_tournament["round_number"]
+        number_pf_rounds = last_tournament["number_of_rounds"]
         print("G E S T I O N N A I R E   D E   T O U R N O I S   D ' É C H "
               "E C S\n")
         print("Menu principal:")
         print("=====================================================")
         print("1. Ajouter un nouveau joueur")
         print("2. Ajouter un nouveau tournoi")
-        print("3. Générer un tour")
+        print(f"3. Générer un tour (tour {current_round_number}"
+              f"/{number_pf_rounds})")
         print("Q. Quitter l'application")
         print("=====================================================")
 

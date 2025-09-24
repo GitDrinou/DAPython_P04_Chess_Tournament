@@ -58,7 +58,7 @@ class TournamentController:
     def generate_round(number_of_rounds, round_number, players):
         """Generate a random tournament round"""
         data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        if int(round_number) > int(number_of_rounds):
+        if int(round_number) == int(number_of_rounds):
             return print("Vous avez atteint le nombre de tours du tournoi.")
 
         round_number += 1

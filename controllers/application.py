@@ -61,45 +61,49 @@ class ApplicationController:
                     last_tournament["players"])
                 time.sleep(2)
                 self.menu_view.clear_console()
-                while True:
-                    round_choice = self.menu_view.round_prompt()
-                    if round_choice == "11":
-                        self.menu_view.clear_console()
-                        round_detail = self.round_controller.start_round()
-                        time.sleep(2)
-                        self.menu_view.clear_console()
-                        self.report_view.display_round_details(round_detail)
-                    elif round_choice == "13":
-                        self.menu_view.clear_console()
-                        round_detail = self.round_controller.end_round()
-                        time.sleep(2)
-                        self.menu_view.clear_console()
-                        self.report_view.display_round_details(round_detail)
-                        self.menu_view.clear_console()
-                        last_tournament = load_last_tournament(
-                            PATH_DATA_TOURNAMENTS_JSON_FILE)
-                        last_round = last_tournament["rounds"][-1]
-                        index = 0
-                        while index < len(last_round["matchs"]):
-                            self.report_view.display_round_details(last_round)
-                            match_id = index + 1
-                            match = self.menu_view.match_prompt(match_id)
-                            self.match_controller.save_score(
-                                last_tournament,
-                                last_round["round_id"],
-                                user_match_id=match_id,
-                                score1=match["score1"],
-                                score2=match["score2"])
+                if int(last_tournament["number_of_rounds"]) > round_number:
+                    while True:
+                        round_choice = self.menu_view.round_prompt()
+                        if round_choice == "11":
                             self.menu_view.clear_console()
-                            index += 1
-                        self.tournament_controller.update_player_points(
-                            last_round["round_id"])
-                        time.sleep(2)
-                        self.menu_view.clear_console()
-                        break
-                    elif round_choice == "15":
-                        self.menu_view.clear_console()
-                        break
+                            round_detail = self.round_controller.start_round()
+                            time.sleep(2)
+                            self.menu_view.clear_console()
+                            self.report_view.display_round_details(
+                                round_detail)
+                        elif round_choice == "13":
+                            self.menu_view.clear_console()
+                            round_detail = self.round_controller.end_round()
+                            time.sleep(2)
+                            self.menu_view.clear_console()
+                            self.report_view.display_round_details(
+                                round_detail)
+                            self.menu_view.clear_console()
+                            last_tournament = load_last_tournament(
+                                PATH_DATA_TOURNAMENTS_JSON_FILE)
+                            last_round = last_tournament["rounds"][-1]
+                            index = 0
+                            while index < len(last_round["matchs"]):
+                                self.report_view.display_round_details(
+                                    last_round)
+                                match_id = index + 1
+                                match = self.menu_view.match_prompt(match_id)
+                                self.match_controller.save_score(
+                                    last_tournament,
+                                    last_round["round_id"],
+                                    user_match_id=match_id,
+                                    score1=match["score1"],
+                                    score2=match["score2"])
+                                self.menu_view.clear_console()
+                                index += 1
+                            self.tournament_controller.update_player_points(
+                                last_round["round_id"])
+                            time.sleep(2)
+                            self.menu_view.clear_console()
+                            break
+                        elif round_choice == "15":
+                            self.menu_view.clear_console()
+                            break
             elif user_choice.upper() == "Q":
                 print("Au revoir et à bientôt 👋.")
                 break
