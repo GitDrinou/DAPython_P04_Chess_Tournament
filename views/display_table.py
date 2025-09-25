@@ -6,7 +6,7 @@ class DisplayTableView:
 
     @staticmethod
     def display_round(round_detail):
-        """Display a pretty table with the round's details"""
+        """Display a table with the round's details"""
         if round_detail:
             round_name = round_detail["name"]
             start_round = round_detail["round_start_date"]
@@ -30,11 +30,12 @@ class DisplayTableView:
             print("--------------------------------------------------------")
 
     @staticmethod
-    def display_tournament_players(tournament):
-        """Display a pretty table with the tournament's players"""
+    def display_players(tournament):
+        """Display a table with the tournament's players"""
         tournament_name = tournament["name"]
         start_date = tournament["start_date"]
         end_date = tournament["end_date"]
+        total_players = len(tournament["players"])
         data_report = sorted(tournament["players"], key=lambda x: (-x[
             "points"], x["last_name"]))
 
@@ -52,6 +53,7 @@ class DisplayTableView:
         print(f">> {tournament_name}:\n")
         print(f"\tDu: {start_date}")
         print(f"\tAu: {end_date}\n")
+        print(f"Nombre de joueurs inscrits: {total_players}\n")
         print("...........................................................\n")
         print(tabulate(rows, headers=headers, tablefmt="github"))
         print("\n...........................................................")

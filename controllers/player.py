@@ -3,7 +3,7 @@ import re
 
 from utils.constants import PATH_DATA_PLAYERS_JSON_FILE, \
     PATH_DATA_TOURNAMENTS_JSON_FILE
-from utils.file_utils import save_to_json, update_last_tournament, read_file
+from utils.file_utils import save_to_json, update_tournament, read_file
 
 
 class PlayerController:
@@ -27,7 +27,7 @@ class PlayerController:
                 return True
         return False
 
-    def add_player(self, player):
+    def add(self, player):
         """Add a player to the tournament"""
 
         if self.check_format_national_id(player.national_id) is not None:
@@ -41,9 +41,9 @@ class PlayerController:
                 "points": 0.0
             })
 
-            update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                   last_tournament["tournament_id"],
-                                   last_tournament)
+            update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                              last_tournament["tournament_id"],
+                              last_tournament)
 
             if not self.check_player_is_exist(player.national_id):
                 save_to_json("players",

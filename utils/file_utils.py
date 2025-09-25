@@ -51,7 +51,7 @@ def save_to_json(key, **kwargs):
     write_file(path, data)
 
 
-def load_last_tournament(path_file):
+def load_tournament(path_file):
     """Load the last tournament data from the json file"""
     with open(path_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
@@ -62,7 +62,7 @@ def load_last_tournament(path_file):
             return None
 
 
-def update_last_tournament(path_file, tournament_id, new_value):
+def update_tournament(path_file, tournament_id, new_value):
     """Update the last tournament data from the json file"""
     data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
 

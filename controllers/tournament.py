@@ -3,14 +3,14 @@ import random
 from models.match import Match
 from models.round import Round
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
-from utils.file_utils import read_file, save_to_json, update_last_tournament
+from utils.file_utils import read_file, save_to_json, update_tournament
 
 
 class TournamentController:
     """Tournament controller class"""
 
     @staticmethod
-    def add_new_tournament(tournament_detail):
+    def add(tournament_detail):
         """Add a new tournament"""
         data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments['tournaments']
@@ -83,9 +83,9 @@ class TournamentController:
         last_tournament["rounds"].append(data_round)
 
         # save round to JSON file
-        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                               last_tournament["tournament_id"],
-                               last_tournament)
+        update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                          last_tournament["tournament_id"],
+                          last_tournament)
 
         return print("Le tour a été généré et enregistré avec succès.")
 
@@ -121,37 +121,37 @@ class TournamentController:
                             "national_id"]:
                 player["points"] = players[player["national_id"]]["points"]
 
-        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                               last_tournament["tournament_id"],
-                               last_tournament)
+        update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                          last_tournament["tournament_id"],
+                          last_tournament)
 
         return print("Les points ont été mis à jour.\nVous allez être "
                      "redirigé vers le menu de gestion du tournoi.")
 
     @staticmethod
-    def break_tournament(tournament_id):
-        """Make a break for a tournament"""
+    def pause(tournament_id):
+        """Take a pause for a tournament"""
         data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         last_tournament = data["tournaments"][-1]
         if last_tournament["tournament_id"] == tournament_id:
             last_tournament["is_on_break"] = True
 
-        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                               tournament_id, last_tournament)
+        update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                          tournament_id, last_tournament)
 
         return print("\nLe tournoi est en pause.\nVous allez être redirigé "
                      "vers le menu principal de l'application.")
 
     @staticmethod
-    def unbreak_tournament(tournament_id):
-        """Unbreak the tournament"""
+    def unpause(tournament_id):
+        """Stop the pause for a tournament"""
         data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         last_tournament = data["tournaments"][-1]
         if last_tournament["tournament_id"] == tournament_id:
             last_tournament["is_on_break"] = False
 
-        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                               tournament_id, last_tournament)
+        update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                          tournament_id, last_tournament)
 
     @staticmethod
     def delete_a_player(tournament_id, national_id):
@@ -162,8 +162,8 @@ class TournamentController:
             last_tournament["players"] = [player for player in last_tournament[
                 "players"] if player.get('national_id') != national_id]
 
-            update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                   last_tournament["tournament_id"],
-                                   last_tournament)
+            update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                              last_tournament["tournament_id"],
+                              last_tournament)
 
         return print("\nLe joueur a bien été supprimé.")

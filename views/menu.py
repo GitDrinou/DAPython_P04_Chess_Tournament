@@ -42,7 +42,7 @@ class MenuView:
         return {"national_id": national_id, "lastname": lastname,
                 "firstname": firstname}
 
-    def new_tournament_prompt(self):
+    def tournament_prompt(self):
         """Prompt the user to enter tournament's details"""
 
         print("\nCREATION D'UN NOUVEAU TOURNOI")
@@ -137,7 +137,7 @@ class MenuView:
         }
 
     @staticmethod
-    def delete_player():
+    def delete_player_prompt():
         """Prompt the user to delete a player"""
         print("\nSUPPRIMER UN JOUEUR")
         print("=====================================================")

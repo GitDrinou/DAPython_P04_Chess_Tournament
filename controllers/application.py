@@ -3,7 +3,7 @@ import time
 from models.player import Player
 from models.tournament import Tournament
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
-from utils.file_utils import load_last_tournament
+from utils.file_utils import load_tournament
 
 
 class ApplicationController:
@@ -28,8 +28,8 @@ class ApplicationController:
             # user choice for main menu
             if user_choice == "1":
                 self.menu_view.clear_console()
-                tournament = self.menu_view.new_tournament_prompt()
-                self.tournament_controller.add_new_tournament(
+                tournament = self.menu_view.tournament_prompt()
+                self.tournament_controller.add(
                     Tournament(tournament["name"], tournament["location"],
                                tournament["start_date"],
                                tournament["end_date"],
@@ -39,15 +39,15 @@ class ApplicationController:
                 self.menu_view.clear_console()
             elif user_choice == "2":
                 self.menu_view.clear_console()
-                last_tournament = load_last_tournament(
+                last_tournament = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE)
                 if last_tournament["is_on_break"]:
-                    self.tournament_controller.unbreak_tournament(
+                    self.tournament_controller.unpause(
                         last_tournament["tournament_id"])
                 while True:
-                    last_tournament = load_last_tournament(
+                    last_tournament = load_tournament(
                         PATH_DATA_TOURNAMENTS_JSON_FILE)
-                    self.display_view.display_tournament_players(
+                    self.display_view.display_players(
                         last_tournament)
                     tournament_choice = self.menu_view.tournament_menu_prompt()
 
@@ -55,7 +55,7 @@ class ApplicationController:
                         self.menu_view.clear_console()
                         if len(last_tournament["rounds"]) == 0:
                             player = self.menu_view.player_prompt()
-                            self.player_controller.add_player(
+                            self.player_controller.add(
                                 Player(player["national_id"], player[
                                     "lastname"], player["firstname"]))
                             time.sleep(2)
@@ -70,9 +70,9 @@ class ApplicationController:
                         self.menu_view.clear_console()
                         if len(last_tournament["rounds"]) == 0 and len(
                                 last_tournament["players"]) > 0:
-                            self.display_view.display_tournament_players(
+                            self.display_view.display_players(
                                 last_tournament)
-                            national_id = self.menu_view.delete_player()
+                            national_id = self.menu_view.delete_player_prompt()
                             self.tournament_controller.delete_a_player(
                                 last_tournament["tournament_id"], national_id)
                             time.sleep(2)
@@ -87,14 +87,19 @@ class ApplicationController:
                     elif tournament_choice == "3":
                         self.menu_view.clear_console()
                         last_round = last_tournament["rounds"]
-                        if len(last_tournament["players"]) < 4:
+                        if len(last_tournament["players"]) < 4 or len(
+                                last_tournament["players"]) % 2 != 0:
+                            self.menu_view.clear_console()
                             print("..........................................")
                             print("Vous n'avez pas assez de joueurs inscrits "
                                   "pour pouvoir générer un tour.\nVeuillez "
                                   "continuer à inscrire des joueurs au "
                                   "tournoi.\nLe minimum attendu est de 4 "
-                                  "joueurs.")
+                                  "joueurs, il faut aussi que le total de "
+                                  "joueurs soit un nombre pair.")
                             print("..........................................")
+                            time.sleep(3)
+                            self.menu_view.clear_console()
                         else:
                             if len(last_round) == 0:
                                 round_number = 0
@@ -115,7 +120,7 @@ class ApplicationController:
                                         self.menu_view.clear_console()
                                         round_detail = (
                                             self.round_controller
-                                            .start_round())
+                                            .start_up())
                                         time.sleep(2)
                                         self.menu_view.clear_console()
                                         self.display_view.display_round(
@@ -123,14 +128,14 @@ class ApplicationController:
                                     elif round_choice == "2":
                                         self.menu_view.clear_console()
                                         round_detail = (
-                                            self.round_controller.end_round())
+                                            self.round_controller.end_up())
                                         time.sleep(2)
                                         self.menu_view.clear_console()
                                         (self.display_view
                                             .display_round(round_detail))
                                         self.menu_view.clear_console()
                                         last_tournament = (
-                                            load_last_tournament(
+                                            load_tournament(
                                                 PATH_DATA_TOURNAMENTS_JSON_FILE
                                             ))
                                         last_round = last_tournament[
@@ -167,9 +172,9 @@ class ApplicationController:
                                         break
                     elif tournament_choice == "4":
                         self.menu_view.clear_console()
-                        last_tournament = load_last_tournament(
+                        last_tournament = load_tournament(
                             PATH_DATA_TOURNAMENTS_JSON_FILE)
-                        self.tournament_controller.break_tournament(
+                        self.tournament_controller.pause(
                             last_tournament["tournament_id"])
                         time.sleep(2)
                         self.menu_view.clear_console()

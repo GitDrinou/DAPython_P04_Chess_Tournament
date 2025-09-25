@@ -1,5 +1,5 @@
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
-from utils.file_utils import update_last_tournament
+from utils.file_utils import update_tournament
 
 
 class MatchController:
@@ -21,9 +21,9 @@ class MatchController:
                     match_detail["match"][1][1] = score2
                     break
 
-            update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                   last_tournament["tournament_id"],
-                                   last_tournament)
+            update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                              last_tournament["tournament_id"],
+                              last_tournament)
 
             print("Les scores ont été enregistrés.")
         else:
