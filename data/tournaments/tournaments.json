@@ -8,14 +8,14 @@
             "end_date": "2025-09-29 00:00:00",
             "description": "Ouverture des portes \u00e0 8h00.",
             "number_of_rounds": "4",
-            "round_number": "2",
+            "round_number": "1",
             "is_on_break": false,
             "players": [
                 {
                     "national_id": "Y66674",
                     "last_name": "MORGAN",
                     "first_name": "John",
-                    "points": 2.0
+                    "points": 3.0
                 },
                 {
                     "national_id": "J55987",
@@ -27,10 +27,51 @@
                     "national_id": "A67890",
                     "last_name": "DOE",
                     "first_name": "Jane",
-                    "points": 1.0
+                    "points": 2.0
+                },
+                {
+                    "national_id": "F94850",
+                    "last_name": "FLASH",
+                    "first_name": "Gordon",
+                    "points": 0.0
                 }
             ],
-            "rounds": []
+            "rounds": [
+                {
+                    "round_id": 1,
+                    "name": "Round 1",
+                    "round_start_date": "25-09-2025 10:47:26",
+                    "round_end_date": "25-09-2025 10:47:30",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "A67890",
+                                    "1"
+                                ],
+                                [
+                                    "J55987",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "Y66674",
+                                    "1"
+                                ],
+                                [
+                                    "F94850",
+                                    "0"
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

@@ -46,26 +46,41 @@ class ApplicationController:
                         last_tournament["tournament_id"])
                 while True:
                     tournament_choice = self.menu_view.tournament_menu_prompt()
+                    last_tournament = load_last_tournament(
+                        PATH_DATA_TOURNAMENTS_JSON_FILE)
                     if tournament_choice == "1":
                         self.menu_view.clear_console()
-                        player = self.menu_view.player_prompt()
-                        self.player_controller.add_player(
-                            Player(player["national_id"],
-                                   player["lastname"],
-                                   player["firstname"]))
-                        time.sleep(2)
-                        self.menu_view.clear_console()
+                        if len(last_tournament["rounds"]) == 0:
+                            player = self.menu_view.player_prompt()
+                            self.player_controller.add_player(
+                                Player(player["national_id"], player[
+                                    "lastname"], player["firstname"]))
+                            time.sleep(2)
+                            self.menu_view.clear_console()
+                        else:
+                            print("\nLe tournoi a déjà démarré, vous ne "
+                                  "pouvez plus inscrire de nouveaux "
+                                  "joueurs.")
+                            time.sleep(3)
+                            self.menu_view.clear_console()
                     elif tournament_choice == "2":
                         self.menu_view.clear_console()
-                        last_tournament = load_last_tournament(
-                            PATH_DATA_TOURNAMENTS_JSON_FILE)
-                        (self.report_view
-                         .display_tournament_players(last_tournament))
-                        national_id = self.menu_view.delete_player()
-                        self.tournament_controller.delete_a_player(
-                            last_tournament["tournament_id"], national_id)
-                        time.sleep(2)
-                        self.menu_view.clear_console()
+                        if len(last_tournament["rounds"]) == 0 and len(
+                                last_tournament["players"]) > 0:
+                            self.report_view.display_tournament_players(
+                                last_tournament)
+                            national_id = self.menu_view.delete_player()
+                            self.tournament_controller.delete_a_player(
+                                last_tournament["tournament_id"], national_id)
+                            time.sleep(2)
+                            self.menu_view.clear_console()
+                        else:
+                            print("\nVous ne pouvez pas supprimer de "
+                                  "joueur, soit parce que le tournoi a déjà "
+                                  "démarré, soit parce qu'il n'y a pas de "
+                                  "joueurs inscrits au tournoi.")
+                            time.sleep(3)
+                            self.menu_view.clear_console()
                     elif tournament_choice == "3":
                         self.menu_view.clear_console()
                         last_tournament = load_last_tournament(
