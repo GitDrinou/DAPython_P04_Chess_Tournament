@@ -139,17 +139,40 @@ class TournamentController:
 
     @staticmethod
     def break_tournament(tournament_id):
-        """Make a break  for a tournament"""
+        """Make a break for a tournament"""
         data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         last_tournament = data["tournaments"][-1]
         if last_tournament["tournament_id"] == tournament_id:
-            last_tournament["is_on_break"] = not last_tournament["is_on_break"]
+            last_tournament["is_on_break"] = True
 
         update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
                                tournament_id, last_tournament)
 
-        if last_tournament["is_on_break"]:
-            return print("\nLe tournoi est en pause.\nVous allez être "
-                         "redirigé vers le menu principal de l'application.")
-        else:
-            return None
+        return print("\nLe tournoi est en pause.\nVous allez être redirigé "
+                     "vers le menu principal de l'application.")
+
+    @staticmethod
+    def unbreak_tournament(tournament_id):
+        """Unbreak the tournament"""
+        data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        last_tournament = data["tournaments"][-1]
+        if last_tournament["tournament_id"] == tournament_id:
+            last_tournament["is_on_break"] = False
+
+        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                               tournament_id, last_tournament)
+
+    @staticmethod
+    def delete_a_player(tournament_id, national_id):
+        """Delete an identify player from the tournament"""
+        data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        last_tournament = data["tournaments"][-1]
+        if last_tournament["tournament_id"] == tournament_id:
+            last_tournament["players"] = [player for player in last_tournament[
+                "players"] if player.get('national_id') != national_id]
+
+            update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                   last_tournament["tournament_id"],
+                                   last_tournament)
+
+        return print("\nLe joueur a bien été supprimé.")

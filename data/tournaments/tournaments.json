@@ -12,12 +12,6 @@
             "is_on_break": false,
             "players": [
                 {
-                    "national_id": "L00032",
-                    "last_name": "WALKER",
-                    "first_name": "Paula",
-                    "points": 1.0
-                },
-                {
                     "national_id": "Y66674",
                     "last_name": "MORGAN",
                     "first_name": "John",
@@ -36,76 +30,7 @@
                     "points": 1.0
                 }
             ],
-            "rounds": [
-                {
-                    "round_id": 1,
-                    "name": "Round 1",
-                    "round_start_date": "24-09-2025 16:36:35",
-                    "round_end_date": "24-09-2025 16:36:41",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "A67890",
-                                    "1"
-                                ],
-                                [
-                                    "J55987",
-                                    "0"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "Y66674",
-                                    "1"
-                                ],
-                                [
-                                    "L00032",
-                                    "0"
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "round_id": 2,
-                    "name": "Round 2",
-                    "round_start_date": "24-09-2025 16:39:25",
-                    "round_end_date": "24-09-2025 16:39:29",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "Y66674",
-                                    "1"
-                                ],
-                                [
-                                    "A67890",
-                                    "0"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "L00032",
-                                    "1"
-                                ],
-                                [
-                                    "J55987",
-                                    "0"
-                                ]
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "rounds": []
         }
     ]
 }

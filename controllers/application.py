@@ -41,8 +41,9 @@ class ApplicationController:
                 self.menu_view.clear_console()
                 last_tournament = load_last_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE)
-                self.tournament_controller.break_tournament(
-                    last_tournament["tournament_id"])
+                if last_tournament["is_on_break"]:
+                    self.tournament_controller.unbreak_tournament(
+                        last_tournament["tournament_id"])
                 while True:
                     tournament_choice = self.menu_view.tournament_menu_prompt()
                     if tournament_choice == "1":
@@ -58,8 +59,11 @@ class ApplicationController:
                         self.menu_view.clear_console()
                         last_tournament = load_last_tournament(
                             PATH_DATA_TOURNAMENTS_JSON_FILE)
-                        self.tournament_controller.break_tournament(
-                            last_tournament["tournament_id"])
+                        (self.report_view
+                         .display_tournament_players(last_tournament))
+                        national_id = self.menu_view.delete_player()
+                        self.tournament_controller.delete_a_player(
+                            last_tournament["tournament_id"], national_id)
                         time.sleep(2)
                         self.menu_view.clear_console()
                     elif tournament_choice == "3":

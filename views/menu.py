@@ -110,3 +110,12 @@ class MenuView:
             "score1": score1,
             "score2": score2
         }
+
+    @staticmethod
+    def delete_player():
+        """Prompt the user to delete a player"""
+        print("\nSUPPRIMER UN JOUEUR")
+        print("=====================================================")
+        national_id = input("Saisissez l'identifiant du joueur: ")
+
+        return national_id
