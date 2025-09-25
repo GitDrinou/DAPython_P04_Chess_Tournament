@@ -83,8 +83,6 @@ class ApplicationController:
                             self.menu_view.clear_console()
                     elif tournament_choice == "3":
                         self.menu_view.clear_console()
-                        last_tournament = load_last_tournament(
-                            PATH_DATA_TOURNAMENTS_JSON_FILE)
                         last_round = last_tournament["rounds"]
                         if len(last_tournament["players"]) < 4:
                             print("..........................................")
@@ -128,10 +126,15 @@ class ApplicationController:
                                         self.report_view.display_round_details(
                                             round_detail)
                                         self.menu_view.clear_console()
-                                        last_tournament = load_last_tournament(
-                                            PATH_DATA_TOURNAMENTS_JSON_FILE)
+                                        last_tournament = (
+                                            load_last_tournament(
+                                                PATH_DATA_TOURNAMENTS_JSON_FILE
+                                            ))
                                         last_round = last_tournament[
                                             "rounds"][-1]
+                                        if (last_round["round_start_date"] ==
+                                                ""):
+                                            break
                                         index = 0
                                         while index < len(last_round[
                                                               "matchs"]):

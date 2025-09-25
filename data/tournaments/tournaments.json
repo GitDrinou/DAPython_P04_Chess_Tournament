@@ -10,8 +10,136 @@
             "number_of_rounds": "4",
             "round_number": 0,
             "is_on_break": false,
-            "players": [],
-            "rounds": []
+            "players": [
+                {
+                    "national_id": "X88457",
+                    "last_name": "DUPONT",
+                    "first_name": "Mark",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "D98766",
+                    "last_name": "JAMES",
+                    "first_name": "Olivia",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "A12345",
+                    "last_name": "DOE",
+                    "first_name": "John",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "S94503",
+                    "last_name": "MARY",
+                    "first_name": "Bianca",
+                    "points": 0.0
+                }
+            ],
+            "rounds": [
+                {
+                    "round_id": 1,
+                    "name": "Round 1",
+                    "round_start_date": "",
+                    "round_end_date": "",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "D98766",
+                                    0.0
+                                ],
+                                [
+                                    "S94503",
+                                    0.0
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "A12345",
+                                    0.0
+                                ],
+                                [
+                                    "X88457",
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 2,
+                    "name": "Round 2",
+                    "round_start_date": "",
+                    "round_end_date": "",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "X88457",
+                                    0.0
+                                ],
+                                [
+                                    "D98766",
+                                    0.0
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "A12345",
+                                    0.0
+                                ],
+                                [
+                                    "S94503",
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 3,
+                    "name": "Round 3",
+                    "round_start_date": "",
+                    "round_end_date": "",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "X88457",
+                                    0.0
+                                ],
+                                [
+                                    "D98766",
+                                    0.0
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "A12345",
+                                    0.0
+                                ],
+                                [
+                                    "S94503",
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

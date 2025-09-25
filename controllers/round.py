@@ -32,15 +32,21 @@ class RoundController:
         data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         last_tournament = data_tournaments["tournaments"][-1]
         last_round = last_tournament["rounds"][-1]
-        end_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        if last_round["round_start_date"] == "":
+            print("\n....................................................")
+            print("Le tour n'est pas encore démarré.\nVous ne pouvez pas "
+                  "terminer le tour avant de l'avoir démarré.")
+            print("....................................................")
+        else:
+            end_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
-        last_tournament["round_number"] = last_round["name"][-1]
-        last_round["round_end_date"] = end_date
+            last_tournament["round_number"] = last_round["name"][-1]
+            last_round["round_end_date"] = end_date
 
-        update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                               last_tournament["tournament_id"],
-                               last_tournament)
+            update_last_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                   last_tournament["tournament_id"],
+                                   last_tournament)
 
-        print("Le tour est terminé.")
+            print("Le tour est terminé.")
 
         return last_round
