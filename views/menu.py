@@ -1,6 +1,7 @@
 import os
 
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
+from utils.date_utils import validate_date, checks_dates
 from utils.file_utils import read_file
 
 
@@ -41,28 +42,48 @@ class MenuView:
         return {"national_id": national_id, "lastname": lastname,
                 "firstname": firstname}
 
-    @staticmethod
-    def new_tournament_prompt():
+    def new_tournament_prompt(self):
         """Prompt the user to enter tournament's details"""
+
         print("\nCREATION D'UN NOUVEAU TOURNOI")
         print("=====================================================")
         name = input("Saisissez le nom du tournoi: ")
         location = input("Saisissez la localisation du tournoi: ")
-        start_date = input("Saisissez la date de début du tournoi (format "
-                           "attendu: JJ/MM/AAAA): ")
-        end_date = input("Saisissez la date de fin du tournoi (format "
-                         "attendu: JJ/MM/AAAA): ")
         description = input("Saisissez une description du tournoi: ")
         number_of_rounds = input("Saisissez le nombre de tours (par défaut: "
                                  "4): ")
 
+        dates = self.dates_prompt()
+
         return {
             "name": name,
             "location": location,
-            "start_date": start_date,
-            "end_date": end_date,
+            "start_date": dates["start_date"],
+            "end_date": dates["end_date"],
             "description": description,
             "number_of_rounds": number_of_rounds
+        }
+
+    @staticmethod
+    def dates_prompt():
+        """Prompt the user to enter date of tournament"""
+
+        while True:
+            start_date = input("Saisissez la date de début du tournoi (format "
+                               "attendu: JJ/MM/AAAA): ")
+            end_date = input("Saisissez la date de fin du tournoi (format "
+                             "attendu: JJ/MM/AAAA): ")
+
+            start_date = validate_date(start_date)
+            end_date = validate_date(end_date)
+
+            if (start_date and end_date) and checks_dates(start_date,
+                                                          end_date):
+                break
+
+        return {
+            "start_date": start_date,
+            "end_date": end_date
         }
 
     @staticmethod

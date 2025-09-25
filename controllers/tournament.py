@@ -3,7 +3,6 @@ import random
 from models.match import Match
 from models.round import Round
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
-from utils.date_utils import validate_date, checks_dates
 from utils.file_utils import read_file, save_to_json, update_last_tournament
 
 
@@ -18,33 +17,25 @@ class TournamentController:
         tournament_id = max(1, len(tournaments) + 1)
 
         # check if the number of rounds is empty or under de default number
-        if (tournament_detail.number_of_rounds == ""
-                or int(tournament_detail.number_of_rounds) < 4):
+        if (tournament_detail.number_of_rounds == "" or int(
+                tournament_detail.number_of_rounds) < 4):
             tournament_detail.number_of_rounds = 4
 
-        start_date = validate_date(tournament_detail.start_date)
-        end_date = validate_date(tournament_detail.end_date)
+        save_to_json("tournaments",
+                     tournament_id=tournament_id,
+                     name=tournament_detail.name.upper(),
+                     location=tournament_detail.location.capitalize(),
+                     start_date=str(tournament_detail.start_date),
+                     end_date=str(tournament_detail.end_date),
+                     description=tournament_detail.description,
+                     number_of_rounds=tournament_detail.number_of_rounds,
+                     round_number=tournament_detail.round_number,
+                     players=[]
+                     )
 
-        if (start_date and end_date) and checks_dates(start_date, end_date):
-
-            save_to_json("tournaments",
-                         tournament_id=tournament_id,
-                         name=tournament_detail.name.upper(),
-                         location=tournament_detail.location.capitalize(),
-                         start_date=str(start_date),
-                         end_date=str(end_date),
-                         description=tournament_detail.description,
-                         number_of_rounds=tournament_detail.number_of_rounds,
-                         round_number=tournament_detail.round_number,
-                         players=[]
-                         )
-
-            message = ("Le nouveau tournoi a été enregistré avec succès.\n"
-                       "Vous pouvez à présent générer le premier tour.")
-            return print("---------------------------\n" + message)
-        else:
-            return print("L'enregistrement du tournoi n'a pas abouti. "
-                         "Veuillez renouveler votre saisie.")
+        message = ("Le nouveau tournoi a été enregistré avec succès.\n"
+                   "Vous pouvez à présent générer le premier tour.")
+        return print("---------------------------\n" + message)
 
     @staticmethod
     def generate_round(number_of_rounds, round_number, players):
