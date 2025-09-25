@@ -1,11 +1,11 @@
 from tabulate import tabulate
 
 
-class ReportView:
+class DisplayTableView:
     """Report view class"""
 
     @staticmethod
-    def display_round_details(round_detail):
+    def display_round(round_detail):
         """Display a pretty table with the round's details"""
         if round_detail:
             round_name = round_detail["name"]
@@ -19,31 +19,39 @@ class ReportView:
                 player1, score1 = entry["match"][0]
                 player2, score2 = entry["match"][1]
                 rows_round.append([match_id, player1, player2, score1, score2])
-            headers = ["Match ID", "Player1", "Player2", "Score1", "Score2"]
+            headers = ["Match n°", "Joueur 1", "Joueur 2", "Score1", "Score2"]
 
             print("--------------------------------------------------------")
-            print(f">>{round_name}:")
+            print(f">> {round_name}:")
             print(f"\tDébut: {start_round}")
             print(f"\tFin: {end_round}\n")
 
             print(tabulate(rows_round, headers=headers, tablefmt="github"))
-            print("--------------------------------------------------------\n")
+            print("--------------------------------------------------------")
 
     @staticmethod
     def display_tournament_players(tournament):
         """Display a pretty table with the tournament's players"""
         tournament_name = tournament["name"]
-        data_report = tournament["players"]
+        start_date = tournament["start_date"]
+        end_date = tournament["end_date"]
+        data_report = sorted(tournament["players"], key=lambda x: (-x[
+            "points"], x["last_name"]))
 
         rows = []
         for entry in data_report:
             national_id = entry["national_id"]
             lastname = entry["last_name"]
             firstname = entry["first_name"]
-            rows.append([national_id, lastname, firstname])
-        headers = ["Identifiant national", "Nom de famille", "Prénom"]
+            points = entry["points"]
+            rows.append([national_id, lastname, firstname, points])
+        headers = ["Identifiant national", "Nom de famille", "Prénom",
+                   "Points"]
 
         print("\n...........................................................")
         print(f">> {tournament_name}:\n")
+        print(f"\tDu: {start_date}")
+        print(f"\tAu: {end_date}\n")
+        print("...........................................................\n")
         print(tabulate(rows, headers=headers, tablefmt="github"))
-        print("...........................................................")
+        print("\n...........................................................")

@@ -93,6 +93,10 @@ class MenuView:
         last_tournament = data_tournaments["tournaments"][-1]
         current_round_number = last_tournament["round_number"]
         number_pf_rounds = last_tournament["number_of_rounds"]
+        if current_round_number == number_pf_rounds:
+            print("\n🎉 🎉 Le tournoi est terminé. Félicitations au vainqueur "
+                  "🏆!")
+            print("\n........................................................")
         print("\nGESTION DU TOURNOI")
         print("=====================================================")
         print("1. Inscrire des joueurs au tournoi")
@@ -122,7 +126,7 @@ class MenuView:
     @staticmethod
     def match_prompt(match_id):
         """Prompt the user to enter the match's scores"""
-        print(f"INSCRIRE LES SCORES DU MATCH N°{match_id}")
+        print(f"\nINSCRIRE LES SCORES DU MATCH N°{match_id}")
         print("*************************************************")
         score1 = input("Saisissez le score du joueur 1 - Score 1 (0 ou 1): ")
         score2 = input("Saisissez le score du joueur 2 - Score 2 (0 ou 1): ")

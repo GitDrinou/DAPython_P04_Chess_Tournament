@@ -9,14 +9,14 @@ from utils.file_utils import load_last_tournament
 class ApplicationController:
     """ Application class controller"""
     def __init__(self, player_controller, tournament_controller,
-                 round_controller, match_controller, menu_view, report_view):
+                 round_controller, match_controller, menu_view, display_view):
         """ Initialize the application controller """
         self.player_controller = player_controller
         self.tournament_controller = tournament_controller
         self.round_controller = round_controller
         self.match_controller = match_controller
         self.menu_view = menu_view
-        self.report_view = report_view
+        self.display_view = display_view
 
     def run(self):
         """ Main method of the application controller """
@@ -45,9 +45,12 @@ class ApplicationController:
                     self.tournament_controller.unbreak_tournament(
                         last_tournament["tournament_id"])
                 while True:
-                    tournament_choice = self.menu_view.tournament_menu_prompt()
                     last_tournament = load_last_tournament(
                         PATH_DATA_TOURNAMENTS_JSON_FILE)
+                    self.display_view.display_tournament_players(
+                        last_tournament)
+                    tournament_choice = self.menu_view.tournament_menu_prompt()
+
                     if tournament_choice == "1":
                         self.menu_view.clear_console()
                         if len(last_tournament["rounds"]) == 0:
@@ -67,7 +70,7 @@ class ApplicationController:
                         self.menu_view.clear_console()
                         if len(last_tournament["rounds"]) == 0 and len(
                                 last_tournament["players"]) > 0:
-                            self.report_view.display_tournament_players(
+                            self.display_view.display_tournament_players(
                                 last_tournament)
                             national_id = self.menu_view.delete_player()
                             self.tournament_controller.delete_a_player(
@@ -115,7 +118,7 @@ class ApplicationController:
                                             .start_round())
                                         time.sleep(2)
                                         self.menu_view.clear_console()
-                                        self.report_view.display_round_details(
+                                        self.display_view.display_round(
                                             round_detail)
                                     elif round_choice == "2":
                                         self.menu_view.clear_console()
@@ -123,8 +126,8 @@ class ApplicationController:
                                             self.round_controller.end_round())
                                         time.sleep(2)
                                         self.menu_view.clear_console()
-                                        self.report_view.display_round_details(
-                                            round_detail)
+                                        (self.display_view
+                                            .display_round(round_detail))
                                         self.menu_view.clear_console()
                                         last_tournament = (
                                             load_last_tournament(
@@ -139,8 +142,8 @@ class ApplicationController:
                                         while index < len(last_round[
                                                               "matchs"]):
                                             (self
-                                             .report_view.
-                                             display_round_details(last_round))
+                                             .display_view.
+                                             display_round(last_round))
                                             match_id = index + 1
                                             match =\
                                                 (self.menu_view
