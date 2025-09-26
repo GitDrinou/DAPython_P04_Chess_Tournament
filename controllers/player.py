@@ -3,7 +3,7 @@ import re
 
 from utils.constants import PATH_DATA_PLAYERS_JSON_FILE, \
     PATH_DATA_TOURNAMENTS_JSON_FILE
-from utils.file_utils import save_to_json, update_tournament, read_file
+from utils.file_utils import save_to_json, update_tournament, read_json_file
 
 
 class PlayerController:
@@ -32,7 +32,7 @@ class PlayerController:
 
         if self.check_format_national_id(player.national_id) is not None:
             # save round to JSON file
-            data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+            data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
             last_tournament = data_tournaments["tournaments"][-1]
             last_tournament["players"].append({
                 "national_id": player.national_id.capitalize(),

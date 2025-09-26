@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
-from utils.file_utils import read_file, update_tournament
+from utils.file_utils import read_json_file, update_tournament
 
 
 class RoundController:
@@ -10,7 +10,7 @@ class RoundController:
     @staticmethod
     def start_up():
         """Method that starts a round."""
-        data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         last_tournament = data_tournaments["tournaments"][-1]
         last_round = last_tournament["rounds"][-1]
         start_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
@@ -29,7 +29,7 @@ class RoundController:
     @staticmethod
     def end_up():
         """Method that terminate the round."""
-        data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         last_tournament = data_tournaments["tournaments"][-1]
         last_round = last_tournament["rounds"][-1]
         if last_round["round_start_date"] == "":

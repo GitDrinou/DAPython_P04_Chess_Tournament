@@ -4,8 +4,8 @@ from utils.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
                              PATH_DATA_PLAYERS_JSON_FILE)
 
 
-def read_file(path_file):
-    """Read a file and return a list"""
+def read_json_file(path_file):
+    """Read a JSON file and return a list"""
     with open(path_file, "r") as f:
         data = json.load(f)
         if data:
@@ -14,8 +14,8 @@ def read_file(path_file):
             return None
 
 
-def write_file(path_file, data):
-    """Write data to a file"""
+def write_json_file(path_file, data):
+    """Write data to a JSON file"""
     with open(path_file, "w") as f:
         json.dump(data, f, indent=4)
 
@@ -24,7 +24,7 @@ def save_to_json(key, **kwargs):
     """Save specific (tournament or player) data to the json file"""
 
     if key == "tournaments":
-        data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         path = PATH_DATA_TOURNAMENTS_JSON_FILE
         data["tournaments"].append({
             "tournament_id": kwargs["tournament_id"],
@@ -40,7 +40,7 @@ def save_to_json(key, **kwargs):
             "rounds": []
         })
     else:
-        data = read_file(PATH_DATA_PLAYERS_JSON_FILE)
+        data = read_json_file(PATH_DATA_PLAYERS_JSON_FILE)
         path = PATH_DATA_PLAYERS_JSON_FILE
         data["players"].append({
             "national_id": kwargs["national_id"],
@@ -48,7 +48,7 @@ def save_to_json(key, **kwargs):
             "first_name": kwargs["first_name"].capitalize(),
         })
 
-    write_file(path, data)
+    write_json_file(path, data)
 
 
 def load_tournament(path_file):
@@ -64,11 +64,17 @@ def load_tournament(path_file):
 
 def update_tournament(path_file, tournament_id, new_value):
     """Update the last tournament data from the json file"""
-    data = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+    data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
 
     for index, tournament in enumerate(data["tournaments"]):
         if tournament.get("tournament_id") == int(tournament_id):
             data["tournaments"][index] = new_value
             break
 
-    write_file(path_file, data)
+    write_json_file(path_file, data)
+
+
+def write_file(path_file, data):
+    """Write data to a file"""
+    with open(path_file, "w") as f:
+        f.write(data)

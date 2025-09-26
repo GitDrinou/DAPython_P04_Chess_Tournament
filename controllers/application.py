@@ -2,19 +2,22 @@ import time
 
 from models.player import Player
 from models.tournament import Tournament
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
-from utils.file_utils import load_tournament
+from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
+    PATH_DATA_PLAYERS_JSON_FILE
+from utils.file_utils import load_tournament, read_json_file
 
 
 class ApplicationController:
     """ Application class controller"""
     def __init__(self, player_controller, tournament_controller,
-                 round_controller, match_controller, menu_view, display_view):
+                 round_controller, match_controller,
+                 report_controller, menu_view, display_view):
         """ Initialize the application controller """
         self.player_controller = player_controller
         self.tournament_controller = tournament_controller
         self.round_controller = round_controller
         self.match_controller = match_controller
+        self.report_controller = report_controller
         self.menu_view = menu_view
         self.display_view = display_view
 
@@ -95,8 +98,8 @@ class ApplicationController:
                                   "pour pouvoir générer un tour.\nVeuillez "
                                   "continuer à inscrire des joueurs au "
                                   "tournoi.\nLe minimum attendu est de 4 "
-                                  "joueurs, il faut aussi que le total de "
-                                  "joueurs soit un nombre pair.")
+                                  "joueurs et le total doit être un nombre "
+                                  "pair.")
                             print("..........................................")
                             time.sleep(3)
                             self.menu_view.clear_console()
@@ -180,6 +183,22 @@ class ApplicationController:
                         self.menu_view.clear_console()
                         break
                     elif tournament_choice == "R":
+                        self.menu_view.clear_console()
+                        break
+            elif user_choice == "3":
+                self.menu_view.clear_console()
+                while True:
+                    report_choice = self.menu_view.reports_prompt()
+
+                    if report_choice == "1":
+                        self.menu_view.clear_console()
+                        data = read_json_file(PATH_DATA_PLAYERS_JSON_FILE)
+                        players = sorted(data["players"], key=lambda x: (x[
+                            "last_name"]))
+                        self.report_controller.players(players)
+                        time.sleep(10)
+                        self.menu_view.clear_console()
+                    elif report_choice.upper() == "R":
                         self.menu_view.clear_console()
                         break
             elif user_choice.upper() == "Q":

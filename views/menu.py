@@ -2,7 +2,7 @@ import os
 
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.date_utils import validate_date, checks_dates
-from utils.file_utils import read_file
+from utils.file_utils import read_json_file
 
 
 class MenuView:
@@ -17,7 +17,7 @@ class MenuView:
         print("=====================================================")
         print("1. Créer un nouveau tournoi")
         print("2. Démarrer ou continuer la gestion du nouveau tournoi")
-        print("3. Rapports")
+        print("3. Générer les rapports")
         print("Q. Quitter l'application")
         print("=====================================================")
 
@@ -89,7 +89,7 @@ class MenuView:
     @staticmethod
     def tournament_menu_prompt():
         """Display the submenu for the current tournament"""
-        data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         last_tournament = data_tournaments["tournaments"][-1]
         current_round_number = last_tournament["round_number"]
         number_pf_rounds = last_tournament["number_of_rounds"]
@@ -114,11 +114,11 @@ class MenuView:
     def round_prompt():
         """Display the submenu for a specific theme"""
         print("\nGESTION D'UN TOUR:")
-        print("*************************************************")
+        print("=====================================================")
         print("1. Démarrer le tour")
         print("2. Terminer le tour")
         print("R. Revenir au menu principal de l'application")
-        print("*************************************************")
+        print("=====================================================")
         round_choice = input("Choisissez une option: ")
 
         return round_choice
@@ -127,7 +127,7 @@ class MenuView:
     def match_prompt(match_id):
         """Prompt the user to enter the match's scores"""
         print(f"\nINSCRIRE LES SCORES DU MATCH N°{match_id}")
-        print("*************************************************")
+        print("=====================================================")
         score1 = input("Saisissez le score du joueur 1 - Score 1 (0 ou 1): ")
         score2 = input("Saisissez le score du joueur 2 - Score 2 (0 ou 1): ")
 
@@ -144,3 +144,20 @@ class MenuView:
         national_id = input("Saisissez l'identifiant du joueur: ")
 
         return national_id
+
+    @staticmethod
+    def reports_prompt():
+        """Prompt the user to generate reports"""
+        print("\nGENERATION DE RAPPORTS")
+        print("=====================================================")
+        print("1. Liste des joueurs par ordre alphabétique")
+        print("2. Liste de tous les tournois")
+        print("3. Nom et dates d’un tournoi")
+        print("4. Liste des joueurs d'un tournoi par ordre alphabétique")
+        print("5. Liste de tous les tours du tournoi et de tous les matchs "
+              "du tour.")
+        print("R. Revenir au menu principal de l'application")
+        print("=====================================================")
+        report_choice = input("Choisissez une option: ")
+
+        return report_choice

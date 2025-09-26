@@ -5,6 +5,7 @@ import os
 from controllers.application import ApplicationController
 from controllers.match import MatchController
 from controllers.player import PlayerController
+from controllers.report import ReportController
 from controllers.round import RoundController
 from controllers.tournament import TournamentController
 # from controllers.round import RoundController
@@ -13,7 +14,7 @@ from controllers.tournament import TournamentController
 # from models.tournament import Tournament
 from utils.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
                              PATH_DATA_PLAYERS_JSON_FILE)
-from utils.file_utils import (read_file)
+from utils.file_utils import (read_json_file)
 from views.menu import MenuView
 from views.display_table import DisplayTableView
 
@@ -36,7 +37,7 @@ def initialize():
 
 def main():
     """Main entry point of the application."""
-    data_players = read_file(PATH_DATA_PLAYERS_JSON_FILE)
+    data_players = read_json_file(PATH_DATA_PLAYERS_JSON_FILE)
     # data_tournaments = read_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
 
     total_players = len(data_players["players"])
@@ -49,12 +50,14 @@ def main():
         tournament_controller = TournamentController()
         round_controller = RoundController()
         match_controller = MatchController()
+        report_controller = ReportController()
         main_view = MenuView()
         display_view = DisplayTableView()
         application_controller = ApplicationController(player_controller,
                                                        tournament_controller,
                                                        round_controller,
                                                        match_controller,
+                                                       report_controller,
                                                        main_view, display_view)
         application_controller.run()
 
