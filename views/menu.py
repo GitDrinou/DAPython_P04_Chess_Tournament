@@ -3,6 +3,7 @@ import os
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.date_utils import validate_date, checks_dates
 from utils.file_utils import read_json_file
+from utils.player_utils import check_format_national_id, check_player_is_exist
 
 
 class MenuView:
@@ -36,11 +37,22 @@ class MenuView:
         """Prompt the user to enter player's lastname and firstname"""
         print("\nINSCRIPTION DE JOUEURS")
         print("=====================================================")
-        lastname = input("Saisissez le nom de famille du joueur: ")
-        firstname = input("Saisissez le prénom du joueur: ")
         national_id = input("Saisissez l'identifiant national du joueur: ")
-        return {"national_id": national_id, "lastname": lastname,
-                "firstname": firstname}
+
+        if check_format_national_id(national_id) is not None:
+            player = check_player_is_exist(national_id)
+            if player is not None:
+                lastname = player["last_name"]
+                firstname = player["first_name"]
+            else:
+                lastname = input("Saisissez le nom de famille du joueur: ")
+                firstname = input("Saisissez le prénom du joueur: ")
+
+            return {"national_id": national_id, "lastname": lastname,
+                    "firstname": firstname}
+        else:
+            return print("Le format de l'identitifant national est "
+                         "incorrect.\nFormat attendu : 1 lettre + 5 chiffres")
 
     def tournament_prompt(self):
         """Prompt the user to enter tournament's details"""
