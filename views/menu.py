@@ -157,8 +157,7 @@ class MenuView:
 
         return national_id
 
-    @staticmethod
-    def reports_prompt():
+    def reports_prompt(self):
         """Prompt the user to generate reports"""
         print("\nGENERATION DE RAPPORTS")
         print("=====================================================")
@@ -173,3 +172,10 @@ class MenuView:
         report_choice = input("Choisissez une option: ")
 
         return report_choice
+
+    @staticmethod
+    def report_tournament_prompt():
+        """Prompt the user to enter the tournament id"""
+        tournament_id = input("Saisissez l'identifiant du tournoi: ")
+
+        return int(tournament_id)

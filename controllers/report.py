@@ -87,8 +87,19 @@ class ReportController:
 
     def tournaments(self, tournaments):
         """Generate the report for all tournaments"""
+        if len(tournaments) == 1:
+            title = "Détail du tournoi"
+            file = PATH_REPORTS_FILES + "tournament_detail.html"
+            absolute_path_file = self.file_part + os.path.abspath(
+                "reports/tournament_detail.html")
+        else:
+            title = "Liste des tournois"
+            file = PATH_REPORTS_FILES + "tournaments_list.html"
+            absolute_path_file = self.file_part + os.path.abspath(
+                "reports/tournaments_list.html")
+
         datas_to_display = {
-            "title": "Liste des tournois",
+            "title": title,
             "tournaments": tournaments,
         }
         template_html = """
@@ -199,12 +210,8 @@ class ReportController:
 
         template = Template(template_html)
         content = template.render(**datas_to_display)
-        file = PATH_REPORTS_FILES + "tournaments_list.html"
 
         write_file(file, content)
-
-        absolute_path_file = self.file_part + os.path.abspath(
-            "reports/tournaments_list.html")
 
         return print(f"\nLe rapport a été généré avec succès.\nVous pouvez "
                      f"le retrouver en cliquant sur le lien suivant:\n"

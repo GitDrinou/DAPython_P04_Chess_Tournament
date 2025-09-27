@@ -205,6 +205,19 @@ class ApplicationController:
                         self.report_controller.tournaments(tournaments)
                         time.sleep(10)
                         self.menu_view.clear_console()
+                    elif report_choice == "3":
+                        self.menu_view.clear_console()
+                        tournament_id \
+                            = self.menu_view.report_tournament_prompt()
+                        tournaments = data_tournaments["tournaments"]
+                        for tournament in tournaments:
+                            if (tournament.get('tournament_id') ==
+                                    tournament_id):
+                                (self.report_controller
+                                    .tournaments([tournament]))
+                                break
+                        time.sleep(10)
+                        self.menu_view.clear_console()
                     elif report_choice.upper() == "R":
                         self.menu_view.clear_console()
                         break
