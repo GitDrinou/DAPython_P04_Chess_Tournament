@@ -157,7 +157,8 @@ class MenuView:
 
         return national_id
 
-    def reports_prompt(self):
+    @staticmethod
+    def reports_prompt():
         """Prompt the user to generate reports"""
         print("\nGENERATION DE RAPPORTS")
         print("=====================================================")
@@ -176,6 +177,21 @@ class MenuView:
     @staticmethod
     def report_tournament_prompt():
         """Prompt the user to enter the tournament id"""
+        data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        tournaments = data_tournaments["tournaments"]
+
         tournament_id = input("Saisissez l'identifiant du tournoi: ")
 
-        return int(tournament_id)
+        is_exist = False
+
+        for tournament in tournaments:
+            if tournament["tournament_id"] == tournament_id:
+                is_exist = True
+
+        if is_exist:
+            return tournament_id
+        else:
+
+            print("\n........................................................")
+            print("\nL'identifiant du tournoi n'existe pas.")
+            return None

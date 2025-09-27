@@ -209,30 +209,53 @@ class ApplicationController:
                         self.menu_view.clear_console()
                         tournament_id \
                             = self.menu_view.report_tournament_prompt()
-                        self.menu_view.clear_console()
-                        tournaments = data_tournaments["tournaments"]
-                        for tournament in tournaments:
-                            if (tournament.get('tournament_id') ==
-                                    tournament_id):
-                                (self.report_controller
-                                    .tournaments([tournament]))
-                                break
-                        time.sleep(10)
+                        if tournament_id is not None:
+                            self.menu_view.clear_console()
+                            tournaments = data_tournaments["tournaments"]
+                            for tournament in tournaments:
+                                if (tournament.get('tournament_id') ==
+                                        tournament_id):
+                                    (self.report_controller
+                                        .tournaments([tournament]))
+                                    break
+                                time.sleep(10)
+                                self.menu_view.clear_console()
+                        time.sleep(3)
                         self.menu_view.clear_console()
                     elif report_choice == "4":
                         self.menu_view.clear_console()
                         tournament_id \
                             = self.menu_view.report_tournament_prompt()
+                        if tournament_id is not None:
+                            self.menu_view.clear_console()
+                            tournaments = data_tournaments["tournaments"]
+                            for tournament in tournaments:
+                                if (tournament.get('tournament_id') ==
+                                        tournament_id):
+                                    (self.report_controller
+                                     .players(tournament["players"], True,
+                                              tournament["name"]))
+                                    break
+                                time.sleep(10)
+                                self.menu_view.clear_console()
+                        time.sleep(3)
                         self.menu_view.clear_console()
-                        tournaments = data_tournaments["tournaments"]
-                        for tournament in tournaments:
-                            if (tournament.get('tournament_id') ==
-                                    tournament_id):
-                                (self.report_controller
-                                 .players(tournament["players"], True,
-                                          tournament["name"]))
-                                break
-                        time.sleep(10)
+                    elif report_choice == "5":
+                        self.menu_view.clear_console()
+                        tournament_id \
+                            = self.menu_view.report_tournament_prompt()
+                        if tournament_id is not None:
+                            self.menu_view.clear_console()
+                            tournaments = data_tournaments["tournaments"]
+                            for tournament in tournaments:
+                                if (tournament.get('tournament_id') ==
+                                        tournament_id):
+                                    (self.report_controller
+                                     .tournament_round(tournament))
+                                    break
+                                time.sleep(10)
+                                self.menu_view.clear_console()
+                        time.sleep(3)
                         self.menu_view.clear_console()
                     elif report_choice.upper() == "R":
                         self.menu_view.clear_console()

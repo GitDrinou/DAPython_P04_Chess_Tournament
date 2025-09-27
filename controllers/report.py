@@ -15,7 +15,8 @@ class ReportController:
         file_part = "file:///"
 
     def players(self, players, tournament=False, tournament_name=""):
-        """Generate the report for all players with alphabetic order"""
+        """Generate the report for all players with alphabetic order (for a
+        tournament or not)"""
 
         if tournament:
             title = "Liste des joueurs du tournoi (par ordre alphabétique)"
@@ -96,7 +97,8 @@ class ReportController:
                      f"ou en allant dans le dossier REPORTS de l'application.")
 
     def tournaments(self, tournaments):
-        """Generate the report for all tournaments"""
+        """Generate the report for all tournaments or for a specific
+        tournament"""
         if len(tournaments) == 1:
             title = "Détail du tournoi"
             file = PATH_REPORTS_FILES + "tournament_detail.html"
@@ -214,6 +216,103 @@ class ReportController:
                         </table>
                         <hr>
                     {% endfor %}
+                   </body>
+                </html>
+                """
+
+        template = Template(template_html)
+        content = template.render(**datas_to_display)
+
+        write_file(file, content)
+
+        return print(f"\nLe rapport a été généré avec succès.\nVous pouvez "
+                     f"le retrouver en cliquant sur le lien suivant:\n"
+                     f"{absolute_path_file}\n"
+                     f"ou en allant dans le dossier REPORTS de l'application.")
+
+    def tournament_round(self, tournament):
+        """Generate the report for all rounds of a tournament"""
+        title = "Détail des tours et matchs du tournoi"
+        file = PATH_REPORTS_FILES + "tournament_rounds_detail.html"
+        absolute_path_file = self.file_part + os.path.abspath(
+            "reports/tournament_rounds_detail.html")
+
+        datas_to_display = {
+            "title": title,
+            "tournament": tournament,
+        }
+        template_html = """
+            <html lang="fr">
+                <head>
+                    <meta charset="utf-8">
+                    <title>{{ title }}</title>
+                    <style>
+                        body {
+                            font-family: Tahoma, sans-serif;
+                            font-size: 1rem;
+                            padding: 24px;
+                        }
+                        table {
+                            border-collapse: collapse;
+                            border: 2px solid rgb(200, 200, 200);
+                            letter-spacing: 1px;
+                        }
+                        td,th {
+                            border: 1px solid rgb(190, 190, 190);
+                            padding: 5px 16px;
+                        }
+                        th {background-color: rgb(215, 215, 215);}
+                        td {text-align: center;}
+                        hr {
+                            margin-top: 24px;
+                            border: none;
+                            border-top: 3px dotted black;
+                        }
+                        .round {background-color: rgb(235, 235, 235);}
+                    </style>
+                </head>
+                <body>
+                    <h1>{{ title }}</h1>
+                    <h2>{{ tournament["name"] }}</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tour</th>
+                                <th>Début</th>
+                                <th>Fin</th>
+                                <th>Id Match</th>
+                                <th>Joueur 1</th>
+                                <th>Joueur 2</th>
+                                <th>Score 1</th>
+                                <th>Score 2</th>
+                            </tr>
+                        <thead>
+                        <tbody>
+                        {% for round in tournament["rounds"] %}
+                            {% for match in round["matchs"] %}
+                                <tr>
+                                {% if loop.first %}
+                                    <td rowspan="2" class="round">
+                                        {{ round["name"] }}
+                                    </td>
+                                    <td rowspan="2" class="round">
+                                        {{ round["round_start_date"] }}
+                                    </td>
+                                    <td rowspan="2" class="round">
+                                        {{ round["round_end_date"] }}
+                                    </td>
+                                {% endif %}
+                                    <td>{{ match["match_id"] }}</td>
+                                    <td>{{ match["match"][0][0] }}</td>
+                                    <td>{{ match["match"][1][0] }}</td>
+                                    <td>{{ match["match"][0][1] }}</td>
+                                    <td>{{ match["match"][1][1] }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <hr>
                    </body>
                 </html>
                 """
