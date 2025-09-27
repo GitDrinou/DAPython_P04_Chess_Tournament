@@ -16,7 +16,7 @@ def read_json_file(path_file):
 
 def write_json_file(path_file, data):
     """Write data to a JSON file"""
-    with open(path_file, "w") as f:
+    with open(path_file, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
 
@@ -76,5 +76,5 @@ def update_tournament(path_file, tournament_id, new_value):
 
 def write_file(path_file, data):
     """Write data to a file"""
-    with open(path_file, "w") as f:
+    with open(path_file, "w", encoding="utf-8") as f:
         f.write(data)

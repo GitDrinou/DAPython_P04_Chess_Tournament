@@ -189,13 +189,20 @@ class ApplicationController:
                 self.menu_view.clear_console()
                 while True:
                     report_choice = self.menu_view.reports_prompt()
-
+                    data_players = read_json_file(PATH_DATA_PLAYERS_JSON_FILE)
+                    data_tournaments = read_json_file(
+                        PATH_DATA_TOURNAMENTS_JSON_FILE)
                     if report_choice == "1":
                         self.menu_view.clear_console()
-                        data = read_json_file(PATH_DATA_PLAYERS_JSON_FILE)
-                        players = sorted(data["players"], key=lambda x: (x[
-                            "last_name"]))
+                        players = sorted(data_players["players"],
+                                         key=lambda x: (x["last_name"]))
                         self.report_controller.players(players)
+                        time.sleep(10)
+                        self.menu_view.clear_console()
+                    elif report_choice == "2":
+                        self.menu_view.clear_console()
+                        tournaments = data_tournaments["tournaments"]
+                        self.report_controller.tournaments(tournaments)
                         time.sleep(10)
                         self.menu_view.clear_console()
                     elif report_choice.upper() == "R":

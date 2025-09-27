@@ -2,11 +2,11 @@
     "tournaments": [
         {
             "tournament_id": 1,
-            "name": "LE TOURNOI DE LA BELLE \u00c9TOILE",
-            "location": "Salle des f\u00eates de l\udcc3'\u00e9toile de la mort",
+            "name": "LE TOURNOI DE LA BELLE ÉTOILE",
+            "location": "Salle des fêtes de l'étoile de la mort",
             "start_date": "2025-09-29 00:00:00",
             "end_date": "2025-09-29 00:00:00",
-            "description": "Ouverture des portes \u00e0 8h00.",
+            "description": "Ouverture des portes à 8h00.",
             "number_of_rounds": "4",
             "round_number": "4",
             "is_on_break": false,
@@ -178,10 +178,10 @@
         {
             "tournament_id": 2,
             "name": "LE TOURNOI DU SOLEIL COUCHANT",
-            "location": "Salle sun tsu du p\u00f4le d'activit\u00e9 warland",
+            "location": "Salle sun tsu du pôle d'activité warland",
             "start_date": "2025-10-03 00:00:00",
             "end_date": "2025-10-03 00:00:00",
-            "description": "Ouverture des portes \u00e0 10H00.",
+            "description": "Ouverture des portes à 10H00.",
             "number_of_rounds": "4",
             "round_number": 0,
             "is_on_break": false,
