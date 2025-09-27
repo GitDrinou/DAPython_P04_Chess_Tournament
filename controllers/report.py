@@ -14,18 +14,32 @@ class ReportController:
     else:
         file_part = "file:///"
 
-    def players(self, players):
+    def players(self, players, tournament=False, tournament_name=""):
         """Generate the report for all players with alphabetic order"""
+
+        if tournament:
+            title = "Liste des joueurs du tournoi (par ordre alphabétique)"
+            subtitle = tournament_name
+            file = PATH_REPORTS_FILES + "tournament_players.html"
+            absolute_path_file = self.file_part + os.path.abspath(
+                "reports/tournament_players.html")
+        else:
+            title = "Liste des joueurs (par ordre alphabétique)"
+            subtitle = ""
+            file = PATH_REPORTS_FILES + "players_list.html"
+            absolute_path_file = self.file_part + os.path.abspath(
+                "reports/players_list.html")
+
         datas_to_display = {
-            "title": "Liste des joueurs (par ordre alphabétique)",
+            "title": title,
             "players": players,
-            "total": len(players),
+            "subtitle": subtitle,
         }
         template_html = """
         <html lang="fr">
             <head>
                 <meta charset="utf-8">
-                <title>{{ title }}</title>
+                <title>{{ title }} / {{ subtitle }}</title>
                 <style>
                     body {
                         font-family: Tahoma, sans-serif;
@@ -48,7 +62,7 @@ class ReportController:
             </head>
            <body>
               <h1>{{ title }}</h1>
-              <p>Total de joueurs {{ total }}</p>
+              <h2>{{ subtitle }}</h2>
               <table>
                 <thead>
                     <tr>
@@ -73,12 +87,8 @@ class ReportController:
 
         template = Template(template_html)
         content = template.render(**datas_to_display)
-        file = PATH_REPORTS_FILES + "players_list.html"
 
         write_file(file, content)
-
-        absolute_path_file = self.file_part + os.path.abspath(
-            "reports/players_list.html")
 
         return print(f"\nLe rapport a été généré avec succès.\nVous pouvez "
                      f"le retrouver en cliquant sur le lien suivant:\n"

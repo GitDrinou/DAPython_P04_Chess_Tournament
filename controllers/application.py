@@ -209,12 +209,28 @@ class ApplicationController:
                         self.menu_view.clear_console()
                         tournament_id \
                             = self.menu_view.report_tournament_prompt()
+                        self.menu_view.clear_console()
                         tournaments = data_tournaments["tournaments"]
                         for tournament in tournaments:
                             if (tournament.get('tournament_id') ==
                                     tournament_id):
                                 (self.report_controller
                                     .tournaments([tournament]))
+                                break
+                        time.sleep(10)
+                        self.menu_view.clear_console()
+                    elif report_choice == "4":
+                        self.menu_view.clear_console()
+                        tournament_id \
+                            = self.menu_view.report_tournament_prompt()
+                        self.menu_view.clear_console()
+                        tournaments = data_tournaments["tournaments"]
+                        for tournament in tournaments:
+                            if (tournament.get('tournament_id') ==
+                                    tournament_id):
+                                (self.report_controller
+                                 .players(tournament["players"], True,
+                                          tournament["name"]))
                                 break
                         time.sleep(10)
                         self.menu_view.clear_console()
