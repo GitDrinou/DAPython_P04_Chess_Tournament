@@ -33,51 +33,60 @@ class MenuView:
         os.system('cls' if os.name == 'nt' else 'clear')
 
     @staticmethod
-    def player_prompt():
+    def date_player_prompt():
+        """Prompt the user to enter the player's birthdate"""
+
+        while True:
+            birth_date = input("Saisissez la date de naissance du joueur ("
+                               "format attendu: JJ/MM/AAAA): ")
+
+            birth_date = validate_date(birth_date)
+
+            if birth_date:
+                break
+
+        return birth_date
+
+    def player_prompt(self):
         """Prompt the user to enter player's lastname and firstname"""
-        print("\nINSCRIPTION DE JOUEURS")
-        print("=====================================================")
-        national_id = input("Saisissez l'identifiant national du joueur: ")
+        while True:
+            print("\nINSCRIPTION DE JOUEURS")
+            print("=====================================================")
+            national_id = input("Saisissez l'identifiant national du joueur: ")
 
-        if check_format_national_id(national_id) is not None:
-            player = check_player_is_exist(national_id)
-            if player is not None:
-                lastname = player["last_name"]
-                firstname = player["first_name"]
+            if check_format_national_id(national_id) is not None:
+                player = check_player_is_exist(national_id)
+                if player is not None:
+                    national_id = player["national_id"],
+                    lastname = player["last_name"]
+                    firstname = player["first_name"]
+                    birthdate = player["birthdate"]
+                    player = {
+                        "national_id": national_id,
+                        "lastname": lastname,
+                        "firstname": firstname,
+                        "birthdate": birthdate.strftime("%d/%m/%Y")
+                    }
+                    break
+                else:
+                    lastname = input("Saisissez le nom de famille du joueur: ")
+                    firstname = input("Saisissez le prénom du joueur: ")
+                    birthdate = self.date_player_prompt()
+                    player = {
+                        "national_id": national_id,
+                        "lastname": lastname,
+                        "firstname": firstname,
+                        "birthdate": birthdate.strftime("%d/%m/%Y")
+                    }
+                    break
             else:
-                lastname = input("Saisissez le nom de famille du joueur: ")
-                firstname = input("Saisissez le prénom du joueur: ")
+                print("Le format de l'identitifant national est incorrect."
+                      "\nFormat attendu : 1 lettre + 5 chiffres")
 
-            return {"national_id": national_id, "lastname": lastname,
-                    "firstname": firstname}
-        else:
-            return print("Le format de l'identitifant national est "
-                         "incorrect.\nFormat attendu : 1 lettre + 5 chiffres")
-
-    def tournament_prompt(self):
-        """Prompt the user to enter tournament's details"""
-
-        print("\nCREATION D'UN NOUVEAU TOURNOI")
-        print("=====================================================")
-        name = input("Saisissez le nom du tournoi: ")
-        location = input("Saisissez la localisation du tournoi: ")
-        description = input("Saisissez une description du tournoi: ")
-        number_of_rounds = input("Saisissez le nombre de tours (par défaut: "
-                                 "4): ")
-
-        dates = self.dates_prompt()
-
-        return {
-            "name": name,
-            "location": location,
-            "start_date": dates["start_date"],
-            "end_date": dates["end_date"],
-            "description": description,
-            "number_of_rounds": number_of_rounds
-        }
+        return player
 
     @staticmethod
-    def dates_prompt():
+    def dates_tournament_prompt():
         """Prompt the user to enter date of tournament"""
 
         while True:
@@ -96,6 +105,28 @@ class MenuView:
         return {
             "start_date": start_date,
             "end_date": end_date
+        }
+
+    def tournament_prompt(self):
+        """Prompt the user to enter tournament's details"""
+
+        print("\nCREATION D'UN NOUVEAU TOURNOI")
+        print("=====================================================")
+        name = input("Saisissez le nom du tournoi: ")
+        location = input("Saisissez la localisation du tournoi: ")
+        description = input("Saisissez une description du tournoi: ")
+        number_of_rounds = input("Saisissez le nombre de tours (par défaut: "
+                                 "4): ")
+
+        dates = self.dates_tournament_prompt()
+
+        return {
+            "name": name,
+            "location": location,
+            "start_date": dates["start_date"],
+            "end_date": dates["end_date"],
+            "description": description,
+            "number_of_rounds": number_of_rounds
         }
 
     @staticmethod

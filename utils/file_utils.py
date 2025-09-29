@@ -30,8 +30,8 @@ def save_to_json(key, **kwargs):
             "tournament_id": kwargs["tournament_id"],
             "name": kwargs["name"].upper(),
             "location": kwargs["location"].capitalize(),
-            "start_date": str(kwargs["start_date"]),
-            "end_date": str(kwargs["end_date"]),
+            "start_date": kwargs["start_date"].strftime("%d/%m/%Y"),
+            "end_date": kwargs["end_date"].strftime("%d/%m/%Y"),
             "description": kwargs["description"],
             "number_of_rounds": kwargs["number_of_rounds"],
             "round_number": kwargs["round_number"],
@@ -46,6 +46,7 @@ def save_to_json(key, **kwargs):
             "national_id": kwargs["national_id"],
             "last_name": kwargs["last_name"].upper(),
             "first_name": kwargs["first_name"].capitalize(),
+            "birth_date": kwargs["birth_date"],
         })
 
     write_json_file(path, data)

@@ -22,5 +22,6 @@ def check_player_is_exist(national_id):
             return {
                 "last_name": player["last_name"],
                 "first_name": player["first_name"],
+                "birth_date": player["birth_date"],
             }
     return None

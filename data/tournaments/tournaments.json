@@ -2,11 +2,11 @@
     "tournaments": [
         {
             "tournament_id": 1,
-            "name": "LE TOURNOI DE LA BELLE ÉTOILE",
-            "location": "Salle des fêtes de l'étoile de la mort",
+            "name": "LE TOURNOI DE LA BELLE \u00c9TOILE",
+            "location": "Salle des f\u00eates de l'\u00e9toile de la mort",
             "start_date": "2025-09-29 00:00:00",
             "end_date": "2025-09-29 00:00:00",
-            "description": "Ouverture des portes à 8h00.",
+            "description": "Ouverture des portes \u00e0 8h00.",
             "number_of_rounds": "4",
             "round_number": "4",
             "is_on_break": false,
@@ -178,60 +178,33 @@
         {
             "tournament_id": 2,
             "name": "LE TOURNOI DU SOLEIL COUCHANT",
-            "location": "Salle sun tsu du pôle d'activité warland",
+            "location": "Salle sun tsu du p\u00f4le d'activit\u00e9 warland",
             "start_date": "2025-10-03 00:00:00",
             "end_date": "2025-10-03 00:00:00",
-            "description": "Ouverture des portes à 10H00.",
+            "description": "Ouverture des portes \u00e0 10H00.",
             "number_of_rounds": "4",
             "round_number": 0,
             "is_on_break": false,
             "players": [
                 {
-                    "national_id": "M00556",
-                    "last_name": "JUNES",
-                    "first_name": "Dehlia",
-                    "points": 0.0
-                },
-                {
-                    "national_id": "J55987",
-                    "last_name": "SKYWALKER",
-                    "first_name": "Luke",
-                    "points": 0.0
-                },
-                {
-                    "national_id": "G58120",
-                    "last_name": "THOMASSON",
-                    "first_name": "Jorgen",
-                    "points": 0.0
-                },
-                {
-                    "national_id": "W54367",
-                    "last_name": "WILDE",
-                    "first_name": "Oscar",
-                    "points": 0.0
-                },
-                {
-                    "national_id": "W34567",
-                    "last_name": "WERBER",
-                    "first_name": "Bernard",
-                    "points": 0.0
-                },
-                {
-                    "national_id": "P23456",
+                    "national_id": "P85930",
                     "last_name": "PROUST",
                     "first_name": "Marcel",
+                    "birth_date": "10/07/1871",
                     "points": 0.0
                 },
                 {
-                    "national_id": "L46754",
-                    "last_name": "LECONTE",
-                    "first_name": "Angela",
+                    "national_id": "W30294",
+                    "last_name": "WERBER",
+                    "first_name": "Bernard",
+                    "birth_date": "18/09/1961",
                     "points": 0.0
                 },
                 {
-                    "national_id": "R65789",
-                    "last_name": "ROBERTSON",
-                    "first_name": "Kirk",
+                    "national_id": "B48392",
+                    "last_name": "BOURNE",
+                    "first_name": "Jason",
+                    "birth_date": "09/02/1989",
                     "points": 0.0
                 }
             ],

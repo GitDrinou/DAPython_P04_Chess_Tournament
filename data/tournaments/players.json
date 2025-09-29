@@ -1,134 +1,22 @@
 {
     "players": [
         {
-            "national_id": "X88457",
-            "last_name": "DUPONT",
-            "first_name": "Mark"
-        },
-        {
-            "national_id": "W57894",
-            "last_name": "BURTON",
-            "first_name": "Charles",
-            "points": 0
-        },
-        {
-            "national_id": "D98766",
-            "last_name": "JAMES",
-            "first_name": "Olivia",
-            "points": 0
-        },
-        {
-            "national_id": "L98524",
-            "last_name": "JOHN",
-            "first_name": "Anna",
-            "points": 0
-        },
-        {
-            "national_id": "B67890",
-            "last_name": "SMITH",
-            "first_name": "Luke"
-        },
-        {
-            "national_id": "A67890",
-            "last_name": "DOE",
-            "first_name": "Jane",
-            "points": 0
-        },
-        {
-            "national_id": "A12345",
-            "last_name": "DOE",
-            "first_name": "John",
-            "points": 0
-        },
-        {
-            "national_id": "J55987",
-            "last_name": "SKYWALKER",
-            "first_name": "Luke"
-        },
-        {
-            "national_id": "M00556",
-            "last_name": "JUNES",
-            "first_name": "Dehlia"
-        },
-        {
-            "national_id": "Y66674",
-            "last_name": "MORGAN",
-            "first_name": "John"
-        },
-        {
-            "national_id": "L00032",
-            "last_name": "WALKER",
-            "first_name": "Paula"
-        },
-        {
-            "national_id": "S94503",
-            "last_name": "MARY",
-            "first_name": "Bianca"
-        },
-        {
-            "national_id": "M00004",
-            "last_name": "THOMAS",
-            "first_name": "Paul"
-        },
-        {
-            "national_id": "A45872",
-            "last_name": "BROWN",
-            "first_name": "Andy"
-        },
-        {
-            "national_id": "P19319",
-            "last_name": "SMITH",
-            "first_name": "Sam"
-        },
-        {
-            "national_id": "G58120",
-            "last_name": "THOMASSON",
-            "first_name": "Jorgen"
-        },
-        {
-            "national_id": "B50493",
-            "last_name": "BAKER",
-            "first_name": "Josephine"
-        },
-        {
-            "national_id": "P54394",
-            "last_name": "PAUL",
-            "first_name": "Will"
-        },
-        {
-            "national_id": "F94850",
-            "last_name": "FLASH",
-            "first_name": "Gordon"
-        },
-        {
-            "national_id": "W54367",
-            "last_name": "WILDE",
-            "first_name": "Oscar"
-        },
-        {
-            "national_id": "W34567",
-            "last_name": "WERBER",
-            "first_name": "Bernard"
-        },
-        {
-            "national_id": "P23456",
+            "national_id": "P85930",
             "last_name": "PROUST",
-            "first_name": "Marcel"
+            "first_name": "Marcel",
+            "birth_date": "10/07/1871"
         },
         {
-            "national_id": "L46754",
-            "last_name": "LECONTE",
-            "first_name": "Angela"
+            "national_id": "W30294",
+            "last_name": "WERBER",
+            "first_name": "Bernard",
+            "birth_date": "18/09/1961"
         },
         {
-            "national_id": "D56778",
-            "last_name": "TOTO",
-            "first_name": "Tata"
-        },
-        {
-            "national_id": "R65789",
-            "last_name": "ROBERTSON",
-            "first_name": "Kirk"
+            "national_id": "B48392",
+            "last_name": "BOURNE",
+            "first_name": "Jason",
+            "birth_date": "09/02/1989"
         }
     ]
 }

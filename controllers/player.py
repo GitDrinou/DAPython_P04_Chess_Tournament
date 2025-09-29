@@ -16,6 +16,7 @@ class PlayerController:
             "national_id": player.national_id.capitalize(),
             "last_name": player.last_name.upper(),
             "first_name": player.first_name.capitalize(),
+            "birth_date": player.birth_date,
             "points": 0.0
         })
 
@@ -27,7 +28,8 @@ class PlayerController:
             save_to_json("players",
                          national_id=player.national_id.capitalize(),
                          last_name=player.last_name.upper(),
-                         first_name=player.first_name.capitalize())
+                         first_name=player.first_name.capitalize(),
+                         birth_date=player.birth_date)
 
         print("=====================================================")
         print("\nLe joueur a été inscrit au tournoi avec succès.")

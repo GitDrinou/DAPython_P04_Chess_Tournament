@@ -60,7 +60,8 @@ class ApplicationController:
                             player = self.menu_view.player_prompt()
                             self.player_controller.add(
                                 Player(player["national_id"], player[
-                                    "lastname"], player["firstname"]))
+                                    "lastname"], player["firstname"],
+                                       player["birthdate"]))
                             time.sleep(2)
                             self.menu_view.clear_console()
                         else:

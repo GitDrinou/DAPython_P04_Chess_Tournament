@@ -44,10 +44,11 @@ class DisplayTableView:
             national_id = entry["national_id"]
             lastname = entry["last_name"]
             firstname = entry["first_name"]
+            birthdate = entry["birth_date"]
             points = entry["points"]
-            rows.append([national_id, lastname, firstname, points])
+            rows.append([national_id, lastname, firstname, birthdate, points])
         headers = ["Identifiant national", "Nom de famille", "Prénom",
-                   "Points"]
+                   "Date de naissance", "Points"]
 
         print("\n...........................................................")
         print(f">> {tournament_name}:\n")
