@@ -38,56 +38,75 @@ class TournamentController:
         return print("---------------------------\n" + message)
 
     @staticmethod
-    def generate_round(number_of_rounds, round_number, players):
+    def generate_round(number_of_rounds, round_number, players,
+                       tournament_id, round_id=None):
         """Generate a random tournament round"""
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        last_tournament = data_tournaments["tournaments"][-1]
+        tournaments = data_tournaments["tournaments"]
+        for tournament in tournaments:
+            if ((round_id is None or round_id == 0)
+                    and tournament["tournament_id"] == tournament_id):
+                if int(round_number) == int(number_of_rounds):
+                    return print("Vous avez atteint le nombre de tours pour "
+                                 "ce tournoi.")
 
-        if int(round_number) == int(number_of_rounds):
-            return print("Vous avez atteint le nombre de tours pour ce "
-                         "tournoi.")
+                round_number += 1
+                round_name = "Round {}".format(round_number)
+                round_detail = Round(round_number, round_name)
 
-        round_number += 1
-        round_name = "Round {}".format(round_number)
-        round_detail = Round(round_number, round_name)
+                if round_number == 1:
+                    random.shuffle(players)
+                else:
+                    players.sort(key=lambda player: player["points"],
+                                 reverse=True)
 
-        if round_number == 1:
-            random.shuffle(players)
-        else:
-            players.sort(key=lambda player: player["points"], reverse=True)
+                id_match = 1
 
-        id_match = 1
+                for i in range(0, len(players), 2):
+                    player1 = {
+                        "national_id": players[i]["national_id"]
+                    }
+                    player2 = {
+                        "national_id": players[i+1]["national_id"]
+                    }
+                    match = Match(id_match, player1=player1["national_id"],
+                                  score1=0.0, player2=player2["national_id"],
+                                  score2=0.0).to_dict()
 
-        for i in range(0, len(players), 2):
-            player1 = {
-                "national_id": players[i]["national_id"]
-            }
-            player2 = {
-                "national_id": players[i+1]["national_id"]
-            }
-            match = Match(id_match, player1=player1["national_id"],
-                          score1=0.0, player2=player2["national_id"],
-                          score2=0.0).to_dict()
+                    id_match += 1
+                    round_detail.matches.append(match)
 
-            id_match += 1
-            round_detail.matches.append(match)
+                data_round = {
+                    "round_id": round_number,
+                    "name": round_name,
+                    "round_start_date": str(round_detail.start_date),
+                    "round_end_date": str(round_detail.end_date),
+                    "matchs": round_detail.matches
+                }
 
-        data_round = {
-            "round_id": round_number,
-            "name": round_name,
-            "round_start_date": str(round_detail.start_date),
-            "round_end_date": str(round_detail.end_date),
-            "matchs": round_detail.matches
-        }
+                tournament["rounds"].append(data_round)
 
-        last_tournament["rounds"].append(data_round)
+                # save round to JSON file
+                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                  tournament["tournament_id"],
+                                  tournament)
 
-        # save round to JSON file
-        update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                          last_tournament["tournament_id"],
-                          last_tournament)
+                return print("\nLe tour a été généré et enregistré avec "
+                             "succès.")
+            else:
+                if tournament["tournament_id"] == tournament_id:
+                    count_matchs = 0
+                    total_matchs = 0
+                    for round_detail in tournament["rounds"]:
+                        total_matchs += len(round_detail["matchs"])
+                        for match in round_detail["matchs"]:
+                            for player_id, score in match["match"]:
+                                if score == 0.0:
+                                    count_matchs += 1
 
-        return print("Le tour a été généré et enregistré avec succès.")
+                    if count_matchs == total_matchs:
+                        return tournament
+        return None
 
     @staticmethod
     def update_player_points(round_id):
@@ -127,31 +146,6 @@ class TournamentController:
 
         return print("Les points ont été mis à jour.\nVous allez être "
                      "redirigé vers le menu de gestion du tournoi.")
-
-    @staticmethod
-    def pause(tournament_id):
-        """Take a pause for a tournament"""
-        data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        last_tournament = data["tournaments"][-1]
-        if last_tournament["tournament_id"] == tournament_id:
-            last_tournament["is_on_break"] = True
-
-        update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                          tournament_id, last_tournament)
-
-        return print("\nLe tournoi est en pause.\nVous allez être redirigé "
-                     "vers le menu principal de l'application.")
-
-    @staticmethod
-    def unpause(tournament_id):
-        """Stop the pause for a tournament"""
-        data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        last_tournament = data["tournaments"][-1]
-        if last_tournament["tournament_id"] == tournament_id:
-            last_tournament["is_on_break"] = False
-
-        update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                          tournament_id, last_tournament)
 
     @staticmethod
     def delete_a_player(tournament_id, national_id):

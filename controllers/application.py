@@ -42,21 +42,20 @@ class ApplicationController:
                 self.menu_view.clear_console()
             elif user_choice == "2":
                 self.menu_view.clear_console()
-                last_tournament = load_tournament(
+                tournaments = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE)
-                if last_tournament["is_on_break"]:
-                    self.tournament_controller.unpause(
-                        last_tournament["tournament_id"])
+                self.display_view.display_tournaments(tournaments)
+                selection = self.menu_view.select_tournament_prompt()
                 while True:
-                    last_tournament = load_tournament(
-                        PATH_DATA_TOURNAMENTS_JSON_FILE)
-                    self.display_view.display_players(
-                        last_tournament)
+                    selected_tournament = load_tournament(
+                        PATH_DATA_TOURNAMENTS_JSON_FILE, selection)
+                    self.menu_view.clear_console()
+                    self.display_view.display_players(selected_tournament)
                     tournament_choice = self.menu_view.tournament_menu_prompt()
 
                     if tournament_choice == "1":
                         self.menu_view.clear_console()
-                        if len(last_tournament["rounds"]) == 0:
+                        if len(selected_tournament["rounds"]) == 0:
                             player = self.menu_view.player_prompt()
                             self.player_controller.add(
                                 Player(player["national_id"], player[
@@ -72,13 +71,14 @@ class ApplicationController:
                             self.menu_view.clear_console()
                     elif tournament_choice == "2":
                         self.menu_view.clear_console()
-                        if len(last_tournament["rounds"]) == 0 and len(
-                                last_tournament["players"]) > 0:
+                        if len(selected_tournament["rounds"]) == 0 and len(
+                                selected_tournament["players"]) > 0:
                             self.display_view.display_players(
-                                last_tournament)
+                                selected_tournament)
                             national_id = self.menu_view.delete_player_prompt()
                             self.tournament_controller.delete_a_player(
-                                last_tournament["tournament_id"], national_id)
+                                selected_tournament["tournament_id"],
+                                national_id)
                             time.sleep(2)
                             self.menu_view.clear_console()
                         else:
@@ -90,9 +90,9 @@ class ApplicationController:
                             self.menu_view.clear_console()
                     elif tournament_choice == "3":
                         self.menu_view.clear_console()
-                        last_round = last_tournament["rounds"]
-                        if len(last_tournament["players"]) < 4 or len(
-                                last_tournament["players"]) % 2 != 0:
+                        last_round = selected_tournament["rounds"]
+                        if len(selected_tournament["players"]) < 4 or len(
+                                selected_tournament["players"]) % 2 != 0:
                             self.menu_view.clear_console()
                             print("..........................................")
                             print("Vous n'avez pas assez de joueurs inscrits "
@@ -109,13 +109,19 @@ class ApplicationController:
                                 round_number = 0
                             else:
                                 round_number = len(last_round)
+                            self.display_view.display_rounds(
+                                selected_tournament["rounds"])
+                            selected_round = (
+                                self.menu_view.select_round_prompt())
                             self.tournament_controller.generate_round(
-                                last_tournament["number_of_rounds"],
+                                selected_tournament["number_of_rounds"],
                                 round_number,
-                                last_tournament["players"])
+                                selected_tournament["players"],
+                                selected_tournament["tournament_id"],
+                                selected_round)
                             time.sleep(2)
                             self.menu_view.clear_console()
-                            if (int(last_tournament["number_of_rounds"]) >
+                            if (int(selected_tournament["number_of_rounds"]) >
                                     round_number):
                                 while True:
                                     round_choice = (
@@ -127,7 +133,7 @@ class ApplicationController:
                                             .start_up())
                                         time.sleep(2)
                                         self.menu_view.clear_console()
-                                        self.display_view.display_round(
+                                        self.display_view.display_a_round(
                                             round_detail)
                                     elif round_choice == "2":
                                         self.menu_view.clear_console()
@@ -136,14 +142,14 @@ class ApplicationController:
                                         time.sleep(2)
                                         self.menu_view.clear_console()
                                         (self.display_view
-                                            .display_round(round_detail))
+                                         .display_a_round(round_detail))
                                         self.menu_view.clear_console()
-                                        last_tournament = (
-                                            load_tournament(
-                                                PATH_DATA_TOURNAMENTS_JSON_FILE
-                                            ))
-                                        last_round = last_tournament[
-                                            "rounds"][-1]
+                                        tournament_id = selected_tournament[
+                                            "tournament_id"]
+                                        tournament = load_tournament(
+                                            PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                            tournament_id)
+                                        last_round = tournament["rounds"][-1]
                                         if (last_round["round_start_date"] ==
                                                 ""):
                                             break
@@ -152,13 +158,13 @@ class ApplicationController:
                                                               "matchs"]):
                                             (self
                                              .display_view.
-                                             display_round(last_round))
+                                             display_a_round(last_round))
                                             match_id = index + 1
                                             match =\
                                                 (self.menu_view
                                                     .match_prompt(match_id))
                                             self.match_controller.save_score(
-                                                last_tournament,
+                                                tournament,
                                                 last_round["round_id"],
                                                 user_match_id=match_id,
                                                 score1=match["score1"],
@@ -174,18 +180,18 @@ class ApplicationController:
                                     elif round_choice.upper() == "R":
                                         self.menu_view.clear_console()
                                         break
+                                    else:
+                                        self.menu_view.clear_console()
+                                        print("Votre choix est invalide.")
                     elif tournament_choice == "4":
-                        self.menu_view.clear_console()
-                        last_tournament = load_tournament(
-                            PATH_DATA_TOURNAMENTS_JSON_FILE)
-                        self.tournament_controller.pause(
-                            last_tournament["tournament_id"])
-                        time.sleep(2)
                         self.menu_view.clear_console()
                         break
                     elif tournament_choice == "R":
                         self.menu_view.clear_console()
                         break
+                    else:
+                        self.menu_view.clear_console()
+                        print("Votre choix est invalide.")
             elif user_choice == "3":
                 self.menu_view.clear_console()
                 while True:
@@ -265,4 +271,5 @@ class ApplicationController:
                 print("Au revoir et à bientôt 👋.")
                 break
             else:
+                self.menu_view.clear_console()
                 print("Votre choix est invalide.")

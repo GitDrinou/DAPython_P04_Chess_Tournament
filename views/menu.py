@@ -17,7 +17,7 @@ class MenuView:
         print("Menu principal:")
         print("=====================================================")
         print("1. Créer un nouveau tournoi")
-        print("2. Démarrer ou continuer la gestion du nouveau tournoi")
+        print("2. Démarrer ou reprendre la gestion d'un tournoi")
         print("3. Générer les rapports")
         print("Q. Quitter l'application")
         print("=====================================================")
@@ -144,7 +144,7 @@ class MenuView:
         print("=====================================================")
         print("1. Inscrire des joueurs au tournoi")
         print("2. Supprimer un joueur du tournoi")
-        print(f"3. Générer un tour (tour {current_round_number}"
+        print(f"3. Générer ou continuer un tour (tour {current_round_number}"
               f"/{number_pf_rounds})")
         print("4. Mettre en pause le tournoi")
         print("R. Revenir au menu principal de l'application")
@@ -152,6 +152,43 @@ class MenuView:
         tournament_choice = input("Choisissez une option: ")
 
         return tournament_choice
+
+    @staticmethod
+    def select_tournament_prompt():
+        """Prompt the user to select a tournament"""
+        while True:
+            print("\nSÉLECTIONNER UN TOURNOI")
+            print("=====================================================")
+            tournament_id = input("Saisissez l'identifiant du tournoi: ")
+
+            try:
+                tournament_id = int(tournament_id)
+                break
+            except ValueError:
+                print("La valeur n'existe pas.")
+
+        return tournament_id
+
+    @staticmethod
+    def select_round_prompt():
+        """Prompt the user to select a round"""
+        while True:
+            print("\nSÉLECTIONNER UN TOUR")
+            print("=====================================================")
+            round_id = input("Saisissez l'identifiant du tour ou tapez "
+                             "ENTREE pour générer un nouveau tour: ")
+
+            if round_id == "":
+                round_id = 0
+                break
+            else:
+                try:
+                    round_id = int(round_id)
+                    break
+                except ValueError:
+                    print("La valeur n'existe pas.")
+
+        return round_id
 
     @staticmethod
     def round_prompt():

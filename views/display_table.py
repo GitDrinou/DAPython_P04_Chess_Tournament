@@ -5,8 +5,8 @@ class DisplayTableView:
     """Report view class"""
 
     @staticmethod
-    def display_round(round_detail):
-        """Display a table with the round's details"""
+    def display_a_round(round_detail):
+        """Display a table with a round's details"""
         if round_detail:
             round_name = round_detail["name"]
             start_round = round_detail["round_start_date"]
@@ -56,5 +56,46 @@ class DisplayTableView:
         print(f"\tAu: {end_date}\n")
         print(f"Nombre de joueurs inscrits: {total_players}\n")
         print("...........................................................\n")
+        print(tabulate(rows, headers=headers, tablefmt="github"))
+        print("\n...........................................................")
+
+    @staticmethod
+    def display_tournaments(tournament):
+        """Display a table with the all non-finished tournaments"""
+        data_report = sorted(tournament, key=lambda x: x[
+            "start_date"])
+
+        rows = []
+        for entry in data_report:
+            tournament_id = entry["tournament_id"]
+            name = entry["name"]
+            start_date = entry["start_date"]
+            round_number = entry["round_number"]
+            total_players = len(entry["players"])
+            rows.append([tournament_id, name, start_date, total_players,
+                         round_number])
+        headers = ["ID Tournoi", "Nom", "Date de début", "Total de joueurs",
+                   "N° du tour"]
+
+        print("\n...........................................................")
+        print(tabulate(rows, headers=headers, tablefmt="github"))
+        print("\n...........................................................")
+
+    @staticmethod
+    def display_rounds(rounds):
+        """Display a table with all rounds for a tournaments"""
+        data_report = rounds
+
+        rows = []
+        for entry in data_report:
+            round_id = entry["round_id"]
+            round_name = entry["name"]
+            start_date = entry["round_start_date"]
+            end_date = entry["round_end_date"]
+            rows.append([round_id, round_name, start_date, end_date])
+
+        headers = ["ID Tour", "Nom", "Date de début", "Date de fin"]
+
+        print("\n...........................................................")
         print(tabulate(rows, headers=headers, tablefmt="github"))
         print("\n...........................................................")

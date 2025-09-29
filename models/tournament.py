@@ -29,9 +29,6 @@ class Tournament:
         self.rounds = []
         self.players = []
 
-        # check if the tournament is on break or not
-        self.is_on_break = False
-
     def __str__(self):
         """Return string representation of tournament"""
         return (f"{self.name} du {self.start_date} au {self.end_date}\n "

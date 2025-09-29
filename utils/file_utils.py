@@ -35,7 +35,6 @@ def save_to_json(key, **kwargs):
             "description": kwargs["description"],
             "number_of_rounds": kwargs["number_of_rounds"],
             "round_number": kwargs["round_number"],
-            "is_on_break": False,
             "players": [],
             "rounds": []
         })
@@ -52,13 +51,24 @@ def save_to_json(key, **kwargs):
     write_json_file(path, data)
 
 
-def load_tournament(path_file):
+def load_tournament(path_file, tournament_id=None):
     """Load the last tournament data from the json file"""
-    with open(path_file, 'r', encoding='utf-8') as f:
+    with (open(path_file, 'r', encoding='utf-8') as f):
         data = json.load(f)
         datas = data.get("tournaments", [])
         if datas:
-            return data["tournaments"][-1]
+            if tournament_id is not None:
+                for tournament in datas:
+                    if tournament["tournament_id"] == int(tournament_id):
+                        return tournament
+                return None
+            else:
+                tournaments = []
+                for tournament in datas:
+                    if int(tournament["number_of_rounds"]) > int(tournament[
+                                                            "round_number"]):
+                        tournaments.append(tournament)
+                return tournaments
         else:
             return None
 

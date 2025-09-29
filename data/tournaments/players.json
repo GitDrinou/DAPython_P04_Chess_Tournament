@@ -17,6 +17,24 @@
             "last_name": "BOURNE",
             "first_name": "Jason",
             "birth_date": "09/02/1989"
+        },
+        {
+            "national_id": "D20934",
+            "last_name": "DE NIRO",
+            "first_name": "Robert",
+            "birth_date": "17/08/1943"
+        },
+        {
+            "national_id": "D59304",
+            "last_name": "DOE",
+            "first_name": "Jonathan",
+            "birth_date": "20/01/2000"
+        },
+        {
+            "national_id": "M59403",
+            "last_name": "MARTIN",
+            "first_name": "Josephine",
+            "birth_date": "31/12/1999"
         }
     ]
 }
