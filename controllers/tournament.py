@@ -57,24 +57,26 @@ class TournamentController:
                 if round_number == 1:
                     random.shuffle(players)
                 else:
-                    players.sort(key=lambda player: player["points"],
+                    players.sort(key=lambda player: (player["points"],
+                                                     random.random()),
                                  reverse=True)
 
                 id_match = 1
+                historical_pairs = []
 
                 for i in range(0, len(players), 2):
-                    player1 = {
-                        "national_id": players[i]["national_id"]
-                    }
-                    player2 = {
-                        "national_id": players[i+1]["national_id"]
-                    }
-                    match = Match(id_match, player1=player1["national_id"],
-                                  score1=0.0, player2=player2["national_id"],
-                                  score2=0.0).to_dict()
+                    player1 = {"national_id": players[i]["national_id"]}
+                    player2 = {"national_id": players[i+1]["national_id"]}
+                    pair = tuple(sorted((player1["national_id"], player2[
+                        "national_id"])))
+                    if pair not in historical_pairs:
+                        match = Match(id_match, player1=player1[
+                            "national_id"], score1=0.0, player2=player2[
+                            "national_id"], score2=0.0).to_dict()
 
-                    id_match += 1
-                    round_detail.matches.append(match)
+                        id_match += 1
+                        round_detail.matches.append(match)
+                        historical_pairs.append(pair)
 
                 data_round = {
                     "round_id": round_number,

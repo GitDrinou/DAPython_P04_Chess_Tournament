@@ -35,31 +35,14 @@ class ReportController:
             "title": title,
             "players": players,
             "subtitle": subtitle,
+            "css_path": PATH_REPORTS_FILES + "report.css"
         }
         template_html = """
         <html lang="fr">
             <head>
                 <meta charset="utf-8">
                 <title>{{ title }} / {{ subtitle }}</title>
-                <style>
-                    body {
-                        font-family: Tahoma, sans-serif;
-                        font-size: 1rem;
-                        padding: 24px;
-                    }
-                    table {
-                        border-collapse: collapse;
-                        border: 2px solid rgb(200, 200, 200);
-                        letter-spacing: 1px;
-                    }
-                    td,th {
-                        border: 1px solid rgb(190, 190, 190);
-                        padding: 10px 20px;
-                    }
-                    th {background-color: rgb(235, 235, 235);}
-                    td {text-align: center;}
-                    p {font-weight: bold;}
-                </style>
+                <link rel="stylesheet" href="{{ style_file_path }}">
             </head>
            <body>
               <h1>{{ title }}</h1>

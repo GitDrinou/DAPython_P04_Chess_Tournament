@@ -182,42 +182,42 @@
             "end_date": "2025-10-03 00:00:00",
             "description": "Ouverture des portes \u00e0 10H00.",
             "number_of_rounds": "4",
-            "round_number": "2",
+            "round_number": "4",
             "players": [
                 {
                     "national_id": "P85930",
                     "last_name": "PROUST",
                     "first_name": "Marcel",
                     "birth_date": "10/07/1871",
-                    "points": 0.0
+                    "points": 1.5
                 },
                 {
                     "national_id": "W30294",
                     "last_name": "WERBER",
                     "first_name": "Bernard",
                     "birth_date": "18/09/1961",
-                    "points": 2.0
+                    "points": 1.0
                 },
                 {
                     "national_id": "B48392",
                     "last_name": "BOURNE",
                     "first_name": "Jason",
                     "birth_date": "09/02/1989",
-                    "points": 1.0
+                    "points": 2.0
                 },
                 {
                     "national_id": "D20934",
                     "last_name": "DE NIRO",
                     "first_name": "Robert",
                     "birth_date": "17/08/1943",
-                    "points": 1.0
+                    "points": 1.5
                 },
                 {
                     "national_id": "D59304",
                     "last_name": "DOE",
                     "first_name": "Jonathan",
                     "birth_date": "20/01/2000",
-                    "points": 0.0
+                    "points": 1.0
                 },
                 {
                     "national_id": "M59403",
@@ -231,14 +231,28 @@
                 {
                     "round_id": 1,
                     "name": "Round 1",
-                    "round_start_date": "29-09-2025 15:35:28",
-                    "round_end_date": "29-09-2025 15:34:55",
+                    "round_start_date": "30-09-2025 11:45:04",
+                    "round_end_date": "30-09-2025 11:45:22",
+                    "historical_pairs": [
+                        [
+                            "B48392",
+                            "D59304"
+                        ],
+                        [
+                            "M59403",
+                            "W30294"
+                        ],
+                        [
+                            "D20934",
+                            "P85930"
+                        ]
+                    ],
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "W30294",
+                                    "B48392",
                                     "1"
                                 ],
                                 [
@@ -251,12 +265,12 @@
                             "match_id": 2,
                             "match": [
                                 [
-                                    "B48392",
+                                    "M59403",
                                     "1"
                                 ],
                                 [
-                                    "D20934",
-                                    "0"
+                                    "W30294",
+                                    "1"
                                 ]
                             ]
                         },
@@ -264,12 +278,12 @@
                             "match_id": 3,
                             "match": [
                                 [
-                                    "M59403",
-                                    "1"
+                                    "D20934",
+                                    "0"
                                 ],
                                 [
                                     "P85930",
-                                    "0"
+                                    "1"
                                 ]
                             ]
                         }
@@ -278,19 +292,33 @@
                 {
                     "round_id": 2,
                     "name": "Round 2",
-                    "round_start_date": "29-09-2025 15:37:22",
-                    "round_end_date": "29-09-2025 15:37:50",
+                    "round_start_date": "30-09-2025 11:45:49",
+                    "round_end_date": "30-09-2025 11:45:59",
+                    "historical_pairs": [
+                        [
+                            "B48392",
+                            "P85930"
+                        ],
+                        [
+                            "M59403",
+                            "W30294"
+                        ],
+                        [
+                            "D20934",
+                            "D59304"
+                        ]
+                    ],
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "W30294",
-                                    "1"
+                                    "P85930",
+                                    "0"
                                 ],
                                 [
                                     "B48392",
-                                    "0"
+                                    "1"
                                 ]
                             ]
                         },
@@ -302,8 +330,8 @@
                                     "1"
                                 ],
                                 [
-                                    "P85930",
-                                    "0"
+                                    "W30294",
+                                    "1"
                                 ]
                             ]
                         },
@@ -325,14 +353,89 @@
                 {
                     "round_id": 3,
                     "name": "Round 3",
-                    "round_start_date": "",
-                    "round_end_date": "",
+                    "round_start_date": "30-09-2025 11:46:28",
+                    "round_end_date": "30-09-2025 11:46:36",
+                    "historical_pairs": [
+                        [
+                            "B48392",
+                            "M59403"
+                        ],
+                        [
+                            "D20934",
+                            "P85930"
+                        ],
+                        [
+                            "D59304",
+                            "W30294"
+                        ]
+                    ],
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
+                                    "B48392",
+                                    "0"
+                                ],
+                                [
+                                    "M59403",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "D20934",
+                                    "1"
+                                ],
+                                [
+                                    "P85930",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 3,
+                            "match": [
+                                [
                                     "W30294",
+                                    "0"
+                                ],
+                                [
+                                    "D59304",
+                                    "1"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 4,
+                    "name": "Round 4",
+                    "round_start_date": "30-09-2025 11:47:02",
+                    "round_end_date": "",
+                    "historical_pairs": [
+                        [
+                            "B48392",
+                            "M59403"
+                        ],
+                        [
+                            "D20934",
+                            "P85930"
+                        ],
+                        [
+                            "D59304",
+                            "W30294"
+                        ]
+                    ],
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "B48392",
                                     0.0
                                 ],
                                 [
@@ -345,11 +448,11 @@
                             "match_id": 2,
                             "match": [
                                 [
-                                    "B48392",
+                                    "D20934",
                                     0.0
                                 ],
                                 [
-                                    "D20934",
+                                    "P85930",
                                     0.0
                                 ]
                             ]
@@ -358,7 +461,7 @@
                             "match_id": 3,
                             "match": [
                                 [
-                                    "P85930",
+                                    "W30294",
                                     0.0
                                 ],
                                 [

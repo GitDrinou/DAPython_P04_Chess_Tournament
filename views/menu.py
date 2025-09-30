@@ -196,7 +196,7 @@ class MenuView:
         print("\nGESTION D'UN TOUR:")
         print("=====================================================")
         print("1. Démarrer le tour")
-        print("2. Terminer le tour")
+        print("2. Terminer le tour et inscrire les scores des matchs")
         print("R. Revenir au menu principal de l'application")
         print("=====================================================")
         round_choice = input("Choisissez une option: ")
