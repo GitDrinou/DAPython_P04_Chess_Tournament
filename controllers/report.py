@@ -19,13 +19,13 @@ class ReportController:
         tournament or not)"""
 
         if tournament:
-            title = "Liste des joueurs du tournoi (par ordre alphabétique)"
+            title = "Liste des joueurs du tournoi<br>(par ordre alphabétique)"
             subtitle = tournament_name
             file = PATH_REPORTS_FILES + "tournament_players.html"
             absolute_path_file = self.file_part + os.path.abspath(
                 "reports/html/tournament_players.html")
         else:
-            title = "Liste des joueurs (par ordre alphabétique)"
+            title = "Liste des joueurs<br>(par ordre alphabétique)"
             subtitle = ""
             file = PATH_REPORTS_FILES + "players_list.html"
             absolute_path_file = self.file_part + os.path.abspath(
@@ -36,7 +36,9 @@ class ReportController:
             "players": players,
             "subtitle": subtitle,
             "css_path": self.file_part + os.path.abspath(
-                "reports/report.css")
+                "reports/report.css"),
+            "img_path": self.file_part + os.path.abspath(
+                "reports/logo-chess-club.png")
         }
         template_html = """
         <html lang="fr">
@@ -45,28 +47,31 @@ class ReportController:
                 <title>{{ title }} / {{ subtitle }}</title>
                 <link rel="stylesheet" href="{{ css_path }}">
             </head>
-           <body>
-              <h1>{{ title }}</h1>
-              <h2>{{ subtitle }}</h2>
-              <table>
-                <thead>
-                    <tr>
-                        <th>Identifiant national</th>
-                        <th>Nom de famille</th>
-                        <th>Prénom</th>
-                    </tr>
-                <thead>
-                <tbody>
-                    {% for player in players %}
+            <body>
+                <div class="container">
+                    <img src="{{ img_path }}" alt="Logo Chess Club">
+                    <h1>{{ title }}</h1>
+                </div>
+                <h2>{{ subtitle }}</h2>
+                <table>
+                    <thead>
                         <tr>
-                            <td>{{ player["national_id"] }}</td>
-                            <td>{{ player["last_name"] }}</td>
-                            <td>{{ player["first_name"] }}</td>
+                            <th>Identifiant national</th>
+                            <th>Nom de famille</th>
+                            <th>Prénom</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-              </table>
-           </body>
+                    <thead>
+                    <tbody>
+                        {% for player in players %}
+                            <tr>
+                                <td>{{ player["national_id"] }}</td>
+                                <td>{{ player["last_name"] }}</td>
+                                <td>{{ player["first_name"] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </body>
         </html>
         """
 
@@ -98,7 +103,9 @@ class ReportController:
             "title": title,
             "tournaments": tournaments,
             "css_path": self.file_part + os.path.abspath(
-                "reports/report.css")
+                "reports/report.css"),
+            "img_path": self.file_part + os.path.abspath(
+                "reports/logo-chess-club.png")
         }
         template_html = """
             <html lang="fr">
@@ -108,7 +115,10 @@ class ReportController:
                     <link rel="stylesheet" href="{{ css_path }}">
                 </head>
                 <body>
-                    <h1>{{ title }}</h1>
+                    <div class="container">
+                        <img src="{{ img_path }}" alt="Logo Chess Club">
+                        <h1>{{ title }}</h1>
+                    </div>
                     {% for tournament in tournaments %}
                         <h2>{{ tournament["name"] }}</h2>
                         <p><b>Identifiant: {{ tournament["tournament_id"] }}
@@ -204,7 +214,9 @@ class ReportController:
             "title": title,
             "tournament": tournament,
             "css_path": self.file_part + os.path.abspath(
-                "reports/report.css")
+                "reports/report.css"),
+            "img_path": self.file_part + os.path.abspath(
+                "reports/logo-chess-club.png")
         }
         template_html = """
             <html lang="fr">
@@ -214,7 +226,10 @@ class ReportController:
                     <link rel="stylesheet" href="{{ css_path }}">
                 </head>
                 <body>
-                    <h1>{{ title }}</h1>
+                    <div class="container">
+                        <img src="{{ img_path }}" alt="Logo Chess Club">
+                        <h1>{{ title }}</h1>
+                    </div>
                     <h2>{{ tournament["name"] }}</h2>
                     <table>
                         <thead>
