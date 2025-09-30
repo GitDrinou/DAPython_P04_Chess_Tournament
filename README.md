@@ -36,5 +36,16 @@ You have just to follow them.
 3. generate a round
 4. pause the tournament
 
+#### Round menu
+1. Start the round
+2. Terminate the round and save the scores
+
+#### Reports menu
+1. generate players list
+2. generate tournaments list
+3. generate tournament details
+4. generate tournament's players
+5. generate tournament's rounds and matchs
+
 ### Extractions folders
 
