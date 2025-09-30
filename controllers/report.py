@@ -23,26 +23,27 @@ class ReportController:
             subtitle = tournament_name
             file = PATH_REPORTS_FILES + "tournament_players.html"
             absolute_path_file = self.file_part + os.path.abspath(
-                "reports/tournament_players.html")
+                "reports/html/tournament_players.html")
         else:
             title = "Liste des joueurs (par ordre alphabétique)"
             subtitle = ""
             file = PATH_REPORTS_FILES + "players_list.html"
             absolute_path_file = self.file_part + os.path.abspath(
-                "reports/players_list.html")
+                "reports/html/players_list.html")
 
         datas_to_display = {
             "title": title,
             "players": players,
             "subtitle": subtitle,
-            "css_path": PATH_REPORTS_FILES + "report.css"
+            "css_path": self.file_part + os.path.abspath(
+                "reports/report.css")
         }
         template_html = """
         <html lang="fr">
             <head>
                 <meta charset="utf-8">
                 <title>{{ title }} / {{ subtitle }}</title>
-                <link rel="stylesheet" href="{{ style_file_path }}">
+                <link rel="stylesheet" href="{{ css_path }}">
             </head>
            <body>
               <h1>{{ title }}</h1>
@@ -86,46 +87,25 @@ class ReportController:
             title = "Détail du tournoi"
             file = PATH_REPORTS_FILES + "tournament_detail.html"
             absolute_path_file = self.file_part + os.path.abspath(
-                "reports/tournament_detail.html")
+                PATH_REPORTS_FILES + "tournament_detail.html")
         else:
             title = "Liste des tournois"
             file = PATH_REPORTS_FILES + "tournaments_list.html"
             absolute_path_file = self.file_part + os.path.abspath(
-                "reports/tournaments_list.html")
+                PATH_REPORTS_FILES + "tournaments_list.html")
 
         datas_to_display = {
             "title": title,
             "tournaments": tournaments,
+            "css_path": self.file_part + os.path.abspath(
+                "reports/report.css")
         }
         template_html = """
             <html lang="fr">
                 <head>
                     <meta charset="utf-8">
                     <title>{{ title }}</title>
-                    <style>
-                        body {
-                            font-family: Tahoma, sans-serif;
-                            font-size: 1rem;
-                            padding: 24px;
-                        }
-                        table {
-                            border-collapse: collapse;
-                            border: 2px solid rgb(200, 200, 200);
-                            letter-spacing: 1px;
-                        }
-                        td,th {
-                            border: 1px solid rgb(190, 190, 190);
-                            padding: 5px 16px;
-                        }
-                        th {background-color: rgb(215, 215, 215);}
-                        td {text-align: center;}
-                        hr {
-                            margin-top: 24px;
-                            border: none;
-                            border-top: 3px dotted black;
-                        }
-                        .round {background-color: rgb(235, 235, 235);}
-                    </style>
+                    <link rel="stylesheet" href="{{ css_path }}">
                 </head>
                 <body>
                     <h1>{{ title }}</h1>
@@ -218,41 +198,20 @@ class ReportController:
         title = "Détail des tours et matchs du tournoi"
         file = PATH_REPORTS_FILES + "tournament_rounds_detail.html"
         absolute_path_file = self.file_part + os.path.abspath(
-            "reports/tournament_rounds_detail.html")
+            PATH_REPORTS_FILES + "tournament_rounds_detail.html")
 
         datas_to_display = {
             "title": title,
             "tournament": tournament,
+            "css_path": self.file_part + os.path.abspath(
+                "reports/report.css")
         }
         template_html = """
             <html lang="fr">
                 <head>
                     <meta charset="utf-8">
                     <title>{{ title }}</title>
-                    <style>
-                        body {
-                            font-family: Tahoma, sans-serif;
-                            font-size: 1rem;
-                            padding: 24px;
-                        }
-                        table {
-                            border-collapse: collapse;
-                            border: 2px solid rgb(200, 200, 200);
-                            letter-spacing: 1px;
-                        }
-                        td,th {
-                            border: 1px solid rgb(190, 190, 190);
-                            padding: 5px 16px;
-                        }
-                        th {background-color: rgb(215, 215, 215);}
-                        td {text-align: center;}
-                        hr {
-                            margin-top: 24px;
-                            border: none;
-                            border-top: 3px dotted black;
-                        }
-                        .round {background-color: rgb(235, 235, 235);}
-                    </style>
+                    <link rel="stylesheet" href="{{ css_path }}">
                 </head>
                 <body>
                     <h1>{{ title }}</h1>

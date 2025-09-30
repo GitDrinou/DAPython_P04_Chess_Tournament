@@ -220,8 +220,8 @@ class ApplicationController:
                             self.menu_view.clear_console()
                             tournaments = data_tournaments["tournaments"]
                             for tournament in tournaments:
-                                if (tournament.get('tournament_id') ==
-                                        tournament_id):
+                                if (tournament["tournament_id"] ==
+                                        int(tournament_id)):
                                     (self.report_controller
                                         .tournaments([tournament]))
                                     break
@@ -237,8 +237,8 @@ class ApplicationController:
                             self.menu_view.clear_console()
                             tournaments = data_tournaments["tournaments"]
                             for tournament in tournaments:
-                                if (tournament.get('tournament_id') ==
-                                        tournament_id):
+                                if (tournament["tournament_id"] ==
+                                        int(tournament_id)):
                                     (self.report_controller
                                      .players(tournament["players"], True,
                                               tournament["name"]))
@@ -255,8 +255,8 @@ class ApplicationController:
                             self.menu_view.clear_console()
                             tournaments = data_tournaments["tournaments"]
                             for tournament in tournaments:
-                                if (tournament.get('tournament_id') ==
-                                        tournament_id):
+                                if (tournament["tournament_id"] ==
+                                        int(tournament_id)):
                                     (self.report_controller
                                      .tournament_round(tournament))
                                     break

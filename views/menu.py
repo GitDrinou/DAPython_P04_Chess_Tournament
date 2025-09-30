@@ -252,14 +252,14 @@ class MenuView:
 
         is_exist = False
 
+        print(type(tournament_id))
         for tournament in tournaments:
-            if tournament["tournament_id"] == tournament_id:
+            if tournament["tournament_id"] == int(tournament_id):
                 is_exist = True
 
         if is_exist:
             return tournament_id
         else:
-
             print("\n........................................................")
             print("\nL'identifiant du tournoi n'existe pas.")
             return None
