@@ -473,6 +473,18 @@
                     ]
                 }
             ]
+        },
+        {
+            "tournament_id": 3,
+            "name": "LE TOURNOI DU BOUT DU MONDE",
+            "location": "Salle des f\u00eates de la fin du monde",
+            "start_date": "05/10/2025",
+            "end_date": "05/10/2025",
+            "description": "le tournoi d\u00e9butera \u00e0 10h00",
+            "number_of_rounds": "4",
+            "round_number": 0,
+            "players": [],
+            "rounds": []
         }
     ]
 }
