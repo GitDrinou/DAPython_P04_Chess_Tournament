@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.date_utils import validate_date, checks_dates
@@ -54,18 +55,18 @@ class MenuView:
             print("=====================================================")
             national_id = input("Saisissez l'identifiant national du joueur: ")
 
-            if check_format_national_id(national_id) is not None:
+            if check_format_national_id(national_id):
                 player = check_player_is_exist(national_id)
                 if player is not None:
-                    national_id = player["national_id"],
                     lastname = player["last_name"]
                     firstname = player["first_name"]
-                    birthdate = player["birthdate"]
+                    birthdate = datetime.strptime(player["birth_date"],
+                                                  "%d/%m/%Y")
                     player = {
                         "national_id": national_id,
-                        "lastname": lastname,
-                        "firstname": firstname,
-                        "birthdate": birthdate.strftime("%d/%m/%Y")
+                        "lastname": player["last_name"],
+                        "firstname": player["first_name"],
+                        "birthdate": birthdate.strftime("%d/%m/%Y"),
                     }
                     break
                 else:
@@ -76,7 +77,7 @@ class MenuView:
                         "national_id": national_id,
                         "lastname": lastname,
                         "firstname": firstname,
-                        "birthdate": birthdate.strftime("%d/%m/%Y")
+                        "birthdate": birthdate.strftime("%d/%m/%Y"),
                     }
                     break
             else:

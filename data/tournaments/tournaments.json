@@ -483,7 +483,36 @@
             "description": "le tournoi d\u00e9butera \u00e0 10h00",
             "number_of_rounds": "4",
             "round_number": 0,
-            "players": [],
+            "players": [
+                {
+                    "national_id": "R94830",
+                    "last_name": "ROBERT",
+                    "first_name": "Jane",
+                    "birth_date": "20/09/2000",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "W30294",
+                    "last_name": "WERBER",
+                    "first_name": "Bernard",
+                    "birth_date": "18/09/1961",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "M59403",
+                    "last_name": "MARTIN",
+                    "first_name": "Josephine",
+                    "birth_date": "31/12/1999",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "F58493",
+                    "last_name": "FORD COPPOLA",
+                    "first_name": "Francis",
+                    "birth_date": "07/04/1939",
+                    "points": 0.0
+                }
+            ],
             "rounds": []
         }
     ]

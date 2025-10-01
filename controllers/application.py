@@ -52,15 +52,16 @@ class ApplicationController:
                     self.menu_view.clear_console()
                     self.display_view.display_players(selected_tournament)
                     tournament_choice = self.menu_view.tournament_menu_prompt()
-
+                    tournament_id = selected_tournament["tournament_id"]
                     if tournament_choice == "1":
                         self.menu_view.clear_console()
                         if len(selected_tournament["rounds"]) == 0:
                             player = self.menu_view.player_prompt()
-                            self.player_controller.create(
+                            self.player_controller.add(
                                 Player(player["national_id"], player[
                                     "lastname"], player["firstname"],
-                                       player["birthdate"]))
+                                       player["birthdate"]),
+                                tournament_id)
                             time.sleep(2)
                             self.menu_view.clear_console()
                         else:
@@ -104,6 +105,8 @@ class ApplicationController:
                             self.menu_view.clear_console()
                             if (int(selected_tournament["number_of_rounds"]) >
                                     round_number):
+                                tournament_id = selected_tournament[
+                                    "tournament_id"]
                                 while True:
                                     round_choice = (
                                         self.menu_view.round_prompt())
@@ -111,7 +114,7 @@ class ApplicationController:
                                         self.menu_view.clear_console()
                                         round_detail = (
                                             self.round_controller
-                                            .start_up())
+                                            .start_up(tournament_id))
                                         time.sleep(2)
                                         self.menu_view.clear_console()
                                         self.display_view.display_a_round(
@@ -119,7 +122,8 @@ class ApplicationController:
                                     elif round_choice == "2":
                                         self.menu_view.clear_console()
                                         round_detail = (
-                                            self.round_controller.end_up())
+                                            self.round_controller.end_up(
+                                                tournament_id))
                                         time.sleep(2)
                                         self.menu_view.clear_console()
                                         (self.display_view

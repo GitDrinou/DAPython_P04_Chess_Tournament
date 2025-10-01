@@ -8,45 +8,57 @@ class RoundController:
     """Round controller class"""
 
     @staticmethod
-    def start_up():
+    def start_up(tournament_id):
         """Method that starts a round."""
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        last_tournament = data_tournaments["tournaments"][-1]
-        last_round = last_tournament["rounds"][-1]
-        start_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        tournaments = data_tournaments["tournaments"]
+        for tournament in tournaments:
+            if tournament["tournament_id"] == tournament_id:
+                last_round = tournament["rounds"][-1]
+                start_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
-        last_tournament["round_number"] = last_round["name"][-1]
-        last_round["round_start_date"] = start_date
+                tournament["round_number"] = last_round["name"][-1]
+                last_round["round_start_date"] = start_date
 
-        update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                          last_tournament["tournament_id"],
-                          last_tournament)
+                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                  tournament["tournament_id"],
+                                  tournament)
 
-        print("Le tour a démarré.")
+                print("\n===================================================="
+                      "=\nLe tour a démarré.\nLes joueurs peuvent commencer "
+                      "leurs matchs.\n======================================="
+                      "==============")
 
-        return last_round
+                return last_round
+        return None
 
     @staticmethod
-    def end_up():
+    def end_up(tournament_id):
         """Method that terminate the round."""
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        last_tournament = data_tournaments["tournaments"][-1]
-        last_round = last_tournament["rounds"][-1]
-        if last_round["round_start_date"] == "":
-            print("\n....................................................")
-            print("Le tour n'est pas encore démarré.\nVous ne pouvez pas "
-                  "terminer le tour avant de l'avoir démarré.")
-            print("....................................................")
-        else:
-            end_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        tournaments = data_tournaments["tournaments"]
+        for tournament in tournaments:
+            if tournament["tournament_id"] == tournament_id:
+                last_round = tournament["rounds"][-1]
+                if last_round["round_start_date"] == "":
+                    print("\n================================================")
+                    print("Le tour n'a pas encore démarré.\nVous ne pouvez "
+                          "pas terminer ce tour avant de l'avoir démarré.")
+                    print("\n================================================")
+                else:
+                    end_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
-            last_tournament["round_number"] = last_round["name"][-1]
-            last_round["round_end_date"] = end_date
+                    tournament["round_number"] = last_round["name"][-1]
+                    last_round["round_end_date"] = end_date
 
-            update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                              last_tournament["tournament_id"],
-                              last_tournament)
+                    update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                      tournament["tournament_id"],
+                                      tournament)
 
-            print("Le tour est terminé.")
+                    print("\n================================================")
+                    print("Le tour est terminé.\n Vous allez à présent "
+                          "enregistrer les scores pour chaque matchs du tour.")
+                    print("\n================================================")
 
-        return last_round
+                    return last_round
+        return None

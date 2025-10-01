@@ -7,9 +7,9 @@ from utils.constants import PATH_DATA_PLAYERS_JSON_FILE
 def check_format_national_id(national_id):
     """Check the format of the national id (1 letter + 5 numbers)"""
     if re.fullmatch(r'^[A-Za-z]\d{5}$', national_id):
-        return national_id
+        return True
     else:
-        return None
+        return False
 
 
 def check_player_is_exist(national_id):
@@ -20,8 +20,9 @@ def check_player_is_exist(national_id):
     for player in data["players"]:
         if player["national_id"] == national_id:
             return {
+                "national_id": player["national_id"],
                 "last_name": player["last_name"],
                 "first_name": player["first_name"],
-                "birth_date": player["birth_date"],
+                "birth_date": player["birth_date"]
             }
     return None

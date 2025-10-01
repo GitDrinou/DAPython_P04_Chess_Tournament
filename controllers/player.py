@@ -6,30 +6,31 @@ from utils.player_utils import check_player_is_exist
 class PlayerController:
 
     @staticmethod
-    def add(player):
+    def add(player, tournament_id):
         """Add a player to the tournament"""
 
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        last_tournament = data_tournaments["tournaments"][-1]
+        tournaments = data_tournaments["tournaments"]
+        for tournament in tournaments:
+            if tournament["tournament_id"] == tournament_id:
+                tournament["players"].append({
+                    "national_id": player.national_id,
+                    "last_name": player.last_name.upper(),
+                    "first_name": player.first_name.capitalize(),
+                    "birth_date": player.birth_date,
+                    "points": 0.0
+                })
 
-        last_tournament["players"].append({
-            "national_id": player.national_id.capitalize(),
-            "last_name": player.last_name.upper(),
-            "first_name": player.first_name.capitalize(),
-            "birth_date": player.birth_date,
-            "points": 0.0
-        })
+                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                  tournament["tournament_id"],
+                                  tournament)
 
-        update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                          last_tournament["tournament_id"],
-                          last_tournament)
+                if not check_player_is_exist(player.national_id):
+                    save_to_json("players",
+                                 national_id=player.national_id,
+                                 last_name=player.last_name.upper(),
+                                 first_name=player.first_name.capitalize(),
+                                 birth_date=player.birth_date)
 
-        if not check_player_is_exist(player.national_id):
-            save_to_json("players",
-                         national_id=player.national_id.capitalize(),
-                         last_name=player.last_name.upper(),
-                         first_name=player.first_name.capitalize(),
-                         birth_date=player.birth_date)
-
-        print("=====================================================")
-        print("\nLe joueur a été inscrit au tournoi avec succès.")
+                print("=====================================================")
+                print("\nLe joueur a été inscrit au tournoi avec succès.")
