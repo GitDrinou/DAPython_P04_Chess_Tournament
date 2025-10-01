@@ -32,7 +32,7 @@ class ApplicationController:
             if user_choice == "1":
                 self.menu_view.clear_console()
                 tournament = self.menu_view.tournament_prompt()
-                self.tournament_controller.add(
+                self.tournament_controller.create(
                     Tournament(tournament["name"], tournament["location"],
                                tournament["start_date"],
                                tournament["end_date"],
@@ -57,7 +57,7 @@ class ApplicationController:
                         self.menu_view.clear_console()
                         if len(selected_tournament["rounds"]) == 0:
                             player = self.menu_view.player_prompt()
-                            self.player_controller.add(
+                            self.player_controller.create(
                                 Player(player["national_id"], player[
                                     "lastname"], player["firstname"],
                                        player["birthdate"]))
@@ -70,25 +70,6 @@ class ApplicationController:
                             time.sleep(3)
                             self.menu_view.clear_console()
                     elif tournament_choice == "2":
-                        self.menu_view.clear_console()
-                        if len(selected_tournament["rounds"]) == 0 and len(
-                                selected_tournament["players"]) > 0:
-                            self.display_view.display_players(
-                                selected_tournament)
-                            national_id = self.menu_view.delete_player_prompt()
-                            self.tournament_controller.delete_a_player(
-                                selected_tournament["tournament_id"],
-                                national_id)
-                            time.sleep(2)
-                            self.menu_view.clear_console()
-                        else:
-                            print("\nVous ne pouvez pas supprimer de "
-                                  "joueur, soit parce que le tournoi a déjà "
-                                  "démarré, soit parce qu'il n'y a pas de "
-                                  "joueurs inscrits au tournoi.")
-                            time.sleep(3)
-                            self.menu_view.clear_console()
-                    elif tournament_choice == "3":
                         self.menu_view.clear_console()
                         last_round = selected_tournament["rounds"]
                         if len(selected_tournament["players"]) < 4 or len(
@@ -113,7 +94,7 @@ class ApplicationController:
                                 selected_tournament["rounds"])
                             selected_round = (
                                 self.menu_view.select_round_prompt())
-                            self.tournament_controller.generate_round(
+                            self.tournament_controller.generate_a_round(
                                 selected_tournament["number_of_rounds"],
                                 round_number,
                                 selected_tournament["players"],
@@ -173,6 +154,7 @@ class ApplicationController:
                                             index += 1
                                         (self.tournament_controller
                                             .update_player_points(
+                                                tournament_id,
                                                 last_round["round_id"]))
                                         time.sleep(2)
                                         self.menu_view.clear_console()
@@ -183,7 +165,7 @@ class ApplicationController:
                                     else:
                                         self.menu_view.clear_console()
                                         print("Votre choix est invalide.")
-                    elif tournament_choice == "4":
+                    elif tournament_choice == "3":
                         self.menu_view.clear_console()
                         break
                     elif tournament_choice == "R":
