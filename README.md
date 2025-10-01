@@ -21,31 +21,19 @@ The program handles player and tournament management through JSON file storage, 
 ## Usage
 
 To manage tournaments, the application display differents menus.\
-You have just to follow them.
+You have just to follow them as needed (create a tournament, register 
+players, generate a round, ...).
 
-### Application menus
+## Code style and linting
 
-#### Principal menu
-1. create a new tournament
-2. begin or continue a specific tournament
-3. to generate HTML reports
+This project follows the PEP8 coding style and uses flake8 as a linting tool 
+to maintain code quality.
 
-#### Tournament menu
-1. register players
-2. delete players
-3. generate a round
-4. pause the tournament
-
-#### Round menu
-1. Start the round
-2. Terminate the round and save the scores
-
-#### Reports menu
-1. generate players list
-2. generate tournaments list
-3. generate tournament details
-4. generate tournament's players
-5. generate tournament's rounds and matchs
-
-### Extractions folders
+To launch and check the flake8 report:
+1. open your terminal 
+2. copy and paste this command line:`flake8 --format=html 
+--htmldir=flake8_rapport`
+3. the report is generated and saved on the folder **flake8_rapport**
+4. open your browser and open the file`ìndex.html` from the 
+   **flake8_rapport** folder of the application.
 
