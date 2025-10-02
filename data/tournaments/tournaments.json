@@ -482,14 +482,14 @@
             "end_date": "05/10/2025",
             "description": "le tournoi d\u00e9butera \u00e0 10h00",
             "number_of_rounds": "4",
-            "round_number": "2",
+            "round_number": "3",
             "players": [
                 {
                     "national_id": "R94830",
                     "last_name": "ROBERT",
                     "first_name": "Jane",
                     "birth_date": "20/09/2000",
-                    "points": 0.5
+                    "points": 1.5
                 },
                 {
                     "national_id": "W30294",
@@ -503,7 +503,7 @@
                     "last_name": "MARTIN",
                     "first_name": "Josephine",
                     "birth_date": "31/12/1999",
-                    "points": 2.0
+                    "points": 3.0
                 },
                 {
                     "national_id": "F58493",
@@ -572,6 +572,40 @@
                             "match": [
                                 [
                                     "F58493",
+                                    "1"
+                                ],
+                                [
+                                    "W30294",
+                                    "0"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 3,
+                    "name": "Round 3",
+                    "round_start_date": "02-10-2025 09:42:54",
+                    "round_end_date": "02-10-2025 09:43:02",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "M59403",
+                                    "1"
+                                ],
+                                [
+                                    "F58493",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "R94830",
                                     "1"
                                 ],
                                 [
