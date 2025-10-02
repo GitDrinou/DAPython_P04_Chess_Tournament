@@ -53,7 +53,7 @@ class ApplicationController:
                     self.menu_view.clear_console()
                     print("\n================================================")
                     print("Vous n'avez pas de tournoi en cours ou en "
-                          "attente.\n Veuillez créer un nouveau tournoi.")
+                          "attente.\nVeuillez créer un nouveau tournoi.")
                     print("=================================================")
                     time.sleep(2)
                     self.menu_view.clear_console()
@@ -110,14 +110,14 @@ class ApplicationController:
                 if len(selected_tournament["players"]) < 4 or len(
                         selected_tournament["players"]) % 2 != 0:
                     self.menu_view.clear_console()
-                    print("..................................................")
+                    print("\n================================================")
                     print("Vous n'avez pas assez de joueurs inscrits pour "
                           "pouvoir générer un tour.\nVeuillez continuer à "
                           "inscrire des joueurs au tournoi.\nLe minimum de "
                           "4 joueurs est attendu et le total doit être un "
                           "nombre pair.")
-                    print("..................................................")
-                    time.sleep(3)
+                    print("================================================")
+                    time.sleep(4)
                     self.menu_view.clear_console()
                 else:
                     if len(last_round) == 0:
@@ -181,11 +181,13 @@ class ApplicationController:
                     self.display_view.display_a_round(last_round)
                     match_id = index + 1
                     match = self.prompt_view.match_prompt(match_id)
-                    self.match_controller.save_score(tournament, last_round[
-                        "round_id"], user_match_id=match_id, score1=match[
-                        "score1"], score2=match["score2"])
-                    self.menu_view.clear_console()
-                    index += 1
+                    if match is not None:
+                        self.match_controller.save_score(
+                            tournament, last_round["round_id"],
+                            user_match_id=match_id, score1=match["score1"],
+                            score2=match["score2"])
+                        self.menu_view.clear_console()
+                        index += 1
                 self.tournament_controller.update_player_points(
                     tournament_id, last_round["round_id"])
                 time.sleep(2)

@@ -60,8 +60,10 @@ class PromptView:
                     }
                     break
             else:
+                print("\n...................................................")
                 print("Le format de l'identitifant national est incorrect."
                       "\nFormat attendu : 1 lettre + 5 chiffres")
+                print("...................................................")
 
         return player
 
@@ -151,15 +153,30 @@ class PromptView:
     @staticmethod
     def match_prompt(match_id):
         """Prompt the user to enter the match's scores"""
-        print(f"\nINSCRIRE LES SCORES DU MATCH N°{match_id}")
-        print("=====================================================")
-        score1 = input("Saisissez le score du joueur 1 - Score 1 (0 ou 1): ")
-        score2 = input("Saisissez le score du joueur 2 - Score 2 (0 ou 1): ")
+        while True:
+            print(f"\nINSCRIRE LES SCORES DU MATCH N°{match_id}")
+            print("=====================================================")
+            print("Instructions:")
+            print("\t-Saisissez 1 pour le vainqueur du match")
+            print("\t-Saisissez 0 pour le perdant du match")
+            print("\t-Saisissez 1 pour les deux scores si match nul")
+            print("=====================================================")
+            score1 = input("Saisissez le score du joueur 1 - Score 1 : ")
+            score2 = input("Saisissez le score du joueur 2 - Score 2 : ")
 
-        return {
-            "score1": score1,
-            "score2": score2
-        }
+            expected_values = ["0", "1"]
+            if score1 in expected_values and score2 in expected_values:
+                scores = {
+                    "score1": score1,
+                    "score2": score2
+                }
+                break
+            else:
+                print("\nLa(les) valeur(s) n'existe(nt) pas.\nVeuillez "
+                      "ressaisir les scores du match.")
+                return None
+
+        return scores
 
     @staticmethod
     def delete_player_prompt():
@@ -180,7 +197,6 @@ class PromptView:
 
         is_exist = False
 
-        print(type(tournament_id))
         for tournament in tournaments:
             if tournament["tournament_id"] == int(tournament_id):
                 is_exist = True

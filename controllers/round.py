@@ -44,7 +44,7 @@ class RoundController:
                     print("\n================================================")
                     print("Le tour n'a pas encore démarré.\nVous ne pouvez "
                           "pas terminer ce tour avant de l'avoir démarré.")
-                    print("\n================================================")
+                    print("================================================")
                 else:
                     end_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
@@ -56,8 +56,9 @@ class RoundController:
                                       tournament)
 
                     print("\n================================================")
-                    print("Le tour est terminé.\n Vous allez à présent "
-                          "enregistrer les scores pour chaque matchs du tour.")
+                    print("Le tour est terminé.\nVous allez à présent être "
+                          "invité à enregistrer les scores pour chaque "
+                          "matchs du tour.")
                     print("\n================================================")
 
                     return last_round
