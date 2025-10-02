@@ -112,6 +112,7 @@ class PromptView:
     @staticmethod
     def select_tournament_prompt():
         """Prompt the user to select a tournament"""
+
         while True:
             print("\nSÉLECTIONNER UN TOURNOI")
             print("=====================================================")
@@ -121,7 +122,7 @@ class PromptView:
                 tournament_id = int(tournament_id)
                 break
             except ValueError:
-                print("La valeur n'existe pas.")
+                print("\nLa valeur n'existe pas.")
 
         return tournament_id
 

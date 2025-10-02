@@ -4,8 +4,8 @@
             "tournament_id": 1,
             "name": "LE TOURNOI DE LA BELLE \u00c9TOILE",
             "location": "Salle des f\u00eates de l'\u00e9toile de la mort",
-            "start_date": "2025-09-29 00:00:00",
-            "end_date": "2025-09-29 00:00:00",
+            "start_date": "29/09/2025",
+            "end_date": "29/09/2025",
             "description": "Ouverture des portes \u00e0 8h00.",
             "number_of_rounds": "4",
             "round_number": "4",
@@ -178,8 +178,8 @@
             "tournament_id": 2,
             "name": "LE TOURNOI DU SOLEIL COUCHANT",
             "location": "Salle sun tsu du p\u00f4le d'activit\u00e9 warland",
-            "start_date": "2025-10-03 00:00:00",
-            "end_date": "2025-10-03 00:00:00",
+            "start_date": "03/10/2025",
+            "end_date": "03/10/2025",
             "description": "Ouverture des portes \u00e0 10H00.",
             "number_of_rounds": "4",
             "round_number": "4",
@@ -482,7 +482,7 @@
             "end_date": "05/10/2025",
             "description": "le tournoi d\u00e9butera \u00e0 10h00",
             "number_of_rounds": "4",
-            "round_number": "3",
+            "round_number": "4",
             "players": [
                 {
                     "national_id": "R94830",
@@ -496,21 +496,21 @@
                     "last_name": "WERBER",
                     "first_name": "Bernard",
                     "birth_date": "18/09/1961",
-                    "points": 0.0
+                    "points": 0.5
                 },
                 {
                     "national_id": "M59403",
                     "last_name": "MARTIN",
                     "first_name": "Josephine",
                     "birth_date": "31/12/1999",
-                    "points": 3.0
+                    "points": 4.0
                 },
                 {
                     "national_id": "F58493",
                     "last_name": "FORD COPPOLA",
                     "first_name": "Francis",
                     "birth_date": "07/04/1939",
-                    "points": 1.5
+                    "points": 2.0
                 }
             ],
             "rounds": [
@@ -611,6 +611,40 @@
                                 [
                                     "W30294",
                                     "0"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 4,
+                    "name": "Round 4",
+                    "round_start_date": "02-10-2025 10:50:41",
+                    "round_end_date": "02-10-2025 10:51:12",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "M59403",
+                                    "1"
+                                ],
+                                [
+                                    "R94830",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "F58493",
+                                    "1"
+                                ],
+                                [
+                                    "W30294",
+                                    "1"
                                 ]
                             ]
                         }

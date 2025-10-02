@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from utils.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
                              PATH_DATA_PLAYERS_JSON_FILE)
@@ -64,9 +65,13 @@ def load_tournament(path_file, tournament_id=None):
                 return None
             else:
                 tournaments = []
+                today = datetime.today().date()
                 for tournament in datas:
-                    if int(tournament["number_of_rounds"]) > int(tournament[
-                                                            "round_number"]):
+                    start_date = datetime.strptime(tournament["start_date"],
+                                                   "%d/%m/%Y").date()
+                    number_of_rounds = int(tournament["number_of_rounds"])
+                    round_number = int(tournament["round_number"])
+                    if number_of_rounds > round_number and start_date >= today:
                         tournaments.append(tournament)
                 return tournaments
         else:

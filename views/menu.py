@@ -2,6 +2,7 @@ import os
 
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.file_utils import read_json_file
+from utils.tournament_utils import tournament_is_finished
 
 
 class MenuView:
@@ -26,27 +27,28 @@ class MenuView:
         os.system('cls' if os.name == 'nt' else 'clear')
 
     @staticmethod
-    def show_tournament_menu():
+    def show_tournament_menu(tournament_id):
         """Display the current tournament menu"""
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        last_tournament = data_tournaments["tournaments"][-1]
-        current_round_number = last_tournament["round_number"]
-        number_pf_rounds = last_tournament["number_of_rounds"]
-        if current_round_number == number_pf_rounds:
-            print("\n🎉 🎉 Le tournoi est terminé. Félicitations au vainqueur "
-                  "🏆!")
-            print("\n........................................................")
-        print("\nGESTION DU TOURNOI")
-        print("=====================================================")
-        print("1. Inscrire des joueurs au tournoi")
-        print(f"2. Générer ou continuer un tour (tour {current_round_number}"
-              f"/{number_pf_rounds})")
-        print("3. Mettre en pause le tournoi")
-        print("R. Revenir au menu principal de l'application")
-        print("=====================================================")
-        tournament_choice = input("Choisissez une option: ")
+        tournaments = data_tournaments["tournaments"]
+        for tournament in tournaments:
+            if tournament["tournament_id"] == tournament_id:
+                current_round_number = tournament["round_number"]
+                number_pf_rounds = tournament["number_of_rounds"]
+                tournament_is_finished(tournament)
 
-        return tournament_choice
+                print("\nGESTION DU TOURNOI")
+                print("=====================================================")
+                print("1. Inscrire des joueurs au tournoi")
+                print(f"2. Générer ou continuer un tour (tour"
+                      f" {current_round_number}/{number_pf_rounds})")
+                print("3. Mettre en pause le tournoi")
+                print("R. Revenir au menu principal de l'application")
+                print("=====================================================")
+                tournament_choice = input("Choisissez une option: ")
+
+                return tournament_choice
+        return None
 
     @staticmethod
     def show_round_menu():

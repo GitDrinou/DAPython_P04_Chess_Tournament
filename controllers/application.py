@@ -45,18 +45,36 @@ class ApplicationController:
                 self.menu_view.clear_console()
                 tournaments = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE)
-                self.display_view.display_tournaments(tournaments)
-                selection = self.prompt_view.select_tournament_prompt()
-                self.tournament_choice(selection)
+                if tournaments:
+                    self.display_view.display_tournaments(tournaments)
+                    selection = self.prompt_view.select_tournament_prompt()
+                    self.tournament_choice(selection)
+                else:
+                    self.menu_view.clear_console()
+                    print("\n================================================")
+                    print("Vous n'avez pas de tournoi en cours ou en "
+                          "attente.\n Veuillez créer un nouveau tournoi.")
+                    print("=================================================")
+                    time.sleep(2)
+                    self.menu_view.clear_console()
             elif user_choice == "3":
                 self.menu_view.clear_console()
                 self.report_choice()
             elif user_choice.upper() == "Q":
+                self.menu_view.clear_console()
+                print("\n===================================================")
+                print("Vous quittez l'application.")
                 print("Au revoir et à bientôt 👋.")
+                print("===================================================")
                 break
             else:
                 self.menu_view.clear_console()
-                print("Votre choix est invalide.")
+                print("\n=================================================")
+                print("Votre choix est invalide.\nVeuillez renouveler votre "
+                      "choix.")
+                print("=================================================")
+                time.sleep(2)
+                self.menu_view.clear_console()
 
     def tournament_choice(self, selection):
         """Display conditions for tournament choice"""
@@ -66,7 +84,9 @@ class ApplicationController:
                 PATH_DATA_TOURNAMENTS_JSON_FILE, selection)
             self.menu_view.clear_console()
             self.display_view.display_players(selected_tournament)
-            tournament_choice = self.menu_view.show_tournament_menu()
+            tournament_id = selected_tournament["tournament_id"]
+            tournament_choice = self.menu_view.show_tournament_menu(
+                tournament_id)
             tournament_id = selected_tournament["tournament_id"]
             if tournament_choice == "1":
                 self.menu_view.clear_console()
@@ -114,19 +134,24 @@ class ApplicationController:
                         selected_tournament["tournament_id"], selected_round)
                     time.sleep(2)
                     self.menu_view.clear_console()
-                    if (int(selected_tournament["number_of_rounds"]) >
+                    if (int(selected_tournament["number_of_rounds"]) >=
                             round_number):
                         tournament_id = selected_tournament["tournament_id"]
                         self.round_choice(selected_tournament, tournament_id)
             elif tournament_choice == "3":
                 self.menu_view.clear_console()
                 break
-            elif tournament_choice == "R":
+            elif tournament_choice.upper() == "R":
                 self.menu_view.clear_console()
                 break
             else:
                 self.menu_view.clear_console()
-                print("Votre choix est invalide.")
+                print("\n=================================================")
+                print("Votre choix est invalide.\nVeuillez renouveler votre "
+                      "choix.")
+                print("=================================================")
+                time.sleep(2)
+                self.menu_view.clear_console()
 
     def round_choice(self, selected_tournament, tournament_id):
         """ Display conditions for round choice"""
@@ -171,7 +196,12 @@ class ApplicationController:
                 break
             else:
                 self.menu_view.clear_console()
-                print("Votre choix est invalide.")
+                print("\n=================================================")
+                print("Votre choix est invalide.\nVeuillez renouveler votre "
+                      "choix.")
+                print("=================================================")
+                time.sleep(2)
+                self.menu_view.clear_console()
 
     def report_choice(self):
         """Display conditions for report choice"""
