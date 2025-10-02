@@ -137,7 +137,7 @@ class ApplicationController:
                     if (int(selected_tournament["number_of_rounds"]) >=
                             round_number):
                         tournament_id = selected_tournament["tournament_id"]
-                        self.round_choice(selected_tournament, tournament_id)
+                        self.round_choice(tournament_id)
             elif tournament_choice == "3":
                 self.menu_view.clear_console()
                 break
@@ -153,7 +153,7 @@ class ApplicationController:
                 time.sleep(2)
                 self.menu_view.clear_console()
 
-    def round_choice(self, selected_tournament, tournament_id):
+    def round_choice(self, tournament_id):
         """ Display conditions for round choice"""
 
         while True:
