@@ -1,8 +1,6 @@
 from datetime import datetime
 
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.date_utils import validate_date, checks_dates
-from utils.file_utils import read_json_file
 from utils.player_utils import check_format_national_id, check_player_is_exist
 
 
@@ -118,7 +116,9 @@ class PromptView:
         while True:
             print("\nSÉLECTIONNER UN TOURNOI")
             print("=====================================================")
-            tournament_id = input("Saisissez l'identifiant du tournoi: ")
+            tournament_id = input("Saisissez l'identifiant du tournoi parmi "
+                                  "la liste de tournois en cours ou à venir "
+                                  "ci-dessus: ")
 
             try:
                 tournament_id = int(tournament_id)

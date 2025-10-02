@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 
 from models.player import Player
 from models.tournament import Tournament
@@ -80,9 +81,9 @@ class ApplicationController:
         """Display conditions for tournament choice"""
 
         while True:
+            self.menu_view.clear_console()
             selected_tournament = load_tournament(
                 PATH_DATA_TOURNAMENTS_JSON_FILE, selection)
-            self.menu_view.clear_console()
             self.display_view.display_players(selected_tournament)
             tournament_id = selected_tournament["tournament_id"]
             tournament_choice = self.menu_view.show_tournament_menu(
@@ -107,15 +108,20 @@ class ApplicationController:
             elif tournament_choice == "2":
                 self.menu_view.clear_console()
                 last_round = selected_tournament["rounds"]
-                if len(selected_tournament["players"]) < 4 or len(
-                        selected_tournament["players"]) % 2 != 0:
+                today = datetime.today().date()
+                start_date = selected_tournament["start_date"]
+                start_date = datetime.strptime(start_date, "%d/%m/%Y")
+                if (len(selected_tournament["players"]) < 4 or len(
+                        selected_tournament["players"]) % 2 != 0 or
+                        start_date.date() > today):
                     self.menu_view.clear_console()
                     print("\n================================================")
-                    print("Vous n'avez pas assez de joueurs inscrits pour "
-                          "pouvoir générer un tour.\nVeuillez continuer à "
-                          "inscrire des joueurs au tournoi.\nLe minimum de "
+                    print("- Soit vous n'avez pas assez de joueurs inscrits "
+                          "pour pouvoir générer un tour.\nVeuillez continuer "
+                          "à inscrire des joueurs au tournoi.\nLe minimum de "
                           "4 joueurs est attendu et le total doit être un "
-                          "nombre pair.")
+                          "nombre pair.\n- Soit la date du tournoi est dans "
+                          "le futur.")
                     print("================================================")
                     time.sleep(4)
                     self.menu_view.clear_console()

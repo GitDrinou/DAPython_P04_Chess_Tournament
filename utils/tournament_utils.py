@@ -1,6 +1,6 @@
 def tournament_is_finished(tournament):
     """Check if tournament is finished"""
-    number_of_pf_rounds = tournament["number_of_rounds"]
+    number_of_rounds = tournament["number_of_rounds"]
     round_number = tournament["round_number"]
     rounds = tournament["rounds"]
     rounds_ended = True
@@ -9,7 +9,7 @@ def tournament_is_finished(tournament):
             rounds_ended = False
             break
 
-    if rounds_ended and number_of_pf_rounds == round_number:
+    if rounds_ended and number_of_rounds == round_number:
         return print("\n🎉 🎉 Le tournoi est terminé. Félicitations au "
                      "vainqueur 🏆!\n........................................"
                      "................")
