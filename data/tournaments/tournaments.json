@@ -482,14 +482,14 @@
             "end_date": "05/10/2025",
             "description": "le tournoi d\u00e9butera \u00e0 10h00",
             "number_of_rounds": "4",
-            "round_number": 0,
+            "round_number": "2",
             "players": [
                 {
                     "national_id": "R94830",
                     "last_name": "ROBERT",
                     "first_name": "Jane",
                     "birth_date": "20/09/2000",
-                    "points": 0.0
+                    "points": 0.5
                 },
                 {
                     "national_id": "W30294",
@@ -503,17 +503,86 @@
                     "last_name": "MARTIN",
                     "first_name": "Josephine",
                     "birth_date": "31/12/1999",
-                    "points": 0.0
+                    "points": 2.0
                 },
                 {
                     "national_id": "F58493",
                     "last_name": "FORD COPPOLA",
                     "first_name": "Francis",
                     "birth_date": "07/04/1939",
-                    "points": 0.0
+                    "points": 1.5
                 }
             ],
-            "rounds": []
+            "rounds": [
+                {
+                    "round_id": 1,
+                    "name": "Round 1",
+                    "round_start_date": "01-10-2025 16:47:20",
+                    "round_end_date": "01-10-2025 16:47:43",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "M59403",
+                                    "1"
+                                ],
+                                [
+                                    "W30294",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "R94830",
+                                    "1"
+                                ],
+                                [
+                                    "F58493",
+                                    "1"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 2,
+                    "name": "Round 2",
+                    "round_start_date": "02-10-2025 09:14:39",
+                    "round_end_date": "02-10-2025 09:15:23",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "M59403",
+                                    "1"
+                                ],
+                                [
+                                    "R94830",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "F58493",
+                                    "1"
+                                ],
+                                [
+                                    "W30294",
+                                    "0"
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

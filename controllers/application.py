@@ -11,7 +11,7 @@ class ApplicationController:
     """ Application class controller"""
     def __init__(self, player_controller, tournament_controller,
                  round_controller, match_controller,
-                 report_controller, menu_view, display_view):
+                 report_controller, menu_view, prompt_view, display_view):
         """ Initialize the application controller """
         self.player_controller = player_controller
         self.tournament_controller = tournament_controller
@@ -19,19 +19,20 @@ class ApplicationController:
         self.match_controller = match_controller
         self.report_controller = report_controller
         self.menu_view = menu_view
+        self.prompt_view = prompt_view
         self.display_view = display_view
 
     def run(self):
         """ Main method of the application controller """
         while True:
             self.menu_view.clear_console()
-            self.menu_view.show_menu()
-            user_choice = self.menu_view.prompt_choice()
+            self.menu_view.show_main_menu()
+            user_choice = self.prompt_view.prompt_choice()
 
             # user choice for main menu
             if user_choice == "1":
                 self.menu_view.clear_console()
-                tournament = self.menu_view.tournament_prompt()
+                tournament = self.prompt_view.tournament_prompt()
                 self.tournament_controller.create(
                     Tournament(tournament["name"], tournament["location"],
                                tournament["start_date"],
@@ -45,18 +46,18 @@ class ApplicationController:
                 tournaments = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE)
                 self.display_view.display_tournaments(tournaments)
-                selection = self.menu_view.select_tournament_prompt()
+                selection = self.prompt_view.select_tournament_prompt()
                 while True:
                     selected_tournament = load_tournament(
                         PATH_DATA_TOURNAMENTS_JSON_FILE, selection)
                     self.menu_view.clear_console()
                     self.display_view.display_players(selected_tournament)
-                    tournament_choice = self.menu_view.tournament_menu_prompt()
+                    tournament_choice = self.menu_view.show_tournament_menu()
                     tournament_id = selected_tournament["tournament_id"]
                     if tournament_choice == "1":
                         self.menu_view.clear_console()
                         if len(selected_tournament["rounds"]) == 0:
-                            player = self.menu_view.player_prompt()
+                            player = self.prompt_view.player_prompt()
                             self.player_controller.add(
                                 Player(player["national_id"], player[
                                     "lastname"], player["firstname"],
@@ -94,7 +95,7 @@ class ApplicationController:
                             self.display_view.display_rounds(
                                 selected_tournament["rounds"])
                             selected_round = (
-                                self.menu_view.select_round_prompt())
+                                self.prompt_view.select_round_prompt())
                             self.tournament_controller.generate_a_round(
                                 selected_tournament["number_of_rounds"],
                                 round_number,
@@ -109,7 +110,7 @@ class ApplicationController:
                                     "tournament_id"]
                                 while True:
                                     round_choice = (
-                                        self.menu_view.round_prompt())
+                                        self.menu_view.show_round_menu())
                                     if round_choice == "1":
                                         self.menu_view.clear_console()
                                         round_detail = (
@@ -146,7 +147,7 @@ class ApplicationController:
                                              display_a_round(last_round))
                                             match_id = index + 1
                                             match =\
-                                                (self.menu_view
+                                                (self.prompt_view
                                                     .match_prompt(match_id))
                                             self.match_controller.save_score(
                                                 tournament,
@@ -181,7 +182,7 @@ class ApplicationController:
             elif user_choice == "3":
                 self.menu_view.clear_console()
                 while True:
-                    report_choice = self.menu_view.reports_prompt()
+                    report_choice = self.menu_view.show_report_menu()
                     data_players = read_json_file(PATH_DATA_PLAYERS_JSON_FILE)
                     data_tournaments = read_json_file(
                         PATH_DATA_TOURNAMENTS_JSON_FILE)
