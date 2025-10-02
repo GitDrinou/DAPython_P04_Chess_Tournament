@@ -167,13 +167,16 @@ class ReportController:
                                 {% for match in round["matchs"] %}
                                     <tr>
                                     {% if loop.first %}
-                                        <td rowspan="2" class="round">
+                                        <td rowspan="{{ round[
+                                        "matchs"]|length }}" class="round">
                                             {{ round["name"] }}
                                         </td>
-                                        <td rowspan="2" class="round">
+                                        <td rowspan="{{ round[
+                                        "matchs"]|length }}" class="round">
                                             {{ round["round_start_date"] }}
                                         </td>
-                                        <td rowspan="2" class="round">
+                                        <td rowspan="{{ round[
+                                        "matchs"]|length }}" class="round">
                                             {{ round["round_end_date"] }}
                                         </td>
                                     {% endif %}
@@ -249,13 +252,16 @@ class ReportController:
                             {% for match in round["matchs"] %}
                                 <tr>
                                 {% if loop.first %}
-                                    <td rowspan="2" class="round">
+                                    <td rowspan="{{ round[
+                                        "matchs"]|length }}" class="round">
                                         {{ round["name"] }}
                                     </td>
-                                    <td rowspan="2" class="round">
+                                    <td rowspan="{{ round[
+                                        "matchs"]|length }}" class="round">
                                         {{ round["round_start_date"] }}
                                     </td>
-                                    <td rowspan="2" class="round">
+                                    <td rowspan="{{ round[
+                                        "matchs"]|length }}" class="round">
                                         {{ round["round_end_date"] }}
                                     </td>
                                 {% endif %}

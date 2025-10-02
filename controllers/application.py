@@ -227,48 +227,96 @@ class ApplicationController:
                 self.menu_view.clear_console()
             elif report_choice == "3":
                 self.menu_view.clear_console()
-                tournament_id = self.menu_view.report_tournament_prompt()
-                if tournament_id is not None:
-                    self.menu_view.clear_console()
-                    tournaments = data_tournaments["tournaments"]
-                    for tournament in tournaments:
-                        if tournament["tournament_id"] == int(tournament_id):
-                            self.report_controller.tournaments([tournament])
-                            break
+                tournaments = load_tournament(
+                    PATH_DATA_TOURNAMENTS_JSON_FILE, all_tournaments=True)
+                if tournaments:
+                    self.display_view.display_tournaments(tournaments)
+                    tournament_id = self.prompt_view.select_tournament_prompt()
+                    if tournament_id is not None:
+                        self.menu_view.clear_console()
+                        tournaments = data_tournaments["tournaments"]
+                        tournament_report = []
+                        for tournament in tournaments:
+                            if tournament["tournament_id"] == int(
+                                    tournament_id):
+                                tournament_report.append(tournament)
+                                break
+                        self.report_controller.tournaments(tournament_report)
                         time.sleep(10)
                         self.menu_view.clear_console()
-                time.sleep(3)
-                self.menu_view.clear_console()
+                else:
+                    self.menu_view.clear_console()
+                    print("\n================================================")
+                    print("Vous n'avez pas de tournoi en cours ou en "
+                          "attente.\nVeuillez créer un nouveau tournoi.")
+                    print("=================================================")
+                    time.sleep(2)
+                    self.menu_view.clear_console()
             elif report_choice == "4":
                 self.menu_view.clear_console()
-                tournament_id = self.menu_view.report_tournament_prompt()
-                if tournament_id is not None:
-                    self.menu_view.clear_console()
-                    tournaments = data_tournaments["tournaments"]
-                    for tournament in tournaments:
-                        if tournament["tournament_id"] == int(tournament_id):
-                            self.report_controller.players(
-                                tournament["players"],
-                                True, tournament["name"])
-                            break
+                tournaments = load_tournament(
+                    PATH_DATA_TOURNAMENTS_JSON_FILE, all_tournaments=True)
+                if tournaments:
+                    self.display_view.display_tournaments(tournaments)
+                    tournament_id = self.prompt_view.select_tournament_prompt()
+                    if tournament_id is not None:
+                        self.menu_view.clear_console()
+                        tournaments = data_tournaments["tournaments"]
+                        tournament_report = {}
+                        for tournament in tournaments:
+                            if tournament["tournament_id"] == int(
+                                    tournament_id):
+                                tournament_report = tournament
+                                break
+                        self.report_controller.players(
+                            tournament_report["players"], True,
+                            tournament_report["name"])
                         time.sleep(10)
                         self.menu_view.clear_console()
-                time.sleep(3)
-                self.menu_view.clear_console()
+                else:
+                    self.menu_view.clear_console()
+                    print("\n================================================")
+                    print("Vous n'avez pas de tournoi en cours ou en "
+                          "attente.\nVeuillez créer un nouveau tournoi.")
+                    print("=================================================")
+                    time.sleep(2)
+                    self.menu_view.clear_console()
             elif report_choice == "5":
                 self.menu_view.clear_console()
-                tournament_id = self.menu_view.report_tournament_prompt()
-                if tournament_id is not None:
-                    self.menu_view.clear_console()
-                    tournaments = data_tournaments["tournaments"]
-                    for tournament in tournaments:
-                        if tournament["tournament_id"] == int(tournament_id):
-                            self.report_controller.tournament_round(tournament)
-                            break
+                tournaments = load_tournament(
+                    PATH_DATA_TOURNAMENTS_JSON_FILE, all_tournaments=True)
+                if tournaments:
+                    self.display_view.display_tournaments(tournaments)
+                    tournament_id = self.prompt_view.select_tournament_prompt()
+                    if tournament_id is not None:
+                        self.menu_view.clear_console()
+                        tournaments = data_tournaments["tournaments"]
+                        tournament_report = {}
+                        for tournament in tournaments:
+                            if tournament["tournament_id"] == int(
+                                    tournament_id):
+                                tournament_report = tournament
+                                break
+                        self.report_controller.tournament_round(
+                            tournament_report)
                         time.sleep(10)
                         self.menu_view.clear_console()
-                time.sleep(3)
-                self.menu_view.clear_console()
+                else:
+                    self.menu_view.clear_console()
+                    print("\n================================================")
+                    print("Vous n'avez pas de tournoi en cours ou en "
+                          "attente.\nVeuillez créer un nouveau tournoi.")
+                    print("=================================================")
+                    time.sleep(2)
+                    self.menu_view.clear_console()
             elif report_choice.upper() == "R":
                 self.menu_view.clear_console()
                 break
+            else:
+                self.menu_view.clear_console()
+                print("\n=================================================")
+                print("Votre choix est invalide.\nVeuillez renouveler votre "
+                      "choix.")
+                print("=================================================")
+                time.sleep(2)
+                self.menu_view.clear_console()

@@ -52,9 +52,9 @@ def save_to_json(key, **kwargs):
     write_json_file(path, data)
 
 
-def load_tournament(path_file, tournament_id=None):
+def load_tournament(path_file, tournament_id=None, all_tournaments=False):
     """Load the last tournament data from the json file"""
-    with (open(path_file, 'r', encoding='utf-8') as f):
+    with open(path_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
         datas = data.get("tournaments", [])
         if datas:
@@ -65,15 +65,21 @@ def load_tournament(path_file, tournament_id=None):
                 return None
             else:
                 tournaments = []
-                today = datetime.today().date()
-                for tournament in datas:
-                    start_date = datetime.strptime(tournament["start_date"],
-                                                   "%d/%m/%Y").date()
-                    number_of_rounds = int(tournament["number_of_rounds"])
-                    round_number = int(tournament["round_number"])
-                    if number_of_rounds > round_number and start_date >= today:
-                        tournaments.append(tournament)
-                return tournaments
+                if all_tournaments:
+                    return datas
+                else:
+                    today = datetime.today().date()
+                    for tournament in datas:
+                        tournament_start = tournament["start_date"]
+                        start_date = datetime.strptime(tournament_start,
+                                                       "%d/%m/%Y"
+                                                       ).date()
+                        number_of_rounds = int(tournament["number_of_rounds"])
+                        round_number = int(tournament["round_number"])
+                        if (number_of_rounds > round_number and start_date
+                                >= today):
+                            tournaments.append(tournament)
+                    return tournaments
         else:
             return None
 
