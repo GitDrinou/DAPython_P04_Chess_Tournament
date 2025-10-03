@@ -6,6 +6,9 @@ from models.tournament import Tournament
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
     PATH_DATA_PLAYERS_JSON_FILE
 from utils.file_utils import load_tournament, read_json_file
+from views.messages import message_create_tournament, \
+    message_quit_application, message_invalid_choice, \
+    message_tournament_started, message_delete_player, message_generate_round
 
 
 class ApplicationController:
@@ -52,10 +55,7 @@ class ApplicationController:
                     self.tournament_choice(selection)
                 else:
                     self.menu_view.clear_console()
-                    print("\n================================================")
-                    print("Vous n'avez pas de tournoi en cours ou en "
-                          "attente.\nVeuillez créer un nouveau tournoi.")
-                    print("=================================================")
+                    print(message_create_tournament)
                     time.sleep(2)
                     self.menu_view.clear_console()
             elif user_choice == "3":
@@ -63,17 +63,11 @@ class ApplicationController:
                 self.report_choice()
             elif user_choice.upper() == "Q":
                 self.menu_view.clear_console()
-                print("\n===================================================")
-                print("Vous quittez l'application.")
-                print("Au revoir et à bientôt 👋.")
-                print("===================================================")
+                print(message_quit_application)
                 break
             else:
                 self.menu_view.clear_console()
-                print("\n=================================================")
-                print("Votre choix est invalide.\nVeuillez renouveler votre "
-                      "choix.")
-                print("=================================================")
+                print(message_invalid_choice)
                 time.sleep(2)
                 self.menu_view.clear_console()
 
@@ -101,8 +95,7 @@ class ApplicationController:
                     time.sleep(2)
                     self.menu_view.clear_console()
                 else:
-                    print("\nLe tournoi a déjà démarré, vous ne pouvez plus "
-                          "inscrire de nouveaux joueurs.")
+                    print(message_tournament_started)
                     time.sleep(3)
                     self.menu_view.clear_console()
             elif tournament_choice == "2":
@@ -118,13 +111,9 @@ class ApplicationController:
                     time.sleep(2)
                     self.menu_view.clear_console()
                 else:
-                    print("\nVous ne pouvez pas supprimer de "
-                          "joueur, soit parce que le tournoi a déjà "
-                          "démarré, soit parce qu'il n'y a pas de "
-                          "joueurs inscrits au tournoi.")
+                    print(message_delete_player)
                     time.sleep(3)
                     self.menu_view.clear_console()
-
             elif tournament_choice == "3":
                 self.menu_view.clear_console()
                 last_round = selected_tournament["rounds"]
@@ -135,15 +124,7 @@ class ApplicationController:
                         selected_tournament["players"]) % 2 != 0 or
                         start_date.date() > today):
                     self.menu_view.clear_console()
-                    print("\n================================================")
-                    print("Vous ne pouvez pas générer de tour:\n")
-                    print("- Soit vous n'avez pas assez de joueurs inscrits "
-                          "pour pouvoir générer un tour.\nVeuillez continuer "
-                          "à inscrire des joueurs au tournoi.\nLe minimum de "
-                          "4 joueurs est attendu et le total doit être un "
-                          "nombre pair.\n- Soit la date du tournoi est dans "
-                          "le futur.")
-                    print("================================================")
+                    print(message_generate_round)
                     time.sleep(10)
                     self.menu_view.clear_console()
                 else:
@@ -151,8 +132,10 @@ class ApplicationController:
                         round_number = 0
                     else:
                         round_number = len(last_round)
-                    self.display_view.display_rounds(
+                    finished_rounds = self.round_controller.is_finished(
                         selected_tournament["rounds"])
+                    self.display_view.display_rounds(
+                        selected_tournament["rounds"], finished_rounds)
                     selected_round = (
                         self.prompt_view.select_round_prompt())
                     self.tournament_controller.generate_a_round(
@@ -173,10 +156,7 @@ class ApplicationController:
                 break
             else:
                 self.menu_view.clear_console()
-                print("\n=================================================")
-                print("Votre choix est invalide.\nVeuillez renouveler votre "
-                      "choix.")
-                print("=================================================")
+                print(message_invalid_choice)
                 time.sleep(2)
                 self.menu_view.clear_console()
 
@@ -225,10 +205,7 @@ class ApplicationController:
                 break
             else:
                 self.menu_view.clear_console()
-                print("\n=================================================")
-                print("Votre choix est invalide.\nVeuillez renouveler votre "
-                      "choix.")
-                print("=================================================")
+                print(message_invalid_choice)
                 time.sleep(2)
                 self.menu_view.clear_console()
 
@@ -273,10 +250,7 @@ class ApplicationController:
                         self.menu_view.clear_console()
                 else:
                     self.menu_view.clear_console()
-                    print("\n================================================")
-                    print("Vous n'avez pas de tournoi en cours ou en "
-                          "attente.\nVeuillez créer un nouveau tournoi.")
-                    print("=================================================")
+                    print(message_create_tournament)
                     time.sleep(2)
                     self.menu_view.clear_console()
             elif report_choice == "4":
@@ -302,10 +276,7 @@ class ApplicationController:
                         self.menu_view.clear_console()
                 else:
                     self.menu_view.clear_console()
-                    print("\n================================================")
-                    print("Vous n'avez pas de tournoi en cours ou en "
-                          "attente.\nVeuillez créer un nouveau tournoi.")
-                    print("=================================================")
+                    print(message_create_tournament)
                     time.sleep(2)
                     self.menu_view.clear_console()
             elif report_choice == "5":
@@ -330,10 +301,7 @@ class ApplicationController:
                         self.menu_view.clear_console()
                 else:
                     self.menu_view.clear_console()
-                    print("\n================================================")
-                    print("Vous n'avez pas de tournoi en cours ou en "
-                          "attente.\nVeuillez créer un nouveau tournoi.")
-                    print("=================================================")
+                    print(message_create_tournament)
                     time.sleep(2)
                     self.menu_view.clear_console()
             elif report_choice.upper() == "R":
@@ -341,9 +309,6 @@ class ApplicationController:
                 break
             else:
                 self.menu_view.clear_console()
-                print("\n=================================================")
-                print("Votre choix est invalide.\nVeuillez renouveler votre "
-                      "choix.")
-                print("=================================================")
+                print(message_invalid_choice)
                 time.sleep(2)
                 self.menu_view.clear_console()

@@ -81,21 +81,29 @@ class DisplayTableView:
         print(tabulate(rows, headers=headers, tablefmt="github"))
         print("\n...........................................................")
 
-    @staticmethod
-    def display_rounds(rounds):
+    def display_rounds(self, rounds, finished_rounds):
         """Display a table with all rounds for a tournaments"""
         data_report = rounds
-
         rows = []
         for entry in data_report:
             round_id = entry["round_id"]
             round_name = entry["name"]
             start_date = entry["round_start_date"]
             end_date = entry["round_end_date"]
-            rows.append([round_id, round_name, start_date, end_date])
+            is_finished = self.round_terminated(round_id, finished_rounds)
+            rows.append([round_id, round_name, start_date, end_date,
+                         is_finished])
 
-        headers = ["ID Tour", "Nom", "Date de début", "Date de fin"]
-
+        headers = ["ID Tour", "Nom", "Date de début", "Date de fin",
+                   "Scores enregistrés"]
         print("\n...........................................................")
         print(tabulate(rows, headers=headers, tablefmt="github"))
         print("\n...........................................................")
+
+    @staticmethod
+    def round_terminated(round_id, finished_rounds):
+        """Check if a round terminates"""
+        for item in finished_rounds:
+            if item["round_id"] == round_id and item["is_finished"]:
+                return "Oui"
+        return ""
