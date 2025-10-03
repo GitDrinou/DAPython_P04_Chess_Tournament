@@ -107,6 +107,26 @@ class ApplicationController:
                     self.menu_view.clear_console()
             elif tournament_choice == "2":
                 self.menu_view.clear_console()
+                if len(selected_tournament["rounds"]) == 0 and len(
+                        selected_tournament["players"]) > 0:
+                    self.display_view.display_players(
+                        selected_tournament)
+                    national_id = self.prompt_view.delete_player_prompt()
+                    self.tournament_controller.delete_a_player(
+                        selected_tournament["tournament_id"],
+                        national_id)
+                    time.sleep(2)
+                    self.menu_view.clear_console()
+                else:
+                    print("\nVous ne pouvez pas supprimer de "
+                          "joueur, soit parce que le tournoi a déjà "
+                          "démarré, soit parce qu'il n'y a pas de "
+                          "joueurs inscrits au tournoi.")
+                    time.sleep(3)
+                    self.menu_view.clear_console()
+
+            elif tournament_choice == "3":
+                self.menu_view.clear_console()
                 last_round = selected_tournament["rounds"]
                 today = datetime.today().date()
                 start_date = selected_tournament["start_date"]
@@ -116,6 +136,7 @@ class ApplicationController:
                         start_date.date() > today):
                     self.menu_view.clear_console()
                     print("\n================================================")
+                    print("Vous ne pouvez pas générer de tour:\n")
                     print("- Soit vous n'avez pas assez de joueurs inscrits "
                           "pour pouvoir générer un tour.\nVeuillez continuer "
                           "à inscrire des joueurs au tournoi.\nLe minimum de "
@@ -123,7 +144,7 @@ class ApplicationController:
                           "nombre pair.\n- Soit la date du tournoi est dans "
                           "le futur.")
                     print("================================================")
-                    time.sleep(4)
+                    time.sleep(10)
                     self.menu_view.clear_console()
                 else:
                     if len(last_round) == 0:
@@ -144,7 +165,7 @@ class ApplicationController:
                             round_number):
                         tournament_id = selected_tournament["tournament_id"]
                         self.round_choice(tournament_id)
-            elif tournament_choice == "3":
+            elif tournament_choice == "4":
                 self.menu_view.clear_console()
                 break
             elif tournament_choice.upper() == "R":

@@ -189,21 +189,21 @@
                     "last_name": "PROUST",
                     "first_name": "Marcel",
                     "birth_date": "10/07/1871",
-                    "points": 1.5
+                    "points": 2.5
                 },
                 {
                     "national_id": "W30294",
                     "last_name": "WERBER",
                     "first_name": "Bernard",
                     "birth_date": "18/09/1961",
-                    "points": 1.0
+                    "points": 1.5
                 },
                 {
                     "national_id": "B48392",
                     "last_name": "BOURNE",
                     "first_name": "Jason",
                     "birth_date": "09/02/1989",
-                    "points": 2.0
+                    "points": 2.5
                 },
                 {
                     "national_id": "D20934",
@@ -217,14 +217,14 @@
                     "last_name": "DOE",
                     "first_name": "Jonathan",
                     "birth_date": "20/01/2000",
-                    "points": 1.0
+                    "points": 1.5
                 },
                 {
                     "national_id": "M59403",
                     "last_name": "MARTIN",
                     "first_name": "Josephine",
                     "birth_date": "31/12/1999",
-                    "points": 2.0
+                    "points": 2.5
                 }
             ],
             "rounds": [
@@ -414,33 +414,19 @@
                 {
                     "round_id": 4,
                     "name": "Round 4",
-                    "round_start_date": "30-09-2025 11:47:02",
-                    "round_end_date": "",
-                    "historical_pairs": [
-                        [
-                            "B48392",
-                            "M59403"
-                        ],
-                        [
-                            "D20934",
-                            "P85930"
-                        ],
-                        [
-                            "D59304",
-                            "W30294"
-                        ]
-                    ],
+                    "round_start_date": "03-10-2025 09:13:00",
+                    "round_end_date": "03-10-2025 09:15:37",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
                                     "B48392",
-                                    0.0
+                                    "1"
                                 ],
                                 [
                                     "M59403",
-                                    0.0
+                                    "1"
                                 ]
                             ]
                         },
@@ -449,11 +435,11 @@
                             "match": [
                                 [
                                     "D20934",
-                                    0.0
+                                    "0"
                                 ],
                                 [
                                     "P85930",
-                                    0.0
+                                    "1"
                                 ]
                             ]
                         },
@@ -461,12 +447,12 @@
                             "match_id": 3,
                             "match": [
                                 [
-                                    "W30294",
-                                    0.0
+                                    "D59304",
+                                    "1"
                                 ],
                                 [
-                                    "D59304",
-                                    0.0
+                                    "W30294",
+                                    "1"
                                 ]
                             ]
                         }
@@ -482,7 +468,7 @@
             "end_date": "01/10/2025",
             "description": "le tournoi d\u00e9butera \u00e0 10h00",
             "number_of_rounds": "4",
-            "round_number": "4",
+            "round_number": "3",
             "players": [
                 {
                     "national_id": "R94830",
@@ -611,40 +597,6 @@
                                 [
                                     "W30294",
                                     "0"
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "round_id": 4,
-                    "name": "Round 4",
-                    "round_start_date": "02-10-2025 10:50:41",
-                    "round_end_date": "02-10-2025 10:51:12",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "M59403",
-                                    "1"
-                                ],
-                                [
-                                    "R94830",
-                                    "0"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "F58493",
-                                    "1"
-                                ],
-                                [
-                                    "W30294",
-                                    "1"
                                 ]
                             ]
                         }
@@ -858,7 +810,15 @@
             "description": "le tournoi d\u00e9butera \u00e0 8H00",
             "number_of_rounds": "4",
             "round_number": 0,
-            "players": [],
+            "players": [
+                {
+                    "national_id": "W30294",
+                    "last_name": "WERBER",
+                    "first_name": "Bernard",
+                    "birth_date": "18/09/1961",
+                    "points": 0.0
+                }
+            ],
             "rounds": []
         }
     ]

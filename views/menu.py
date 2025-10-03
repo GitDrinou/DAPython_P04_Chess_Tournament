@@ -40,9 +40,10 @@ class MenuView:
                 print("\nGESTION DU TOURNOI")
                 print("=====================================================")
                 print("1. Inscrire des joueurs au tournoi")
-                print(f"2. Générer ou continuer un tour (tour"
+                print("2 - Supprimer un joueur du tournoi")
+                print(f"3. Générer ou continuer un tour (tour"
                       f" {current_round_number}/{number_pf_rounds})")
-                print("3. Mettre en pause le tournoi")
+                print("4. Mettre en pause le tournoi")
                 print("R. Revenir au menu principal de l'application")
                 print("=====================================================")
                 tournament_choice = input("Choisissez une option: ")

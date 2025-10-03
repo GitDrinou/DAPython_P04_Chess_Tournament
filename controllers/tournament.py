@@ -163,3 +163,23 @@ class TournamentController:
                              "du tournoi.\n==================================="
                              "==================")
         return None
+
+    @staticmethod
+    def delete_a_player(tournament_id, national_id):
+        """Delete an identify player from the tournament"""
+        data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        tournaments = data["tournaments"]
+        for tournament in tournaments:
+            if tournament["tournament_id"] == tournament_id:
+                tournament["players"] = [player for player in tournament[
+                    "players"] if player.get('national_id') != national_id]
+
+                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                  tournament["tournament_id"],
+                                  tournament)
+
+                return print("\n=============================================="
+                             "=======\nLe joueur a bien été supprimé du "
+                             "tournoi.\n======================================"
+                             "============")
+        return None
