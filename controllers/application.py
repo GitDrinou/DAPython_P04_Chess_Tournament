@@ -52,7 +52,8 @@ class ApplicationController:
                 if tournaments:
                     self.display_view.display_tournaments(tournaments)
                     selection = self.prompt_view.select_tournament_prompt()
-                    self.tournament_choice(selection)
+                    if not selection == 0:
+                        self.tournament_choice(selection)
                 else:
                     self.menu_view.clear_console()
                     print(message_create_tournament)
@@ -83,82 +84,88 @@ class ApplicationController:
             tournament_choice = self.menu_view.show_tournament_menu(
                 tournament_id)
             tournament_id = selected_tournament["tournament_id"]
-            if tournament_choice == "1":
-                self.menu_view.clear_console()
-                if len(selected_tournament["rounds"]) == 0:
-                    player = self.prompt_view.player_prompt()
-                    self.player_controller.add(Player(player["national_id"],
-                                                      player["lastname"],
-                                                      player["firstname"],
-                                                      player["birthdate"]),
-                                               tournament_id)
-                    time.sleep(2)
+            if tournament_choice is not None:
+                if tournament_choice == "1":
                     self.menu_view.clear_console()
-                else:
-                    print(message_tournament_started)
-                    time.sleep(3)
-                    self.menu_view.clear_console()
-            elif tournament_choice == "2":
-                self.menu_view.clear_console()
-                if len(selected_tournament["rounds"]) == 0 and len(
-                        selected_tournament["players"]) > 0:
-                    self.display_view.display_players(
-                        selected_tournament)
-                    national_id = self.prompt_view.delete_player_prompt()
-                    self.tournament_controller.delete_a_player(
-                        selected_tournament["tournament_id"],
-                        national_id)
-                    time.sleep(2)
-                    self.menu_view.clear_console()
-                else:
-                    print(message_delete_player)
-                    time.sleep(3)
-                    self.menu_view.clear_console()
-            elif tournament_choice == "3":
-                self.menu_view.clear_console()
-                last_round = selected_tournament["rounds"]
-                today = datetime.today().date()
-                start_date = selected_tournament["start_date"]
-                start_date = datetime.strptime(start_date, "%d/%m/%Y")
-                if (len(selected_tournament["players"]) < 4 or len(
-                        selected_tournament["players"]) % 2 != 0 or
-                        start_date.date() > today):
-                    self.menu_view.clear_console()
-                    print(message_generate_round)
-                    time.sleep(10)
-                    self.menu_view.clear_console()
-                else:
-                    if len(last_round) == 0:
-                        round_number = 0
+                    if len(selected_tournament["rounds"]) == 0:
+                        player = self.prompt_view.player_prompt()
+                        self.player_controller.add(Player(
+                            player["national_id"], player["lastname"],
+                            player["firstname"], player["birthdate"]),
+                            tournament_id)
+                        time.sleep(2)
+                        self.menu_view.clear_console()
                     else:
-                        round_number = len(last_round)
-                    finished_rounds = self.round_controller.is_finished(
-                        selected_tournament["rounds"])
-                    self.display_view.display_rounds(
-                        selected_tournament["rounds"], finished_rounds)
-                    selected_round = (
-                        self.prompt_view.select_round_prompt())
-                    self.tournament_controller.generate_a_round(
-                        selected_tournament["number_of_rounds"], round_number,
-                        selected_tournament["players"],
-                        selected_tournament["tournament_id"], selected_round)
+                        print(message_tournament_started)
+                        time.sleep(3)
+                        self.menu_view.clear_console()
+                elif tournament_choice == "2":
+                    self.menu_view.clear_console()
+                    if len(selected_tournament["rounds"]) == 0 and len(
+                            selected_tournament["players"]) > 0:
+                        self.display_view.display_players(
+                            selected_tournament)
+                        national_id = self.prompt_view.delete_player_prompt()
+                        self.tournament_controller.delete_a_player(
+                            selected_tournament["tournament_id"],
+                            national_id)
+                        time.sleep(2)
+                        self.menu_view.clear_console()
+                    else:
+                        print(message_delete_player)
+                        time.sleep(3)
+                        self.menu_view.clear_console()
+                elif tournament_choice == "3":
+                    self.menu_view.clear_console()
+                    last_round = selected_tournament["rounds"]
+                    today = datetime.today().date()
+                    start_date = selected_tournament["start_date"]
+                    start_date = datetime.strptime(start_date, "%d/%m/%Y")
+                    if (len(selected_tournament["players"]) < 4 or len(
+                            selected_tournament["players"]) % 2 != 0 or
+                            start_date.date() > today):
+                        self.menu_view.clear_console()
+                        print(message_generate_round)
+                        time.sleep(10)
+                        self.menu_view.clear_console()
+                    else:
+                        if len(last_round) == 0:
+                            round_number = 0
+                        else:
+                            round_number = len(last_round)
+                        finished_rounds = self.round_controller.is_finished(
+                            selected_tournament["rounds"])
+                        self.display_view.display_rounds(
+                            selected_tournament["rounds"], finished_rounds)
+                        selected_round = (
+                            self.prompt_view.select_round_prompt())
+                        self.tournament_controller.generate_a_round(
+                            selected_tournament["number_of_rounds"],
+                            round_number, selected_tournament["players"],
+                            selected_tournament["tournament_id"],
+                            selected_round)
+                        time.sleep(2)
+                        self.menu_view.clear_console()
+                        if (int(selected_tournament["number_of_rounds"]) >=
+                                round_number):
+                            tournament_id = selected_tournament[
+                                "tournament_id"]
+                            self.round_choice(tournament_id)
+                elif tournament_choice == "4":
+                    self.menu_view.clear_console()
+                    break
+                elif tournament_choice.upper() == "R":
+                    self.menu_view.clear_console()
+                    break
+                else:
+                    self.menu_view.clear_console()
+                    print(message_invalid_choice)
                     time.sleep(2)
                     self.menu_view.clear_console()
-                    if (int(selected_tournament["number_of_rounds"]) >=
-                            round_number):
-                        tournament_id = selected_tournament["tournament_id"]
-                        self.round_choice(tournament_id)
-            elif tournament_choice == "4":
-                self.menu_view.clear_console()
-                break
-            elif tournament_choice.upper() == "R":
-                self.menu_view.clear_console()
-                break
             else:
+                time.sleep(5)
                 self.menu_view.clear_console()
-                print(message_invalid_choice)
-                time.sleep(2)
-                self.menu_view.clear_console()
+                break
 
     def round_choice(self, tournament_id):
         """ Display conditions for round choice"""

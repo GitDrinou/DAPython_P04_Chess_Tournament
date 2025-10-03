@@ -1,17 +1,17 @@
+from controllers.round import RoundController
+from views.messages import message_tournament_terminated
+
+
 def tournament_is_finished(tournament):
     """Check if tournament is finished"""
     number_of_rounds = tournament["number_of_rounds"]
     round_number = tournament["round_number"]
     rounds = tournament["rounds"]
-    rounds_ended = True
-    for round_detail in rounds:
-        if round_detail["round_end_date"] == "":
-            rounds_ended = False
-            break
+    list_finished_rounds = RoundController().is_finished(rounds)
+    existe_false = any(item['is_finished'] is False for item in
+                       list_finished_rounds)
 
-    if rounds_ended and number_of_rounds == round_number:
-        return print("\n🎉 🎉 Le tournoi est terminé. Félicitations au "
-                     "vainqueur 🏆!\n........................................"
-                     "................")
+    if not existe_false and number_of_rounds == round_number:
+        return print(message_tournament_terminated)
     else:
         return None

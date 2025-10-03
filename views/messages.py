@@ -34,3 +34,11 @@ message_generate_round = ("\n================================================"
                           "être un nombre pair.\n\t- soit la date du tournoi "
                           "est dans le futur.\n==============================="
                           "=================")
+
+message_tournament_terminated = ("\n=========================================="
+                                 "======\n🎉 🎉  L E  T O U R N O I  E S T  "
+                                 "T E R M I N É. 🎉 🎉\nFélicitations au "
+                                 "vainqueur 🏆!\nVous allez être redirigé "
+                                 "dans un instant vers le menu principal.\n==="
+                                 "============================================"
+                                 "=")

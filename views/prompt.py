@@ -2,6 +2,7 @@ from datetime import datetime
 
 from utils.date_utils import validate_date, checks_dates
 from utils.player_utils import check_format_national_id, check_player_is_exist
+from views.messages import message_invalid_choice
 
 
 class PromptView:
@@ -117,14 +118,20 @@ class PromptView:
             print("\nSÉLECTIONNER UN TOURNOI")
             print("=====================================================")
             tournament_id = input("Saisissez l'identifiant du tournoi parmi "
-                                  "la liste de tournois en cours ou à venir "
-                                  "ci-dessus: ")
+                                  "la liste de tournois disponibles ci-dessus "
+                                  "\nou tapez sur la touche R de votre clavier"
+                                  "pour revenir au menu précédent: ")
+            print("=====================================================")
 
             try:
-                tournament_id = int(tournament_id)
-                break
+                if not tournament_id.upper() == "R":
+                    tournament_id = int(tournament_id)
+                    break
+                else:
+                    tournament_id = 0
+                    break
             except ValueError:
-                print("\nLa valeur n'existe pas.")
+                print(message_invalid_choice)
 
         return tournament_id
 

@@ -35,20 +35,19 @@ class MenuView:
             if tournament["tournament_id"] == tournament_id:
                 current_round_number = tournament["round_number"]
                 number_pf_rounds = tournament["number_of_rounds"]
-                tournament_is_finished(tournament)
+                if tournament_is_finished(tournament) is not None:
+                    print("\nGESTION DU TOURNOI")
+                    print("==================================================")
+                    print("1. Inscrire des joueurs au tournoi")
+                    print("2 - Supprimer un joueur du tournoi")
+                    print(f"3. Générer ou continuer un tour (tour"
+                          f" {current_round_number}/{number_pf_rounds})")
+                    print("4. Mettre en pause le tournoi")
+                    print("R. Revenir au menu principal de l'application")
+                    print("==================================================")
+                    tournament_choice = input("Choisissez une option: ")
 
-                print("\nGESTION DU TOURNOI")
-                print("=====================================================")
-                print("1. Inscrire des joueurs au tournoi")
-                print("2 - Supprimer un joueur du tournoi")
-                print(f"3. Générer ou continuer un tour (tour"
-                      f" {current_round_number}/{number_pf_rounds})")
-                print("4. Mettre en pause le tournoi")
-                print("R. Revenir au menu principal de l'application")
-                print("=====================================================")
-                tournament_choice = input("Choisissez une option: ")
-
-                return tournament_choice
+                    return tournament_choice
         return None
 
     @staticmethod

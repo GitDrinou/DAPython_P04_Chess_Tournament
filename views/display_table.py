@@ -55,9 +55,7 @@ class DisplayTableView:
         print(f"\tDu: {start_date}")
         print(f"\tAu: {end_date}\n")
         print(f"Nombre de joueurs inscrits: {total_players}\n")
-        print("...........................................................\n")
-        print(tabulate(rows, headers=headers, tablefmt="github"))
-        print("\n...........................................................")
+        print(tabulate(rows, headers=headers, tablefmt="outline"))
 
     @staticmethod
     def display_tournaments(tournament):
@@ -77,9 +75,8 @@ class DisplayTableView:
         headers = ["ID Tournoi", "Nom", "Date de début", "Total de joueurs",
                    "N° du tour"]
 
-        print("\n...........................................................")
-        print(tabulate(rows, headers=headers, tablefmt="github"))
-        print("\n...........................................................")
+        print("\nLISTE DES TOURNOIS EN COURS OU A VENIR")
+        print(tabulate(rows, headers=headers, tablefmt="outline"))
 
     def display_rounds(self, rounds, finished_rounds):
         """Display a table with all rounds for a tournaments"""
