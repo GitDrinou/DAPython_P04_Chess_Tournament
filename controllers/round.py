@@ -84,12 +84,12 @@ class RoundController:
                     or round_detail["round_end_date"] == ""):
                 list_finished_rounds.append({
                     "round_id": round_detail["round_id"],
-                    "is_finished": False
+                    "is_finished": ""
                 })
             else:
                 list_finished_rounds.append({
                     "round_id": round_detail["round_id"],
-                    "is_finished": True
+                    "is_finished": "X"
                 })
 
         return list_finished_rounds

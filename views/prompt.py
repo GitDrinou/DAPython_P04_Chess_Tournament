@@ -141,19 +141,26 @@ class PromptView:
         while True:
             print("\nSÉLECTIONNER UN TOUR")
             print("=====================================================")
-            round_id = input("Saisissez l'identifiant du tour ou tapez sur "
-                             "la touche ENTREE de votre clavier pour générer "
-                             "un nouveau tour: ")
+            round_id = input("Choix possibles:\n\t- soit l'identifiant du "
+                             "tour en cours\n\t- soit tapez sur la touche "
+                             "ENTREE de votre clavier pour générer un nouveau "
+                             "tour\n\t- soit tapez sur la tour R de votre "
+                             "clavier pour revenir au menu "
+                             "précédent\nSaisissez votre choix: ")
+            print("=====================================================")
 
-            if round_id == "":
-                round_id = 0
-                break
-            else:
-                try:
+            try:
+                if round_id == "":
+                    round_id = 0
+                    break
+                elif round_id.upper() == "R":
+                    round_id = -1
+                    break
+                else:
                     round_id = int(round_id)
                     break
-                except ValueError:
-                    print("La valeur n'existe pas.")
+            except ValueError:
+                print("La valeur n'existe pas.")
 
         return round_id
 

@@ -101,6 +101,6 @@ class DisplayTableView:
     def round_terminated(round_id, finished_rounds):
         """Check if a round terminates"""
         for item in finished_rounds:
-            if item["round_id"] == round_id and item["is_finished"]:
+            if item["round_id"] == round_id and item["is_finished"] == "X":
                 return "Oui"
         return ""

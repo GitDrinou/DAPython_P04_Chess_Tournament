@@ -35,7 +35,7 @@ class MenuView:
             if tournament["tournament_id"] == tournament_id:
                 current_round_number = tournament["round_number"]
                 number_pf_rounds = tournament["number_of_rounds"]
-                if tournament_is_finished(tournament) is not None:
+                if tournament_is_finished(tournament):
                     print("\nGESTION DU TOURNOI")
                     print("==================================================")
                     print("1. Inscrire des joueurs au tournoi")

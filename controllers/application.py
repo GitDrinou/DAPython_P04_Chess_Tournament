@@ -139,18 +139,21 @@ class ApplicationController:
                             selected_tournament["rounds"], finished_rounds)
                         selected_round = (
                             self.prompt_view.select_round_prompt())
-                        self.tournament_controller.generate_a_round(
-                            selected_tournament["number_of_rounds"],
-                            round_number, selected_tournament["players"],
-                            selected_tournament["tournament_id"],
-                            selected_round)
-                        time.sleep(2)
-                        self.menu_view.clear_console()
-                        if (int(selected_tournament["number_of_rounds"]) >=
-                                round_number):
-                            tournament_id = selected_tournament[
-                                "tournament_id"]
-                            self.round_choice(tournament_id)
+                        if not selected_round == -1:
+                            self.tournament_controller.generate_a_round(
+                                selected_tournament["number_of_rounds"],
+                                round_number, selected_tournament["players"],
+                                selected_tournament["tournament_id"],
+                                selected_round)
+                            time.sleep(2)
+                            self.menu_view.clear_console()
+                            if (int(selected_tournament["number_of_rounds"]) >=
+                                    round_number):
+                                tournament_id = selected_tournament[
+                                    "tournament_id"]
+                                self.round_choice(tournament_id)
+                        else:
+                            self.menu_view.clear_console()
                 elif tournament_choice == "4":
                     self.menu_view.clear_console()
                     break
