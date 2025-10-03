@@ -24,6 +24,8 @@ To manage tournaments, the application display differents menus.\
 You have just to follow them as needed (create a tournament, register 
 players, generate a round, ...).
 
+Launch the application with this command line : `python main.py`
+
 ## Code style and linting
 
 This project follows the PEP8 coding style and uses flake8 as a linting tool 
