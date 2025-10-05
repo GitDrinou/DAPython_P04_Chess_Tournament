@@ -1,6 +1,6 @@
 message_create_tournament = ("\n=============================================="
-                             "==\nVous n'avez pas de tournoi en cours ou en "
-                             "attente.\nVeuillez créer un nouveau "
+                             "==\n⚠️ Vous n'avez pas de tournoi en cours ou "
+                             "en attente.\nVeuillez créer un nouveau "
                              "tournoi.\n======================================"
                              "===========")
 
@@ -10,24 +10,24 @@ message_quit_application = ("\n==============================================="
                             "=================")
 
 message_invalid_choice = ("\n================================================="
-                          "\nVotre choix est invalide.\nVeuillez renouveler "
-                          "votre choix.\n====================================="
-                          "============")
+                          "\n⚠️ Votre choix est invalide.\nVeuillez "
+                          "renouveler votre choix.\n=========================="
+                          "=======================")
 
 message_tournament_started = ("\n============================================="
-                              "====\nLe tournoi a déjà démarré, vous ne "
+                              "====\n⚠️ Le tournoi a déjà démarré, vous ne "
                               "pouvez plus inscrire de nouveaux joueurs.\n===="
                               "=============================================")
 
 message_delete_player = ("\n================================================="
-                         "\nVous ne pouvez pas supprimer de joueur:\n\t- soit "
-                         "parce que le tournoi a déjà démarré,\n\t- soit "
+                         "\n⚠️ Vous ne pouvez pas supprimer de joueur:\n\t- "
+                         "soit parce que le tournoi a déjà démarré,\n\t- soit "
                          "parce qu'il n'y a pas de joueurs inscrits au "
                          "tournoi.\n=========================================="
                          "=======")
 
 message_generate_round = ("\n================================================"
-                          "\nVous ne pouvez pas générer de tour:\n\t- soit "
+                          "\n⚠️ Vous ne pouvez pas générer de tour:\n\t- soit "
                           "vous n'avez pas assez de joueurs inscrits pour "
                           "pouvoir générer un tour.\n\t  Un minimum de 4 "
                           "joueurs est attendu et le total des joueurs doit "
@@ -42,3 +42,23 @@ message_tournament_terminated = ("\n=========================================="
                                  "dans un instant vers le menu principal.\n==="
                                  "============================================"
                                  "=")
+
+message_rounds_reached = ("\n==============================================="
+                          "=\n⚠️ Vous avez atteint le nombre de tours maximum "
+                          "pour ce tournoi.\n Vous ne pouvez plus générer de "
+                          "nouveaux tours\n==================================="
+                          "=============")
+
+message_round_generated = ("\n================================================"
+                           "=====\nLe tour a été généré avec succès.\nVous "
+                           "allez être redirigé vers le menu vous permettant"
+                           "de gérer le tour.\n==============================="
+                           "======================")
+
+message_round_not_generated = ("\n============================================"
+                               "=========\n⚠️ Vous ne pouvez pas générer un "
+                               "nouveau tour. Le tour précédent n'est pas "
+                               "terminé.\nVeuillez sélectionner le tour en "
+                               "cours afin de le terminer avant de générer "
+                               "un nouveau tour.\n==========================="
+                               "==========================")

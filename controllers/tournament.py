@@ -4,6 +4,8 @@ from models.match import Match
 from models.round import Round
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.file_utils import read_json_file, save_to_json, update_tournament
+from views.messages import message_rounds_reached, message_round_generated, \
+    message_round_not_generated
 
 
 class TournamentController:
@@ -49,57 +51,60 @@ class TournamentController:
             if ((round_id is None or round_id == 0)
                     and tournament["tournament_id"] == tournament_id):
                 if int(round_number) == int(number_of_rounds):
-                    return print("Vous avez atteint le nombre de tours "
-                                 "maximum pour ce tournoi.")
+                    return print(message_rounds_reached)
 
-                round_number += 1
-                round_name = "Round {}".format(round_number)
-                round_detail = Round(round_number, round_name)
+                count_round_ended = 0
+                for round_detail in tournament["rounds"]:
+                    if round_detail["round_end_date"] != "":
+                        count_round_ended += 1
 
-                if round_number == 1:
-                    random.shuffle(players)
+                if count_round_ended == 0:
+                    round_number += 1
+                    round_name = "Round {}".format(round_number)
+                    round_detail = Round(round_number, round_name)
+
+                    if round_number == 1:
+                        random.shuffle(players)
+                    else:
+                        players.sort(key=lambda player: (player["points"],
+                                                         random.random()),
+                                     reverse=True)
+
+                    id_match = 1
+                    historical_pairs = []
+
+                    for i in range(0, len(players), 2):
+                        player1 = {"national_id": players[i]["national_id"]}
+                        player2 = {"national_id": players[i+1]["national_id"]}
+                        pair = tuple(sorted((player1["national_id"], player2[
+                            "national_id"])))
+                        if pair not in historical_pairs:
+                            match = Match(id_match, player1=player1[
+                                "national_id"], score1=0.0, player2=player2[
+                                "national_id"], score2=0.0).to_dict()
+
+                            id_match += 1
+                            round_detail.matches.append(match)
+                            historical_pairs.append(pair)
+
+                    data_round = {
+                        "round_id": round_number,
+                        "name": round_name,
+                        "round_start_date": str(round_detail.start_date),
+                        "round_end_date": str(round_detail.end_date),
+                        "matchs": round_detail.matches
+                    }
+
+                    tournament["rounds"].append(data_round)
+
+                    update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                      tournament["tournament_id"],
+                                      tournament)
+
+                    return print(message_round_generated)
                 else:
-                    players.sort(key=lambda player: (player["points"],
-                                                     random.random()),
-                                 reverse=True)
-
-                id_match = 1
-                historical_pairs = []
-
-                for i in range(0, len(players), 2):
-                    player1 = {"national_id": players[i]["national_id"]}
-                    player2 = {"national_id": players[i+1]["national_id"]}
-                    pair = tuple(sorted((player1["national_id"], player2[
-                        "national_id"])))
-                    if pair not in historical_pairs:
-                        match = Match(id_match, player1=player1[
-                            "national_id"], score1=0.0, player2=player2[
-                            "national_id"], score2=0.0).to_dict()
-
-                        id_match += 1
-                        round_detail.matches.append(match)
-                        historical_pairs.append(pair)
-
-                data_round = {
-                    "round_id": round_number,
-                    "name": round_name,
-                    "round_start_date": str(round_detail.start_date),
-                    "round_end_date": str(round_detail.end_date),
-                    "matchs": round_detail.matches
-                }
-
-                tournament["rounds"].append(data_round)
-
-                # save round to JSON file
-                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                  tournament["tournament_id"],
-                                  tournament)
-
-                return print("\n=============================================="
-                             "=======\nLe tour a été généré avec "
-                             "succès.\nVous allez être redirigé vers le menu "
-                             "vous permettant de gérer le tour.\n============="
-                             "========================================")
+                    print(message_round_not_generated)
+                    return None
             else:
                 if tournament["tournament_id"] == tournament_id:
                     count_matchs = 0

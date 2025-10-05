@@ -140,18 +140,24 @@ class ApplicationController:
                         selected_round = (
                             self.prompt_view.select_round_prompt())
                         if not selected_round == -1:
-                            self.tournament_controller.generate_a_round(
-                                selected_tournament["number_of_rounds"],
-                                round_number, selected_tournament["players"],
-                                selected_tournament["tournament_id"],
-                                selected_round)
-                            time.sleep(2)
-                            self.menu_view.clear_console()
-                            if (int(selected_tournament["number_of_rounds"]) >=
-                                    round_number):
-                                tournament_id = selected_tournament[
-                                    "tournament_id"]
-                                self.round_choice(tournament_id)
+                            generation = (
+                                self.tournament_controller.generate_a_round(
+                                    selected_tournament["number_of_rounds"],
+                                    round_number, selected_tournament[
+                                        "players"], selected_tournament[
+                                        "tournament_id"], selected_round))
+                            if generation is not None:
+                                time.sleep(2)
+                                self.menu_view.clear_console()
+                                if (int(selected_tournament[
+                                            "number_of_rounds"]) >=
+                                        round_number):
+                                    tournament_id = selected_tournament[
+                                        "tournament_id"]
+                                    self.round_choice(tournament_id)
+                            else:
+                                time.sleep(6)
+                                self.menu_view.clear_console()
                         else:
                             self.menu_view.clear_console()
                 elif tournament_choice == "4":
