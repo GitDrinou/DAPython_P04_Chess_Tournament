@@ -47,15 +47,18 @@ class TournamentController:
         """Generate a random tournament round"""
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
+
         for tournament in tournaments:
-            if ((round_id is None or round_id == 0)
-                    and tournament["tournament_id"] == tournament_id):
+            count_matchs = 0
+            total_matchs = 0
+            count_round_ended = 0
+            if round_id == 0 and tournament["tournament_id"] == tournament_id:
                 if int(round_number) == int(number_of_rounds):
                     return print(message_rounds_reached)
 
-                count_round_ended = 0
                 for round_detail in tournament["rounds"]:
-                    if round_detail["round_end_date"] != "":
+                    if (round_detail["round_end_date"] == "" and
+                            round_detail["round_start_date"] != ""):
                         count_round_ended += 1
 
                 if count_round_ended == 0:
@@ -101,14 +104,14 @@ class TournamentController:
                                       tournament["tournament_id"],
                                       tournament)
 
-                    return print(message_round_generated)
+                    print(message_round_generated)
+                    return tournament
                 else:
                     print(message_round_not_generated)
                     return None
             else:
-                if tournament["tournament_id"] == tournament_id:
-                    count_matchs = 0
-                    total_matchs = 0
+                if (round_id > 0 and tournament["tournament_id"] ==
+                        tournament_id):
                     for round_detail in tournament["rounds"]:
                         total_matchs += len(round_detail["matchs"])
                         for match in round_detail["matchs"]:
@@ -116,7 +119,7 @@ class TournamentController:
                                 if score == 0.0:
                                     count_matchs += 1
 
-                    if count_matchs == total_matchs:
+                    if count_matchs <= total_matchs:
                         return tournament
         return None
 

@@ -139,7 +139,7 @@ class ApplicationController:
                             selected_tournament["rounds"], finished_rounds)
                         selected_round = (
                             self.prompt_view.select_round_prompt())
-                        if not selected_round == -1:
+                        if selected_round >= 0:
                             generation = (
                                 self.tournament_controller.generate_a_round(
                                     selected_tournament["number_of_rounds"],
