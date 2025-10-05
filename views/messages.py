@@ -45,7 +45,7 @@ message_tournament_terminated = ("\n=========================================="
 
 message_rounds_reached = ("\n==============================================="
                           "=\n⚠️ Vous avez atteint le nombre de tours maximum "
-                          "pour ce tournoi.\n Vous ne pouvez plus générer de "
+                          "pour ce tournoi.\nVous ne pouvez plus générer de "
                           "nouveaux tours\n==================================="
                           "=============")
 
