@@ -62,3 +62,10 @@ message_round_not_generated = ("\n============================================"
                                "cours afin de le terminer avant de générer "
                                "un nouveau tour.\n==========================="
                                "==========================")
+
+message_round_ended = ("\n==================================================="
+                       "==\n⚠️ Le tour que vous avez sélectionné est terminé "
+                       "et les scores ont déjà été enregistrés.\nVeuillez "
+                       "sélectionner un tour en cours ou générer un nouveau "
+                       "tour.\n==============================================="
+                       "======")

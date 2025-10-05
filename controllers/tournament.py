@@ -5,7 +5,7 @@ from models.round import Round
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.file_utils import read_json_file, save_to_json, update_tournament
 from views.messages import message_rounds_reached, message_round_generated, \
-    message_round_not_generated
+    message_round_not_generated, message_round_ended
 
 
 class TournamentController:
@@ -113,14 +113,18 @@ class TournamentController:
                 if (round_id > 0 and tournament["tournament_id"] ==
                         tournament_id):
                     for round_detail in tournament["rounds"]:
-                        total_matchs += len(round_detail["matchs"])
-                        for match in round_detail["matchs"]:
-                            for player_id, score in match["match"]:
-                                if score == 0.0:
-                                    count_matchs += 1
+                        if round_detail["round_id"] == round_id:
+                            total_matchs += len(round_detail["matchs"])
+                            for match in round_detail["matchs"]:
+                                for player_id, score in match["match"]:
+                                    if score == 0.0:
+                                        count_matchs += 1
 
-                    if count_matchs <= total_matchs:
-                        return tournament
+                            if 0 < count_matchs <= total_matchs:
+                                return tournament
+                            else:
+                                print(message_round_ended)
+                                return None
         return None
 
     @staticmethod

@@ -700,7 +700,7 @@
                     "last_name": "DOE",
                     "first_name": "Jonathan",
                     "birth_date": "20/01/2000",
-                    "points": 2.0
+                    "points": 3.0
                 },
                 {
                     "national_id": "J48372",
@@ -728,14 +728,14 @@
                     "last_name": "BOURNE",
                     "first_name": "Jason",
                     "birth_date": "09/02/1989",
-                    "points": 1.5
+                    "points": 2.5
                 },
                 {
                     "national_id": "K34567",
                     "last_name": "KID",
                     "first_name": "Kessy",
                     "birth_date": "02/03/1978",
-                    "points": 2.5
+                    "points": 3.5
                 }
             ],
             "rounds": [
@@ -931,18 +931,18 @@
                     "round_id": 5,
                     "name": "Round 5",
                     "round_start_date": "05-10-2025 12:37:51",
-                    "round_end_date": "",
+                    "round_end_date": "05-10-2025 12:40:12",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
                                     "F58493",
-                                    0.0
+                                    "0"
                                 ],
                                 [
                                     "K34567",
-                                    0.0
+                                    "1"
                                 ]
                             ]
                         },
@@ -951,11 +951,11 @@
                             "match": [
                                 [
                                     "P85930",
-                                    0.0
+                                    "0"
                                 ],
                                 [
                                     "D59304",
-                                    0.0
+                                    "1"
                                 ]
                             ]
                         },
@@ -964,11 +964,11 @@
                             "match": [
                                 [
                                     "J48372",
-                                    0.0
+                                    "0"
                                 ],
                                 [
                                     "B48392",
-                                    0.0
+                                    "1"
                                 ]
                             ]
                         }
