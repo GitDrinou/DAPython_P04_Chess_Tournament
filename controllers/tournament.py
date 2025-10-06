@@ -10,6 +10,8 @@ from views.messages import message_rounds_reached, message_round_generated, \
 
 class TournamentController:
     """Tournament controller class"""
+    def __init__(self):
+        self.historical_pairs = []
 
     @staticmethod
     def create(tournament_detail):
@@ -41,8 +43,7 @@ class TournamentController:
                      "principal de l'application.\n=========================="
                      "===========================")
 
-    @staticmethod
-    def generate_a_round(number_of_rounds, round_number, players,
+    def generate_a_round(self, number_of_rounds, round_number, players,
                          tournament_id, round_id=None):
         """Generate a random tournament round"""
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
@@ -52,10 +53,12 @@ class TournamentController:
             count_matchs = 0
             total_matchs = 0
             count_round_ended = 0
+
             if round_id == 0 and tournament["tournament_id"] == tournament_id:
                 if int(round_number) == int(number_of_rounds):
                     return print(message_rounds_reached)
 
+                # Count total of no ended rounds
                 for round_detail in tournament["rounds"]:
                     if (round_detail["round_end_date"] == "" and
                             round_detail["round_start_date"] != ""):
@@ -74,21 +77,55 @@ class TournamentController:
                                      reverse=True)
 
                     id_match = 1
-                    historical_pairs = []
+                    used_index = set()
 
-                    for i in range(0, len(players), 2):
-                        player1 = {"national_id": players[i]["national_id"]}
-                        player2 = {"national_id": players[i+1]["national_id"]}
-                        pair = tuple(sorted((player1["national_id"], player2[
-                            "national_id"])))
-                        if pair not in historical_pairs:
-                            match = Match(id_match, player1=player1[
-                                "national_id"], score1=0.0, player2=player2[
-                                "national_id"], score2=0.0).to_dict()
+                    for i in range(0, len(players)):
+                        if i in used_index:
+                            continue
+                        player1 = players[i]
+                        pair_found = False
 
-                            id_match += 1
-                            round_detail.matches.append(match)
-                            historical_pairs.append(pair)
+                        for j in range(i + 1, len(players)):
+                            if j in used_index:
+                                continue
+
+                            player2 = players[j]
+                            pair = tuple(sorted((player1["national_id"],
+                                                 player2["national_id"])))
+
+                            if pair not in self.historical_pairs:
+                                match = Match(id_match,
+                                              player1=player1["national_id"],
+                                              score1=0.0,
+                                              player2=player2["national_id"],
+                                              score2=0.0).to_dict()
+
+                                round_detail.matches.append(match)
+                                self.historical_pairs.append(pair)
+                                id_match += 1
+                                used_index.update((i, j))
+                                pair_found = True
+                                break
+
+                        if not pair_found:
+                            for j in range(i + 1, len(players)):
+                                if j not in used_index:
+                                    player2 = players[j]
+                                    pair = tuple(sorted(
+                                                    (player1["national_id"],
+                                                     player2["national_id"])))
+                                    match = Match(id_match,
+                                                  player1=player1[
+                                                      "national_id"],
+                                                  score1=0.0,
+                                                  player2=player2[
+                                                      "national_id"],
+                                                  score2=0.0).to_dict()
+                                    round_detail.matches.append(match)
+                                    self.historical_pairs.append(pair)
+                                    id_match += 1
+                                    used_index.update((i, j))
+                                    break
 
                     data_round = {
                         "round_id": round_number,
