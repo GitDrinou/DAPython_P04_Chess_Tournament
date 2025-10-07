@@ -2,10 +2,9 @@ import random
 
 from models.match import Match
 from models.round import Round
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
+from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file, save_to_json, update_tournament
-from views.messages import message_rounds_reached, message_round_generated, \
-    message_round_not_generated, message_round_ended
+from utils.console_utils import ConsoleLogger
 
 
 class TournamentController:
@@ -37,13 +36,9 @@ class TournamentController:
                      players=[]
                      )
 
-        return print("\n===================================================="
-                     "=\nLe nouveau tournoi a été créé avec "
-                     "succès.\nVous allez être redirigé vers le menu "
-                     "principal de l'application.\n=========================="
-                     "===========================")
+        return ConsoleLogger.log(MESSAGES["tournament_created"], level="INFO")
 
-    def generate_a_round(self, number_of_rounds, round_number, players,
+    def generate_a_round(self,  round_number, players,
                          tournament_id, round_id=None):
         """Generate a random tournament round"""
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
@@ -55,13 +50,13 @@ class TournamentController:
             count_round_ended = 0
 
             if round_id == 0 and tournament["tournament_id"] == tournament_id:
-                if int(round_number) == int(number_of_rounds):
-                    return print(message_rounds_reached)
 
                 # Count total of no ended rounds
                 for round_detail in tournament["rounds"]:
                     if (round_detail["round_end_date"] == "" and
-                            round_detail["round_start_date"] != ""):
+                            round_detail["round_start_date"] != "") or (
+                            round_detail["round_start_date"] == "" and
+                            round_detail["round_end_date"] == ""):
                         count_round_ended += 1
 
                 if count_round_ended == 0:
@@ -141,10 +136,12 @@ class TournamentController:
                                       tournament["tournament_id"],
                                       tournament)
 
-                    print(message_round_generated)
+                    ConsoleLogger.log(MESSAGES["round_generated"],
+                                      level="INFO")
                     return tournament
                 else:
-                    print(message_round_not_generated)
+                    ConsoleLogger.log(MESSAGES["no_generate_round"],
+                                      level="WARNING")
                     return None
             else:
                 if (round_id > 0 and tournament["tournament_id"] ==
@@ -157,10 +154,13 @@ class TournamentController:
                                     if score == 0.0:
                                         count_matchs += 1
 
-                            if 0 < count_matchs <= total_matchs:
+                            if (0 < count_matchs <= total_matchs or
+                                    round_detail["round_start_date"] == ""):
                                 return tournament
                             else:
-                                print(message_round_ended)
+                                ConsoleLogger.log(MESSAGES[
+                                                      "round_already_ended"],
+                                                  level="WARNING")
                                 return None
         return None
 
@@ -206,11 +206,8 @@ class TournamentController:
                                   tournament["tournament_id"],
                                   tournament)
 
-                return print("\n=============================================="
-                             "=======\nLes points ont été mis à jour.\nVous "
-                             "allez être redirigé vers le menu de gestion "
-                             "du tournoi.\n==================================="
-                             "==================")
+                return ConsoleLogger.log(MESSAGES["points_updated"],
+                                         level="INFO")
         return None
 
     @staticmethod
@@ -227,8 +224,6 @@ class TournamentController:
                                   tournament["tournament_id"],
                                   tournament)
 
-                return print("\n=============================================="
-                             "=======\nLe joueur a bien été supprimé du "
-                             "tournoi.\n======================================"
-                             "============")
+                return ConsoleLogger.log(MESSAGES["player_deleted"],
+                                         level="INFO")
         return None

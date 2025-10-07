@@ -1,5 +1,8 @@
 from datetime import datetime
 
+from utils.console_utils import ConsoleLogger
+from utils.constants import MESSAGES
+
 
 def validate_date(date_to_validate):
     """Function to validate the date entered by the user"""
@@ -16,5 +19,4 @@ def checks_dates(start_date, end_date):
     if end_date >= start_date:
         return start_date, end_date
     else:
-        return print("La date de fin doit être égale ou postérieure à la "
-                     "date de début. Veuillez entrer une date valide.")
+        return ConsoleLogger.log(MESSAGES["invalid_end_date"], level="WARNING")

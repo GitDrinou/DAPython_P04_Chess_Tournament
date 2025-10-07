@@ -1,8 +1,9 @@
 from datetime import datetime
 
+from utils.console_utils import ConsoleLogger
+from utils.constants import MESSAGES
 from utils.date_utils import validate_date, checks_dates
 from utils.player_utils import check_format_national_id, check_player_is_exist
-from views.messages import message_invalid_choice
 
 
 class PromptView:
@@ -131,7 +132,7 @@ class PromptView:
                     tournament_id = 0
                     break
             except ValueError:
-                print(message_invalid_choice)
+                ConsoleLogger.log(MESSAGES["invalid_choice"], level="WARNING")
 
         return tournament_id
 

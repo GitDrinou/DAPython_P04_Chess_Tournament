@@ -509,188 +509,10 @@
         },
         {
             "tournament_id": 3,
-            "name": "LE TOURNOI DU BOUT DU MONDE",
-            "location": "Salle des f\u00eates de la fin du monde",
-            "start_date": "01/10/2025",
-            "end_date": "01/10/2025",
-            "description": "le tournoi d\u00e9butera \u00e0 10h00",
-            "number_of_rounds": "4",
-            "round_number": "3",
-            "players": [
-                {
-                    "national_id": "R94830",
-                    "last_name": "ROBERT",
-                    "first_name": "Jane",
-                    "birth_date": "20/09/2000",
-                    "points": 1.5
-                },
-                {
-                    "national_id": "W30294",
-                    "last_name": "WERBER",
-                    "first_name": "Bernard",
-                    "birth_date": "18/09/1961",
-                    "points": 0.5
-                },
-                {
-                    "national_id": "M59403",
-                    "last_name": "MARTIN",
-                    "first_name": "Josephine",
-                    "birth_date": "31/12/1999",
-                    "points": 4.0
-                },
-                {
-                    "national_id": "F58493",
-                    "last_name": "FORD COPPOLA",
-                    "first_name": "Francis",
-                    "birth_date": "07/04/1939",
-                    "points": 2.0
-                }
-            ],
-            "rounds": [
-                {
-                    "round_id": 1,
-                    "name": "Round 1",
-                    "round_start_date": "01-10-2025 16:47:20",
-                    "round_end_date": "01-10-2025 16:47:43",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "M59403",
-                                    "1"
-                                ],
-                                [
-                                    "W30294",
-                                    "0"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "R94830",
-                                    "1"
-                                ],
-                                [
-                                    "F58493",
-                                    "1"
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "round_id": 2,
-                    "name": "Round 2",
-                    "round_start_date": "02-10-2025 09:14:39",
-                    "round_end_date": "02-10-2025 09:15:23",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "M59403",
-                                    "1"
-                                ],
-                                [
-                                    "R94830",
-                                    "0"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "F58493",
-                                    "1"
-                                ],
-                                [
-                                    "W30294",
-                                    "0"
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "round_id": 3,
-                    "name": "Round 3",
-                    "round_start_date": "02-10-2025 09:42:54",
-                    "round_end_date": "02-10-2025 09:43:02",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "M59403",
-                                    "1"
-                                ],
-                                [
-                                    "F58493",
-                                    "0"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "R94830",
-                                    "1"
-                                ],
-                                [
-                                    "W30294",
-                                    "0"
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "round_id": 4,
-                    "name": "Round 4",
-                    "round_start_date": "",
-                    "round_end_date": "",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "M59403",
-                                    0.0
-                                ],
-                                [
-                                    "F58493",
-                                    0.0
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "R94830",
-                                    0.0
-                                ],
-                                [
-                                    "W30294",
-                                    0.0
-                                ]
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "tournament_id": 4,
             "name": "LE TOURNOI DES BONS COPAINS",
             "location": "Amicale de la bonne fortune",
-            "start_date": "06/10/2025",
-            "end_date": "06/10/2025",
+            "start_date": "07/10/2025",
+            "end_date": "07/10/2025",
             "description": "le tournoi d\u00e9butera \u00e0 10H00.",
             "number_of_rounds": "6",
             "round_number": "6",
@@ -707,7 +529,7 @@
                     "last_name": "JOSH",
                     "first_name": "Brian",
                     "birth_date": "01/12/1987",
-                    "points": 4.0
+                    "points": 4.5
                 },
                 {
                     "national_id": "F58493",
@@ -721,7 +543,7 @@
                     "last_name": "PROUST",
                     "first_name": "Marcel",
                     "birth_date": "10/07/1871",
-                    "points": 3.5
+                    "points": 3.0
                 },
                 {
                     "national_id": "B48392",
@@ -931,7 +753,7 @@
                     "round_id": 5,
                     "name": "Round 5",
                     "round_start_date": "06-10-2025 11:55:28",
-                    "round_end_date": "06-10-2025 11:56:32",
+                    "round_end_date": "06-10-2025 11:58:05",
                     "matchs": [
                         {
                             "match_id": 1,
@@ -977,15 +799,15 @@
                 {
                     "round_id": 6,
                     "name": "Round 6",
-                    "round_start_date": "06-10-2025 11:56:58",
-                    "round_end_date": "06-10-2025 11:57:05",
+                    "round_start_date": "07-10-2025 14:08:44",
+                    "round_end_date": "07-10-2025 14:17:26",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
                                     "J48372",
-                                    "0"
+                                    "1"
                                 ],
                                 [
                                     "P85930",
@@ -1011,7 +833,7 @@
                             "match": [
                                 [
                                     "F58493",
-                                    "0"
+                                    "1"
                                 ],
                                 [
                                     "B48392",
@@ -1024,23 +846,15 @@
             ]
         },
         {
-            "tournament_id": 5,
-            "name": "LE TOURNOI DU SOLEIL COUCHANT",
-            "location": "Salle  murakami - 2\u00e8me \u00e9tage - bat b",
+            "tournament_id": 4,
+            "name": "LE TOURNOI DU JOUR",
+            "location": "Salle des f\u00eates de la nuit",
             "start_date": "10/10/2025",
             "end_date": "10/10/2025",
-            "description": "le tournoi d\u00e9butera \u00e0 8H00",
-            "number_of_rounds": "4",
+            "description": "un jour peut-\u00eatre",
+            "number_of_rounds": "5",
             "round_number": 0,
-            "players": [
-                {
-                    "national_id": "W30294",
-                    "last_name": "WERBER",
-                    "first_name": "Bernard",
-                    "birth_date": "18/09/1961",
-                    "points": 0.0
-                }
-            ],
+            "players": [],
             "rounds": []
         }
     ]

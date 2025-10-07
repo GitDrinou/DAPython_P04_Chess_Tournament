@@ -1,4 +1,5 @@
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
+from utils.console_utils import ConsoleLogger
+from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from utils.file_utils import save_to_json, update_tournament, read_json_file
 from utils.player_utils import check_player_is_exist
 
@@ -32,5 +33,4 @@ class PlayerController:
                                  first_name=player.first_name.capitalize(),
                                  birth_date=player.birth_date)
 
-                print("=====================================================")
-                print("\nLe joueur a été inscrit au tournoi avec succès.")
+                ConsoleLogger.log(MESSAGES["player_registered"], level="INFO")

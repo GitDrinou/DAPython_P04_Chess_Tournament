@@ -1,5 +1,6 @@
 from controllers.round import RoundController
-from views.messages import message_tournament_terminated
+from utils.console_utils import ConsoleLogger
+from utils.constants import MESSAGES
 
 
 def tournament_is_finished(tournament):
@@ -10,7 +11,7 @@ def tournament_is_finished(tournament):
     counter = sum(obj["is_finished"] == "X" for obj in list_finished_rounds)
 
     if counter == int(number_of_rounds):
-        print(message_tournament_terminated)
+        ConsoleLogger.log(MESSAGES["congratulations"], level="INFO")
         return False
     else:
         return True

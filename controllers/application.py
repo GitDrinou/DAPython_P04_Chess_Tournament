@@ -4,11 +4,9 @@ from datetime import datetime
 from models.player import Player
 from models.tournament import Tournament
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
-    PATH_DATA_PLAYERS_JSON_FILE
+    PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
 from utils.file_utils import load_tournament, read_json_file
-from views.messages import message_create_tournament, \
-    message_quit_application, message_invalid_choice, \
-    message_tournament_started, message_delete_player, message_generate_round
+from utils.console_utils import ConsoleLogger
 
 
 class ApplicationController:
@@ -37,6 +35,7 @@ class ApplicationController:
             if user_choice == "1":
                 self.menu_view.clear_console()
                 tournament = self.prompt_view.tournament_prompt()
+                self.menu_view.clear_console()
                 self.tournament_controller.create(
                     Tournament(tournament["name"], tournament["location"],
                                tournament["start_date"],
@@ -56,20 +55,21 @@ class ApplicationController:
                         self.tournament_choice(selection)
                 else:
                     self.menu_view.clear_console()
-                    print(message_create_tournament)
-                    time.sleep(2)
+                    ConsoleLogger.log(MESSAGES["tournament_detail"],
+                                      level="WARNING")
+                    time.sleep(6)
                     self.menu_view.clear_console()
             elif user_choice == "3":
                 self.menu_view.clear_console()
                 self.report_choice()
             elif user_choice.upper() == "Q":
                 self.menu_view.clear_console()
-                print(message_quit_application)
+                ConsoleLogger.log(MESSAGES["exit_application"], level="INFO")
                 break
             else:
                 self.menu_view.clear_console()
-                print(message_invalid_choice)
-                time.sleep(2)
+                ConsoleLogger.log(MESSAGES["invalid_choice"], level="WARNING")
+                time.sleep(6)
                 self.menu_view.clear_console()
 
     def tournament_choice(self, selection):
@@ -96,8 +96,9 @@ class ApplicationController:
                         time.sleep(2)
                         self.menu_view.clear_console()
                     else:
-                        print(message_tournament_started)
-                        time.sleep(3)
+                        ConsoleLogger.log(MESSAGES["register_players"],
+                                          level="WARNING")
+                        time.sleep(6)
                         self.menu_view.clear_console()
                 elif tournament_choice == "2":
                     self.menu_view.clear_console()
@@ -112,8 +113,9 @@ class ApplicationController:
                         time.sleep(2)
                         self.menu_view.clear_console()
                     else:
-                        print(message_delete_player)
-                        time.sleep(3)
+                        ConsoleLogger.log(MESSAGES["delete_player"],
+                                          level="WARNING")
+                        time.sleep(6)
                         self.menu_view.clear_console()
                 elif tournament_choice == "3":
                     self.menu_view.clear_console()
@@ -125,7 +127,8 @@ class ApplicationController:
                             selected_tournament["players"]) % 2 != 0 or
                             start_date.date() > today):
                         self.menu_view.clear_console()
-                        print(message_generate_round)
+                        ConsoleLogger.log(MESSAGES["generate_round"],
+                                          level="WARNING")
                         time.sleep(10)
                         self.menu_view.clear_console()
                     else:
@@ -139,10 +142,10 @@ class ApplicationController:
                             selected_tournament["rounds"], finished_rounds)
                         selected_round = (
                             self.prompt_view.select_round_prompt())
+                        self.menu_view.clear_console()
                         if selected_round >= 0:
                             generation = (
                                 self.tournament_controller.generate_a_round(
-                                    selected_tournament["number_of_rounds"],
                                     round_number, selected_tournament[
                                         "players"], selected_tournament[
                                         "tournament_id"], selected_round))
@@ -168,8 +171,9 @@ class ApplicationController:
                     break
                 else:
                     self.menu_view.clear_console()
-                    print(message_invalid_choice)
-                    time.sleep(2)
+                    ConsoleLogger.log(MESSAGES["invalid_choice"],
+                                      level="WARNING")
+                    time.sleep(6)
                     self.menu_view.clear_console()
             else:
                 time.sleep(5)
@@ -221,8 +225,8 @@ class ApplicationController:
                 break
             else:
                 self.menu_view.clear_console()
-                print(message_invalid_choice)
-                time.sleep(2)
+                ConsoleLogger.log(MESSAGES["invalid_choice"], level="WARNING")
+                time.sleep(6)
                 self.menu_view.clear_console()
 
     def report_choice(self):
@@ -266,8 +270,9 @@ class ApplicationController:
                         self.menu_view.clear_console()
                 else:
                     self.menu_view.clear_console()
-                    print(message_create_tournament)
-                    time.sleep(2)
+                    ConsoleLogger.log(MESSAGES["tournament_detail"],
+                                      level="WARNING")
+                    time.sleep(6)
                     self.menu_view.clear_console()
             elif report_choice == "4":
                 self.menu_view.clear_console()
@@ -292,8 +297,9 @@ class ApplicationController:
                         self.menu_view.clear_console()
                 else:
                     self.menu_view.clear_console()
-                    print(message_create_tournament)
-                    time.sleep(2)
+                    ConsoleLogger.log(MESSAGES["tournament_detail"],
+                                      level="WARNING")
+                    time.sleep(6)
                     self.menu_view.clear_console()
             elif report_choice == "5":
                 self.menu_view.clear_console()
@@ -317,14 +323,16 @@ class ApplicationController:
                         self.menu_view.clear_console()
                 else:
                     self.menu_view.clear_console()
-                    print(message_create_tournament)
-                    time.sleep(2)
+
+                    ConsoleLogger.log(MESSAGES["tournament_detail"],
+                                      level="WARNING")
+                    time.sleep(6)
                     self.menu_view.clear_console()
             elif report_choice.upper() == "R":
                 self.menu_view.clear_console()
                 break
             else:
                 self.menu_view.clear_console()
-                print(message_invalid_choice)
-                time.sleep(2)
+                ConsoleLogger.log(MESSAGES["invalid_choice"], level="WARNING")
+                time.sleep(6)
                 self.menu_view.clear_console()

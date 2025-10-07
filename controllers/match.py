@@ -1,4 +1,5 @@
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
+from utils.console_utils import ConsoleLogger
+from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from utils.file_utils import update_tournament
 
 
@@ -6,27 +7,29 @@ class MatchController:
     """Match controller class"""
 
     @staticmethod
-    def save_score(last_tournament, round_id, user_match_id, score1, score2):
+    def save_score(tournament, round_id, user_match_id, score1, score2):
         """ Update score for specific match """
-        last_round = last_tournament["rounds"][-1]
-        if last_round["round_id"] == round_id:
+        rounds = tournament["rounds"]
+        for round_detail in rounds:
+            try:
+                if round_detail["round_id"] == round_id:
 
-            matchs = last_round["matchs"]
+                    matchs = round_detail["matchs"]
 
-            for item in matchs:
-                data_match_id = item["match_id"]
-                if data_match_id == int(user_match_id):
-                    match_detail = last_round["matchs"][int(user_match_id) - 1]
-                    match_detail["match"][0][1] = score1
-                    match_detail["match"][1][1] = score2
-                    break
+                    for item in matchs:
+                        data_match_id = item["match_id"]
+                        if data_match_id == int(user_match_id):
+                            match_detail = round_detail["matchs"][int(
+                                user_match_id) - 1]
+                            match_detail["match"][0][1] = score1
+                            match_detail["match"][1][1] = score2
+                            break
 
-            update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                              last_tournament["tournament_id"],
-                              last_tournament)
+                    update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                      tournament["tournament_id"],
+                                      tournament)
+            except KeyError:
+                ConsoleLogger.log(MESSAGES["error_on_save"], level="ERROR")
 
-            print("Les scores ont été enregistrés.")
-        else:
-            print("Une erreur est survenue lors de l'enregistrement.")
-
-        return last_round
+            return round_detail
+        return None
