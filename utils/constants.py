@@ -11,7 +11,7 @@ MESSAGES = {
     "invalid_choice": """
     \t====================================
     \tVotre choix est invalide.
-    \tVeuillez renouveler votre sélection.
+    \tVeuillez renouveler votre saisie.
     \t====================================
     """,
     "register_players": """
@@ -126,5 +126,11 @@ MESSAGES = {
     \t=========================================
     \tLe joueur a bien été supprimé du tournoi.
     \t=========================================
+    """,
+    "invalid_national_id": """
+    \t===================================================
+    \tLe format de l'identitifant national est incorrect.
+    \tFormat attendu : 1 lettre + 5 chiffres
+    \t===================================================
     """
 }

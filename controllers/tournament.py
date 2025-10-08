@@ -155,7 +155,7 @@ class TournamentController:
                                     if score == 0.0:
                                         count_matchs += 1
 
-                            if (0 < count_matchs <= total_matchs or
+                            if ((count_matchs/total_matchs == 2) or
                                     round_detail["round_start_date"] == ""):
                                 return tournament
                             else:

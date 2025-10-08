@@ -10,12 +10,7 @@ class PromptView:
     """Prompt view class"""
 
     @staticmethod
-    def prompt_choice():
-        """Prompt the user to select an option"""
-        return input("Choisissez une option: ")
-
-    @staticmethod
-    def date_player_prompt():
+    def birthdate_player_prompt():
         """Prompt the user to enter the player's birthdate"""
 
         while True:
@@ -32,9 +27,10 @@ class PromptView:
     def player_prompt(self):
         """Prompt the user to enter player's lastname and firstname"""
         while True:
-            print("\nINSCRIPTION DE JOUEURS")
-            print("=====================================================")
-            national_id = input("Saisissez l'identifiant national du joueur: ")
+            national_id = ConsoleDisplayer.display_prompt(
+                text="Saisissez l'identifiant national du joueur",
+                title="INSCRIPTION D'UN JOUEUR"
+            )
 
             if check_format_national_id(national_id):
                 player = check_player_is_exist(national_id)
@@ -49,9 +45,11 @@ class PromptView:
                     }
                     break
                 else:
-                    lastname = input("Saisissez le nom de famille du joueur: ")
-                    firstname = input("Saisissez le prénom du joueur: ")
-                    birthdate = self.date_player_prompt()
+                    lastname = ConsoleDisplayer.display_prompt(
+                        text="Saisissez le nom de famille du joueur")
+                    firstname = ConsoleDisplayer.display_prompt(
+                        text="Saisissez le prénom du joueur")
+                    birthdate = self.birthdate_player_prompt()
                     player = {
                         "national_id": national_id,
                         "lastname": lastname,
@@ -60,10 +58,8 @@ class PromptView:
                     }
                     break
             else:
-                print("\n...................................................")
-                print("Le format de l'identitifant national est incorrect."
-                      "\nFormat attendu : 1 lettre + 5 chiffres")
-                print("...................................................")
+                ConsoleDisplayer.log(MESSAGES["invalid_national_id"],
+                                     level="WARNING")
 
         return player
 
@@ -72,10 +68,12 @@ class PromptView:
         """Prompt the user to enter date of tournament"""
 
         while True:
-            start_date = input("Saisissez la date de début du tournoi (format "
-                               "attendu: JJ/MM/AAAA): ")
-            end_date = input("Saisissez la date de fin du tournoi (format "
-                             "attendu: JJ/MM/AAAA): ")
+            start_date = ConsoleDisplayer.display_prompt(
+                text="Saisissez la date de début du tournoi "
+                     "(format attendu: JJ/MM/AAAA)")
+            end_date = ConsoleDisplayer.display_prompt(
+                text="Saisissez la date de fin du tournoi "
+                     "(format attendu: JJ/MM/AAAA)")
 
             start_date = validate_date(start_date)
             end_date = validate_date(end_date)
@@ -92,13 +90,15 @@ class PromptView:
     def tournament_prompt(self):
         """Prompt the user to enter tournament's details"""
 
-        print("\nCREATION D'UN NOUVEAU TOURNOI")
-        print("=====================================================")
-        name = input("Saisissez le nom du tournoi: ")
-        location = input("Saisissez la localisation du tournoi: ")
-        description = input("Saisissez une description du tournoi: ")
-        number_of_rounds = input("Saisissez le nombre de tours (par défaut: "
-                                 "4): ")
+        name = ConsoleDisplayer.display_prompt(
+            text="Saisissez le nom du tournoi",
+            title="CRÉATION D'UN NOUVEAU TOURNOI")
+        location = ConsoleDisplayer.display_prompt(
+            text="Saisissez la localisation du tournoi")
+        description = ConsoleDisplayer.display_prompt(
+            text="Saisissez une description du tournoi")
+        number_of_rounds = ConsoleDisplayer.display_prompt(
+            text="Saisissez le nombre de tours par défaut 4)")
 
         dates = self.dates_tournament_prompt()
 
@@ -116,13 +116,13 @@ class PromptView:
         """Prompt the user to select a tournament"""
 
         while True:
-            print("\nSÉLECTIONNER UN TOURNOI")
-            print("=====================================================")
-            tournament_id = input("Saisissez l'identifiant du tournoi parmi "
-                                  "la liste de tournois disponibles ci-dessus "
-                                  "\nou tapez sur la touche R de votre clavier"
-                                  "pour revenir au menu précédent: ")
-            print("=====================================================")
+
+            tournament_id = ConsoleDisplayer.display_prompt(
+                text="Saisissez l'identifiant du tournoi parmi la liste "
+                     "ci-dessus\nou pour revenir au menu précédent, tapez sur "
+                     "la touche R de votre clavier.",
+                title="SÉLECTION D'UN TOURNOI"
+            )
 
             try:
                 if not tournament_id.upper() == "R":
@@ -141,15 +141,14 @@ class PromptView:
     def select_round_prompt():
         """Prompt the user to select a round"""
         while True:
-            print("\nSÉLECTIONNER UN TOUR")
-            print("=====================================================")
-            round_id = input("Choix possibles:\n\t- soit l'identifiant du "
-                             "tour en cours\n\t- soit tapez sur la touche "
-                             "ENTREE de votre clavier pour générer un nouveau "
-                             "tour\n\t- soit tapez sur la tour R de votre "
-                             "clavier pour revenir au menu "
-                             "précédent\nSaisissez votre choix: ")
-            print("=====================================================")
+            round_id = ConsoleDisplayer.display_prompt(
+                text="Les différentes possibilités:\n\t- saisir "
+                     "l'identifiant du tour en cours\n\t- taper sur la "
+                     "touche ENTREE de votre clavier pour générer un nouveau "
+                     "tour\n\t- taper sur la tour R de votre clavier pour "
+                     "revenir au menu précédent\nChoisissez une option",
+                title="SÉLECTIONNER UN TOUR"
+            )
 
             try:
                 if round_id == "":
@@ -170,15 +169,19 @@ class PromptView:
     def match_prompt(match_id):
         """Prompt the user to enter the match's scores"""
         while True:
+
             print(f"\nINSCRIRE LES SCORES DU MATCH N°{match_id}")
-            print("=====================================================")
+            print("*" * 70)
             print("Instructions:")
-            print("\t-Saisissez 1 pour le vainqueur du match")
-            print("\t-Saisissez 0 pour le perdant du match")
-            print("\t-Saisissez 1 pour les deux scores si match nul")
-            print("=====================================================")
-            score1 = input("Saisissez le score du joueur 1 - Score 1 : ")
-            score2 = input("Saisissez le score du joueur 2 - Score 2 : ")
+            print("\t- [1] pour le vainqueur du match")
+            print("\t- [0] pour le perdant du match")
+            print("\t- En cas de match nul, saisissez [1] pour les 2 scores")
+            print("*" * 70)
+
+            score1 = ConsoleDisplayer.display_prompt(
+                text="Saisissez le score du joueur 1 | Score 1")
+            score2 = ConsoleDisplayer.display_prompt(
+                text="Saisissez le score du joueur 2 | Score 2")
 
             expected_values = ["0", "1"]
             if score1 in expected_values and score2 in expected_values:
@@ -188,17 +191,18 @@ class PromptView:
                 }
                 break
             else:
-                print("\nLa(les) valeur(s) n'existe(nt) pas.\nVeuillez "
-                      "ressaisir les scores du match.")
-                return None
+                ConsoleDisplayer.log(MESSAGES["invalid_choice"],
+                                     level="WARNING")
 
         return scores
 
     @staticmethod
     def delete_player_prompt():
         """Prompt the user to delete a player"""
-        print("\nSUPPRIMER UN JOUEUR")
-        print("=====================================================")
-        national_id = input("Saisissez l'identifiant du joueur: ")
+
+        national_id = ConsoleDisplayer.display_prompt(
+            text="Saisissez l'identifiant du joueur",
+            title="SUPPRIMER UN JOUEUR"
+        )
 
         return national_id

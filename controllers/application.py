@@ -152,7 +152,6 @@ class ApplicationController:
                                         "players"], selected_tournament[
                                         "tournament_id"], selected_round))
                             if generation is not None:
-                                time.sleep(2)
                                 self.menu_view.clear_console()
                                 if (int(selected_tournament[
                                             "number_of_rounds"]) >=

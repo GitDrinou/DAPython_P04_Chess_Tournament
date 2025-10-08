@@ -515,7 +515,7 @@
             "end_date": "08/10/2025",
             "description": "le tournoi d\u00e9butera \u00e0 10H00.",
             "number_of_rounds": "6",
-            "round_number": "6",
+            "round_number": "5",
             "players": [
                 {
                     "national_id": "D59304",
@@ -752,55 +752,8 @@
                 {
                     "round_id": 5,
                     "name": "Round 5",
-                    "round_start_date": "06-10-2025 11:55:28",
-                    "round_end_date": "06-10-2025 11:58:05",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "J48372",
-                                    "1"
-                                ],
-                                [
-                                    "B48392",
-                                    "0"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "F58493",
-                                    "0"
-                                ],
-                                [
-                                    "K34567",
-                                    "1"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 3,
-                            "match": [
-                                [
-                                    "P85930",
-                                    "0"
-                                ],
-                                [
-                                    "D59304",
-                                    "1"
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "round_id": 6,
-                    "name": "Round 6",
-                    "round_start_date": "08-10-2025 11:25:40",
-                    "round_end_date": "",
+                    "round_start_date": "08-10-2025 17:51:11",
+                    "round_end_date": "08-10-2025 18:22:53",
                     "matchs": [
                         {
                             "match_id": 1,

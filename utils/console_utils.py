@@ -29,3 +29,18 @@ class ConsoleDisplayer:
         choice = input("Choisissez une option: ")
 
         return choice
+
+    @staticmethod
+    def display_prompt(text, title=None):
+        """Display a dynamic prompt
+        Args:
+            text (str): text of the prompt
+            title (str): title of the prompt optional
+        """
+        if title:
+            print(f"\n{title}")
+            print("*" * 70)
+
+        response = input(f"{text}: ")
+
+        return response
