@@ -511,8 +511,8 @@
             "tournament_id": 3,
             "name": "LE TOURNOI DES BONS COPAINS",
             "location": "Amicale de la bonne fortune",
-            "start_date": "07/10/2025",
-            "end_date": "07/10/2025",
+            "start_date": "08/10/2025",
+            "end_date": "08/10/2025",
             "description": "le tournoi d\u00e9butera \u00e0 10H00.",
             "number_of_rounds": "6",
             "round_number": "6",
@@ -799,19 +799,19 @@
                 {
                     "round_id": 6,
                     "name": "Round 6",
-                    "round_start_date": "07-10-2025 14:08:44",
-                    "round_end_date": "07-10-2025 14:17:26",
+                    "round_start_date": "08-10-2025 11:25:40",
+                    "round_end_date": "",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
                                     "J48372",
-                                    "1"
+                                    0.0
                                 ],
                                 [
                                     "P85930",
-                                    "1"
+                                    0.0
                                 ]
                             ]
                         },
@@ -820,11 +820,11 @@
                             "match": [
                                 [
                                     "K34567",
-                                    "1"
+                                    0.0
                                 ],
                                 [
                                     "D59304",
-                                    "1"
+                                    0.0
                                 ]
                             ]
                         },
@@ -833,11 +833,11 @@
                             "match": [
                                 [
                                     "F58493",
-                                    "1"
+                                    0.0
                                 ],
                                 [
                                     "B48392",
-                                    "1"
+                                    0.0
                                 ]
                             ]
                         }

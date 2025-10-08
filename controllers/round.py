@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from utils.console_utils import ConsoleLogger
+from utils.console_utils import ConsoleDisplayer
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file, update_tournament
 
@@ -25,7 +25,7 @@ class RoundController:
                                   tournament["tournament_id"],
                                   tournament)
 
-                ConsoleLogger.log(MESSAGES["round_started"], level="INFO")
+                ConsoleDisplayer.log(MESSAGES["round_started"], level="INFO")
 
                 return last_round
         return None
@@ -39,8 +39,8 @@ class RoundController:
             if tournament["tournament_id"] == tournament_id:
                 last_round = tournament["rounds"][-1]
                 if last_round["round_start_date"] == "":
-                    ConsoleLogger.log(MESSAGES["round_not_started"],
-                                      level="WARNING")
+                    ConsoleDisplayer.log(MESSAGES["round_not_started"],
+                                         level="WARNING")
                 else:
                     end_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
@@ -51,7 +51,7 @@ class RoundController:
                                       tournament["tournament_id"],
                                       tournament)
 
-                    ConsoleLogger.log(MESSAGES["round_ended"], level="INFO")
+                    ConsoleDisplayer.log(MESSAGES["round_ended"], level="INFO")
 
                     return last_round
         return None

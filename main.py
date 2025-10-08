@@ -10,7 +10,7 @@ from controllers.round import RoundController
 from controllers.tournament import TournamentController
 from utils.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
                              PATH_DATA_PLAYERS_JSON_FILE)
-from views.menu import MenuView
+from views.menu import MenusView
 from views.display_table import DisplayTableView
 from views.prompt import PromptView
 
@@ -39,7 +39,7 @@ def main():
     round_controller = RoundController()
     match_controller = MatchController()
     report_controller = ReportController()
-    main_view = MenuView()
+    main_view = MenusView()
     prompt_view = PromptView()
     display_view = DisplayTableView()
     application_controller = ApplicationController(player_controller,

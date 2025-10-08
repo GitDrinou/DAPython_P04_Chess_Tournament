@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from utils.console_utils import ConsoleLogger
+from utils.console_utils import ConsoleDisplayer
 from utils.constants import MESSAGES
 
 
@@ -19,4 +19,5 @@ def checks_dates(start_date, end_date):
     if end_date >= start_date:
         return start_date, end_date
     else:
-        return ConsoleLogger.log(MESSAGES["invalid_end_date"], level="WARNING")
+        return ConsoleDisplayer.log(MESSAGES["invalid_end_date"],
+                                    level="WARNING")

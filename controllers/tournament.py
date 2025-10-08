@@ -4,7 +4,7 @@ from models.match import Match
 from models.round import Round
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file, save_to_json, update_tournament
-from utils.console_utils import ConsoleLogger
+from utils.console_utils import ConsoleDisplayer
 
 
 class TournamentController:
@@ -36,7 +36,8 @@ class TournamentController:
                      players=[]
                      )
 
-        return ConsoleLogger.log(MESSAGES["tournament_created"], level="INFO")
+        return ConsoleDisplayer.log(MESSAGES["tournament_created"],
+                                    level="INFO")
 
     def generate_a_round(self,  round_number, players,
                          tournament_id, round_id=None):
@@ -136,12 +137,12 @@ class TournamentController:
                                       tournament["tournament_id"],
                                       tournament)
 
-                    ConsoleLogger.log(MESSAGES["round_generated"],
-                                      level="INFO")
+                    ConsoleDisplayer.log(MESSAGES["round_generated"],
+                                         level="INFO")
                     return tournament
                 else:
-                    ConsoleLogger.log(MESSAGES["no_generate_round"],
-                                      level="WARNING")
+                    ConsoleDisplayer.log(MESSAGES["no_generate_round"],
+                                         level="WARNING")
                     return None
             else:
                 if (round_id > 0 and tournament["tournament_id"] ==
@@ -158,9 +159,9 @@ class TournamentController:
                                     round_detail["round_start_date"] == ""):
                                 return tournament
                             else:
-                                ConsoleLogger.log(MESSAGES[
+                                ConsoleDisplayer.log(MESSAGES[
                                                       "round_already_ended"],
-                                                  level="WARNING")
+                                                     level="WARNING")
                                 return None
         return None
 
@@ -206,8 +207,8 @@ class TournamentController:
                                   tournament["tournament_id"],
                                   tournament)
 
-                return ConsoleLogger.log(MESSAGES["points_updated"],
-                                         level="INFO")
+                return ConsoleDisplayer.log(MESSAGES["points_updated"],
+                                            level="INFO")
         return None
 
     @staticmethod
@@ -224,6 +225,6 @@ class TournamentController:
                                   tournament["tournament_id"],
                                   tournament)
 
-                return ConsoleLogger.log(MESSAGES["player_deleted"],
-                                         level="INFO")
+                return ConsoleDisplayer.log(MESSAGES["player_deleted"],
+                                            level="INFO")
         return None
