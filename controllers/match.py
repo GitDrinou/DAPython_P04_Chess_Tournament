@@ -1,5 +1,4 @@
-from utils.console_utils import ConsoleDisplayer
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
+from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.file_utils import update_tournament
 
 
@@ -10,26 +9,26 @@ class MatchController:
     def save_score(tournament, round_id, user_match_id, score1, score2):
         """ Update score for specific match """
         rounds = tournament["rounds"]
-        for round_detail in rounds:
-            try:
-                if round_detail["round_id"] == round_id:
+        round_ = next(
+            (r for r in rounds if r["round_id"] == round_id),
+            None
+        )
 
-                    matchs = round_detail["matchs"]
+        if round_:
+            matchs = round_["matchs"]
+            match = next(
+                (m for m in matchs if m["match_id"] == user_match_id),
+                None
+            )
 
-                    for item in matchs:
-                        data_match_id = item["match_id"]
-                        if data_match_id == int(user_match_id):
-                            match_detail = round_detail["matchs"][int(
-                                user_match_id) - 1]
-                            match_detail["match"][0][1] = score1
-                            match_detail["match"][1][1] = score2
-                            break
+            if match:
+                match_detail = round_["matchs"][int(user_match_id) - 1]
+                match_detail["match"][0][1] = score1
+                match_detail["match"][1][1] = score2
 
-                    update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                      tournament["tournament_id"],
-                                      tournament)
-            except KeyError:
-                ConsoleDisplayer.log(MESSAGES["error_on_save"], level="ERROR")
+                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                  tournament["tournament_id"], tournament)
 
-            return round_detail
-        return None
+            return round_
+        else:
+            return None

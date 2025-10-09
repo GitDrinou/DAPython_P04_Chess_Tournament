@@ -9,52 +9,96 @@ class RoundController:
     """Round controller class"""
 
     @staticmethod
-    def start_up(tournament_id):
+    def start_up(tournament_id, round_id):
         """Method that starts a round."""
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
-        for tournament in tournaments:
-            if tournament["tournament_id"] == tournament_id:
-                last_round = tournament["rounds"][-1]
-                start_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        tournament = next(
+            (t for t in tournaments if t["tournament_id"] == tournament_id),
+            None
+        )
 
+        if tournament:
+            rounds = tournament["rounds"]
+            round_ = next(
+                (r for r in rounds if r["round_id"] == round_id),
+                None
+            )
+
+            start_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+            if round_:
+                tournament["round_number"] = round_["name"][-1]
+                round_["round_start_date"] = start_date
+
+                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                  tournament["tournament_id"], tournament)
+
+                round_item = round_
+
+                ConsoleDisplayer.log(MESSAGES["round_started"], level="INFO")
+
+            else:
+                last_round = tournament["rounds"][-1]
                 tournament["round_number"] = last_round["name"][-1]
                 last_round["round_start_date"] = start_date
 
                 update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                  tournament["tournament_id"],
-                                  tournament)
+                                  tournament["tournament_id"], tournament)
+
+                round_item = last_round
 
                 ConsoleDisplayer.log(MESSAGES["round_started"], level="INFO")
 
-                return last_round
-        return None
+            return round_item
+        else:
+            return None
 
     @staticmethod
-    def end_up(tournament_id):
+    def end_up(tournament_id, round_id):
         """Method that terminate the round."""
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
-        for tournament in tournaments:
-            if tournament["tournament_id"] == tournament_id:
-                last_round = tournament["rounds"][-1]
-                if last_round["round_start_date"] == "":
+        tournament = next(
+            (t for t in tournaments if t["tournament_id"] == tournament_id),
+            None
+        )
+
+        if tournament:
+            rounds = tournament["rounds"]
+            round_ = next(
+                (r for r in rounds if r["round_id"] == round_id),
+                None
+            )
+
+            end_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+            round_item = {}
+            if round_:
+                if round_["round_start_date"] == "":
                     ConsoleDisplayer.log(MESSAGES["round_not_started"],
                                          level="WARNING")
                 else:
-                    end_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-
-                    tournament["round_number"] = last_round["name"][-1]
-                    last_round["round_end_date"] = end_date
+                    round_["round_end_date"] = end_date
 
                     update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                      tournament["tournament_id"],
-                                      tournament)
+                                      tournament["tournament_id"], tournament)
+
+                    round_item = round_
 
                     ConsoleDisplayer.log(MESSAGES["round_ended"], level="INFO")
+            else:
+                last_round = tournament["rounds"][-1]
+                last_round["round_end_date"] = end_date
 
-                    return last_round
-        return None
+                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                  tournament["tournament_id"], tournament)
+
+                round_item = last_round
+
+                ConsoleDisplayer.log(MESSAGES["round_ended"], level="INFO")
+
+            return round_item
+        else:
+            return None
 
     @staticmethod
     def is_finished(rounds):

@@ -1,7 +1,7 @@
 import os
 
 from utils.console_utils import ConsoleDisplayer
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
+from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file
 from utils.tournament_utils import tournament_is_finished
 
@@ -47,7 +47,8 @@ class MenusView:
             if tournament["tournament_id"] == tournament_id:
                 current_round_number = tournament["round_number"]
                 number_pf_rounds = tournament["number_of_rounds"]
-                if tournament_is_finished(tournament):
+
+                if not tournament_is_finished(tournament):
 
                     options = [
                         "Inscrire un joueur au tournoi",
@@ -64,8 +65,10 @@ class MenusView:
                         current_round_number=current_round_number,
                         number_pf_rounds=number_pf_rounds
                     )
-
                     return choice
+                else:
+                    return ConsoleDisplayer.log(MESSAGES["congratulations"],
+                                                level="INFO")
         return None
 
     @staticmethod

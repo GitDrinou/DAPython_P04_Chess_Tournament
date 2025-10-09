@@ -509,47 +509,47 @@
         },
         {
             "tournament_id": 3,
-            "name": "LE TOURNOI DES BONS COPAINS",
-            "location": "Amicale de la bonne fortune",
+            "name": "LE TOURNOI DES COPAINS D'AVANT",
+            "location": "Salle des f\u00eates jacques brel au 2\u00e8me \u00e9tage de la mairie",
             "start_date": "09/10/2025",
             "end_date": "09/10/2025",
-            "description": "le tournoi d\u00e9butera \u00e0 10H00.",
-            "number_of_rounds": "6",
-            "round_number": "5",
+            "description": "la mairie ouvrira ses portes \u00e0 8H00. Le tournoi d\u00e9marrera \u00e0 9H00.",
+            "number_of_rounds": "4",
+            "round_number": "4",
             "players": [
+                {
+                    "national_id": "B48392",
+                    "last_name": "BOURNE",
+                    "first_name": "Jason",
+                    "birth_date": "09/02/1989",
+                    "points": 3.0
+                },
                 {
                     "national_id": "D59304",
                     "last_name": "DOE",
                     "first_name": "Jonathan",
-                    "birth_date": "20/01/2000",
-                    "points": 3.0
+                    "birth_date": "20/02/2000",
+                    "points": 1.5
                 },
                 {
-                    "national_id": "J48372",
-                    "last_name": "JOSH",
-                    "first_name": "Brian",
-                    "birth_date": "01/12/1987",
-                    "points": 4.5
+                    "national_id": "M59403",
+                    "last_name": "MARTIN",
+                    "first_name": "Josephine",
+                    "birth_date": "31/12/1999",
+                    "points": 1.5
                 },
                 {
                     "national_id": "F58493",
                     "last_name": "FORD COPPOLA",
                     "first_name": "Francis",
                     "birth_date": "07/04/1939",
-                    "points": 2.5
+                    "points": 2.0
                 },
                 {
-                    "national_id": "P85930",
-                    "last_name": "PROUST",
-                    "first_name": "Marcel",
-                    "birth_date": "10/07/1871",
-                    "points": 3.0
-                },
-                {
-                    "national_id": "B48392",
-                    "last_name": "BOURNE",
-                    "first_name": "Jason",
-                    "birth_date": "09/02/1989",
+                    "national_id": "J48372",
+                    "last_name": "JOSH",
+                    "first_name": "Brian",
+                    "birth_date": "01/12/1987",
                     "points": 2.0
                 },
                 {
@@ -557,25 +557,25 @@
                     "last_name": "KID",
                     "first_name": "Kessy",
                     "birth_date": "02/03/1978",
-                    "points": 3.0
+                    "points": 2.0
                 }
             ],
             "rounds": [
                 {
                     "round_id": 1,
                     "name": "Round 1",
-                    "round_start_date": "06-10-2025 11:49:56",
-                    "round_end_date": "06-10-2025 11:50:23",
+                    "round_start_date": "09-10-2025 16:26:20",
+                    "round_end_date": "09-10-2025 16:26:23",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "J48372",
+                                    "F58493",
                                     "1"
                                 ],
                                 [
-                                    "F58493",
+                                    "D59304",
                                     "0"
                                 ]
                             ]
@@ -584,11 +584,11 @@
                             "match_id": 2,
                             "match": [
                                 [
-                                    "K34567",
+                                    "J48372",
                                     "0"
                                 ],
                                 [
-                                    "D59304",
+                                    "K34567",
                                     "1"
                                 ]
                             ]
@@ -597,11 +597,11 @@
                             "match_id": 3,
                             "match": [
                                 [
-                                    "P85930",
+                                    "B48392",
                                     "1"
                                 ],
                                 [
-                                    "B48392",
+                                    "M59403",
                                     "1"
                                 ]
                             ]
@@ -611,28 +611,15 @@
                 {
                     "round_id": 2,
                     "name": "Round 2",
-                    "round_start_date": "06-10-2025 11:50:53",
-                    "round_end_date": "06-10-2025 11:52:11",
+                    "round_start_date": "09-10-2025 16:26:48",
+                    "round_end_date": "09-10-2025 16:26:51",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "J48372",
-                                    "1"
-                                ],
-                                [
-                                    "D59304",
+                                    "K34567",
                                     "0"
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "P85930",
-                                    "1"
                                 ],
                                 [
                                     "F58493",
@@ -641,14 +628,27 @@
                             ]
                         },
                         {
-                            "match_id": 3,
+                            "match_id": 2,
                             "match": [
                                 [
                                     "B48392",
+                                    "1"
+                                ],
+                                [
+                                    "J48372",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 3,
+                            "match": [
+                                [
+                                    "M59403",
                                     "0"
                                 ],
                                 [
-                                    "K34567",
+                                    "D59304",
                                     "1"
                                 ]
                             ]
@@ -658,19 +658,19 @@
                 {
                     "round_id": 3,
                     "name": "Round 3",
-                    "round_start_date": "06-10-2025 11:52:34",
-                    "round_end_date": "06-10-2025 11:53:32",
+                    "round_start_date": "09-10-2025 16:35:30",
+                    "round_end_date": "09-10-2025 16:35:34",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "J48372",
-                                    "1"
+                                    "F58493",
+                                    "0"
                                 ],
                                 [
-                                    "K34567",
-                                    "0"
+                                    "B48392",
+                                    "1"
                                 ]
                             ]
                         },
@@ -678,11 +678,11 @@
                             "match_id": 2,
                             "match": [
                                 [
-                                    "D59304",
+                                    "K34567",
                                     "1"
                                 ],
                                 [
-                                    "P85930",
+                                    "D59304",
                                     "1"
                                 ]
                             ]
@@ -691,12 +691,12 @@
                             "match_id": 3,
                             "match": [
                                 [
-                                    "F58493",
+                                    "M59403",
                                     "1"
                                 ],
                                 [
-                                    "B48392",
-                                    "0"
+                                    "J48372",
+                                    "1"
                                 ]
                             ]
                         }
@@ -705,19 +705,19 @@
                 {
                     "round_id": 4,
                     "name": "Round 4",
-                    "round_start_date": "06-10-2025 11:53:54",
-                    "round_end_date": "06-10-2025 11:55:04",
+                    "round_start_date": "09-10-2025 16:36:00",
+                    "round_end_date": "09-10-2025 16:36:03",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "J48372",
-                                    "0"
+                                    "B48392",
+                                    "1"
                                 ],
                                 [
-                                    "P85930",
-                                    "1"
+                                    "D59304",
+                                    "0"
                                 ]
                             ]
                         },
@@ -725,11 +725,11 @@
                             "match_id": 2,
                             "match": [
                                 [
-                                    "D59304",
+                                    "F58493",
                                     "0"
                                 ],
                                 [
-                                    "F58493",
+                                    "J48372",
                                     "1"
                                 ]
                             ]
@@ -742,95 +742,14 @@
                                     "1"
                                 ],
                                 [
-                                    "B48392",
+                                    "M59403",
                                     "1"
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "round_id": 5,
-                    "name": "Round 5",
-                    "round_start_date": "08-10-2025 17:51:11",
-                    "round_end_date": "08-10-2025 18:22:53",
-                    "matchs": [
-                        {
-                            "match_id": 1,
-                            "match": [
-                                [
-                                    "J48372",
-                                    0.0
-                                ],
-                                [
-                                    "P85930",
-                                    0.0
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 2,
-                            "match": [
-                                [
-                                    "K34567",
-                                    0.0
-                                ],
-                                [
-                                    "D59304",
-                                    0.0
-                                ]
-                            ]
-                        },
-                        {
-                            "match_id": 3,
-                            "match": [
-                                [
-                                    "F58493",
-                                    0.0
-                                ],
-                                [
-                                    "B48392",
-                                    0.0
                                 ]
                             ]
                         }
                     ]
                 }
             ]
-        },
-        {
-            "tournament_id": 4,
-            "name": "LE TOURNOI DU JOUR",
-            "location": "Salle des f\u00eates de la nuit",
-            "start_date": "10/10/2025",
-            "end_date": "10/10/2025",
-            "description": "un jour peut-\u00eatre",
-            "number_of_rounds": "5",
-            "round_number": 0,
-            "players": [
-                {
-                    "national_id": "P85930",
-                    "last_name": "PROUST",
-                    "first_name": "Marcel",
-                    "birth_date": "10/07/1871",
-                    "points": 0.0
-                },
-                {
-                    "national_id": "B48392",
-                    "last_name": "BOURNE",
-                    "first_name": "Jason",
-                    "birth_date": "09/02/1989",
-                    "points": 0.0
-                },
-                {
-                    "national_id": "D59304",
-                    "last_name": "DOE",
-                    "first_name": "Jonathan",
-                    "birth_date": "20/01/2000",
-                    "points": 0.0
-                }
-            ],
-            "rounds": []
         }
     ]
 }
