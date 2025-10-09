@@ -1,4 +1,3 @@
-import time
 from datetime import datetime
 
 from models.player import Player
@@ -6,14 +5,14 @@ from models.tournament import Tournament
 from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
     PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
 from utils.file_utils import load_tournament, read_json_file
-from utils.console_utils import ConsoleDisplayer
+from utils.console_utils import clear_and_wait
 
 
 class ApplicationController:
     """ Application class controller"""
     def __init__(self, player_controller, tournament_controller,
-                 round_controller, match_controller,
-                 report_controller, menu_view, prompt_view, display_view):
+                 round_controller, match_controller, report_controller,
+                 menu_view, prompt_view, display_view):
         """ Initialize the application controller """
         self.player_controller = player_controller
         self.tournament_controller = tournament_controller
@@ -28,23 +27,22 @@ class ApplicationController:
         """ Main method of the application controller """
 
         while True:
-            self.menu_view.clear_console()
+            clear_and_wait(delay=0, console_view=self.menu_view)
             user_choice = self.menu_view.show_main_menu()
 
             if user_choice == "1":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 tournament = self.prompt_view.tournament_prompt()
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 self.tournament_controller.create(
                     Tournament(tournament["name"], tournament["location"],
                                tournament["start_date"],
                                tournament["end_date"],
                                tournament["description"],
                                tournament["number_of_rounds"]))
-                time.sleep(2)
-                self.menu_view.clear_console()
+                clear_and_wait(delay=5)
             elif user_choice == "2":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 tournaments = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE)
                 if tournaments:
@@ -53,31 +51,24 @@ class ApplicationController:
                     if not selection == 0:
                         self.tournament_choice(selection)
                 else:
-                    self.menu_view.clear_console()
-                    ConsoleDisplayer.log(MESSAGES["tournament_detail"],
-                                         level="WARNING")
-                    time.sleep(6)
-                    self.menu_view.clear_console()
+                    clear_and_wait(message=MESSAGES["tournament_detail"])
             elif user_choice == "3":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 self.report_choice()
             elif user_choice == "4":
-                self.menu_view.clear_console()
-                ConsoleDisplayer.log(MESSAGES["exit_application"],
-                                     level="INFO")
+                clear_and_wait(message=MESSAGES["exit_application"],
+                               level="INFO", console_view=self.menu_view,
+                               clear_before=True)
                 break
             else:
-                self.menu_view.clear_console()
-                ConsoleDisplayer.log(MESSAGES["invalid_choice"],
-                                     level="WARNING")
-                time.sleep(6)
-                self.menu_view.clear_console()
+                clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
+                               console_view=self.menu_view, clear_before=True)
 
     def tournament_choice(self, selection):
         """Display conditions for tournament choice"""
 
         while True:
-            self.menu_view.clear_console()
+            clear_and_wait(delay=0, console_view=self.menu_view)
             selected_tournament = load_tournament(
                 PATH_DATA_TOURNAMENTS_JSON_FILE, selection)
             self.display_view.display_players(selected_tournament)
@@ -87,22 +78,19 @@ class ApplicationController:
             tournament_id = selected_tournament["tournament_id"]
             if tournament_choice is not None:
                 if tournament_choice == "1":
-                    self.menu_view.clear_console()
+                    clear_and_wait(delay=0, console_view=self.menu_view)
                     if len(selected_tournament["rounds"]) == 0:
                         player = self.prompt_view.player_prompt()
                         self.player_controller.add(Player(
                             player["national_id"], player["lastname"],
                             player["firstname"], player["birthdate"]),
                             tournament_id)
-                        time.sleep(2)
-                        self.menu_view.clear_console()
+                        clear_and_wait(delay=2)
                     else:
-                        ConsoleDisplayer.log(MESSAGES["register_players"],
-                                             level="WARNING")
-                        time.sleep(6)
-                        self.menu_view.clear_console()
+                        clear_and_wait(message=MESSAGES["register_players"],
+                                       console_view=self.menu_view)
                 elif tournament_choice == "2":
-                    self.menu_view.clear_console()
+                    clear_and_wait(delay=0, console_view=self.menu_view)
                     if len(selected_tournament["rounds"]) == 0 and len(
                             selected_tournament["players"]) > 0:
                         self.display_view.display_players(
@@ -111,15 +99,12 @@ class ApplicationController:
                         self.tournament_controller.delete_a_player(
                             selected_tournament["tournament_id"],
                             national_id)
-                        time.sleep(2)
-                        self.menu_view.clear_console()
+                        clear_and_wait(delay=2, console_view=self.menu_view)
                     else:
-                        ConsoleDisplayer.log(MESSAGES["delete_player"],
-                                             level="WARNING")
-                        time.sleep(6)
-                        self.menu_view.clear_console()
+                        clear_and_wait(message=MESSAGES["delete_player"],
+                                       console_view=self.menu_view)
                 elif tournament_choice == "3":
-                    self.menu_view.clear_console()
+                    clear_and_wait(delay=0, console_view=self.menu_view)
                     last_round = selected_tournament["rounds"]
                     today = datetime.today().date()
                     start_date = selected_tournament["start_date"]
@@ -128,11 +113,9 @@ class ApplicationController:
                     if (len(selected_tournament["players"]) < 4 or len(
                             selected_tournament["players"]) % 2 != 0 or
                             start_date.date() > today):
-                        self.menu_view.clear_console()
-                        ConsoleDisplayer.log(MESSAGES["generate_round"],
-                                             level="WARNING")
-                        time.sleep(10)
-                        self.menu_view.clear_console()
+                        clear_and_wait(message=MESSAGES["generate_round"],
+                                       console_view=self.menu_view,
+                                       clear_before=True)
                     else:
                         if len(last_round) == 0:
                             round_number = 0
@@ -144,7 +127,7 @@ class ApplicationController:
                             selected_tournament["rounds"], finished_rounds)
                         selected_round = (
                             self.prompt_view.select_round_prompt())
-                        self.menu_view.clear_console()
+                        clear_and_wait(delay=0, console_view=self.menu_view)
                         if selected_round >= 0:
                             generation = (
                                 self.tournament_controller.generate_a_round(
@@ -160,25 +143,22 @@ class ApplicationController:
                                         "tournament_id"]
                                     self.round_choice(tournament_id)
                             else:
-                                time.sleep(6)
-                                self.menu_view.clear_console()
+                                clear_and_wait(console_view=self.menu_view)
                         else:
-                            self.menu_view.clear_console()
+                            clear_and_wait(delay=0,
+                                           console_view=self.menu_view)
                 elif tournament_choice == "4":
-                    self.menu_view.clear_console()
+                    clear_and_wait(delay=0, console_view=self.menu_view)
                     break
                 elif tournament_choice == "5":
-                    self.menu_view.clear_console()
+                    clear_and_wait(delay=0, console_view=self.menu_view)
                     break
                 else:
-                    self.menu_view.clear_console()
-                    ConsoleDisplayer.log(MESSAGES["invalid_choice"],
-                                         level="WARNING")
-                    time.sleep(6)
-                    self.menu_view.clear_console()
+                    clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
+                                   console_view=self.menu_view,
+                                   clear_before=True)
             else:
-                time.sleep(5)
-                self.menu_view.clear_console()
+                clear_and_wait(console_view=self.menu_view)
                 break
 
     def round_choice(self, tournament_id):
@@ -187,18 +167,16 @@ class ApplicationController:
         while True:
             round_choice = (self.menu_view.show_round_menu())
             if round_choice == "1":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 round_detail = self.round_controller.start_up(tournament_id)
-                time.sleep(2)
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 self.display_view.display_a_round(round_detail)
             elif round_choice == "2":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 round_detail = self.round_controller.end_up(tournament_id)
-                time.sleep(2)
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 self.display_view.display_a_round(round_detail)
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 tournament = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE, tournament_id)
                 last_round = tournament["rounds"][-1]
@@ -218,18 +196,14 @@ class ApplicationController:
                         index += 1
                 self.tournament_controller.update_player_points(
                     tournament_id, last_round["round_id"])
-                time.sleep(2)
-                self.menu_view.clear_console()
+                clear_and_wait(console_view=self.menu_view)
                 break
             elif round_choice == "3":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 break
             else:
-                self.menu_view.clear_console()
-                ConsoleDisplayer.log(MESSAGES["invalid_choice"],
-                                     level="WARNING")
-                time.sleep(6)
-                self.menu_view.clear_console()
+                clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
+                               console_view=self.menu_view, clear_before=True)
 
     def report_choice(self):
         """Display conditions for report choice"""
@@ -239,27 +213,25 @@ class ApplicationController:
             data_players = read_json_file(PATH_DATA_PLAYERS_JSON_FILE)
             data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
             if report_choice == "1":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 players = sorted(data_players["players"], key=lambda x: (x[
                     "last_name"]))
                 self.report_controller.players(players)
-                time.sleep(10)
-                self.menu_view.clear_console()
+                clear_and_wait(delay=10, console_view=self.menu_view)
             elif report_choice == "2":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 tournaments = data_tournaments["tournaments"]
                 self.report_controller.tournaments(tournaments)
-                time.sleep(10)
-                self.menu_view.clear_console()
+                clear_and_wait(delay=10, console_view=self.menu_view)
             elif report_choice == "3":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 tournaments = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE, all_tournaments=True)
                 if tournaments:
                     self.display_view.display_tournaments(tournaments)
                     tournament_id = self.prompt_view.select_tournament_prompt()
                     if tournament_id is not None:
-                        self.menu_view.clear_console()
+                        clear_and_wait(delay=0, console_view=self.menu_view)
                         tournaments = data_tournaments["tournaments"]
                         tournament_report = []
                         for tournament in tournaments:
@@ -268,23 +240,20 @@ class ApplicationController:
                                 tournament_report.append(tournament)
                                 break
                         self.report_controller.tournaments(tournament_report)
-                        time.sleep(10)
-                        self.menu_view.clear_console()
+                        clear_and_wait(delay=10, console_view=self.menu_view)
                 else:
-                    self.menu_view.clear_console()
-                    ConsoleDisplayer.log(MESSAGES["tournament_detail"],
-                                         level="WARNING")
-                    time.sleep(6)
-                    self.menu_view.clear_console()
+                    clear_and_wait(message=MESSAGES["tournament_detail"],
+                                   console_view=self.menu_view,
+                                   clear_before=True)
             elif report_choice == "4":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 tournaments = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE, all_tournaments=True)
                 if tournaments:
                     self.display_view.display_tournaments(tournaments)
                     tournament_id = self.prompt_view.select_tournament_prompt()
                     if tournament_id is not None:
-                        self.menu_view.clear_console()
+                        clear_and_wait(delay=0, console_view=self.menu_view)
                         tournaments = data_tournaments["tournaments"]
                         tournament_report = {}
                         for tournament in tournaments:
@@ -295,23 +264,20 @@ class ApplicationController:
                         self.report_controller.players(
                             tournament_report["players"], True,
                             tournament_report["name"])
-                        time.sleep(10)
-                        self.menu_view.clear_console()
+                        clear_and_wait(delay=10, console_view=self.menu_view)
                 else:
-                    self.menu_view.clear_console()
-                    ConsoleDisplayer.log(MESSAGES["tournament_detail"],
-                                         level="WARNING")
-                    time.sleep(6)
-                    self.menu_view.clear_console()
+                    clear_and_wait(message=MESSAGES["tournament_detail"],
+                                   console_view=self.menu_view,
+                                   clear_before=True)
             elif report_choice == "5":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 tournaments = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE, all_tournaments=True)
                 if tournaments:
                     self.display_view.display_tournaments(tournaments)
                     tournament_id = self.prompt_view.select_tournament_prompt()
                     if tournament_id is not None:
-                        self.menu_view.clear_console()
+                        clear_and_wait(delay=0, console_view=self.menu_view)
                         tournaments = data_tournaments["tournaments"]
                         tournament_report = {}
                         for tournament in tournaments:
@@ -321,21 +287,14 @@ class ApplicationController:
                                 break
                         self.report_controller.tournament_round(
                             tournament_report)
-                        time.sleep(10)
-                        self.menu_view.clear_console()
+                        clear_and_wait(delay=10, console_view=self.menu_view)
                 else:
-                    self.menu_view.clear_console()
-
-                    ConsoleDisplayer.log(MESSAGES["tournament_detail"],
-                                         level="WARNING")
-                    time.sleep(6)
-                    self.menu_view.clear_console()
+                    clear_and_wait(message=MESSAGES["tournament_detail"],
+                                   console_view=self.menu_view,
+                                   clear_before=True)
             elif report_choice == "6":
-                self.menu_view.clear_console()
+                clear_and_wait(delay=0, console_view=self.menu_view)
                 break
             else:
-                self.menu_view.clear_console()
-                ConsoleDisplayer.log(MESSAGES["invalid_choice"],
-                                     level="WARNING")
-                time.sleep(6)
-                self.menu_view.clear_console()
+                clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
+                               console_view=self.menu_view, clear_before=True)

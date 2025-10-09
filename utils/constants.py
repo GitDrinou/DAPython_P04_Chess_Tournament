@@ -3,70 +3,70 @@ PATH_DATA_TOURNAMENTS_JSON_FILE = "./data/tournaments/tournaments.json"
 PATH_REPORTS_FILES = "./reports/html/"
 MESSAGES = {
     "tournament_detail": """
-    \t===================================================
-    \tVous n'avez pas de tournoi en cours ou en attente.
-    \tVeuillez créer un nouveau tournoi.
-    \t===================================================
+    ===================================================
+    Vous n'avez pas de tournoi en cours ou en attente.
+    Veuillez créer un nouveau tournoi.
+    ===================================================
     """,
     "invalid_choice": """
-    \t====================================
-    \tVotre choix est invalide.
-    \tVeuillez renouveler votre saisie.
-    \t====================================
+    ====================================
+    Votre choix est invalide.
+    Veuillez renouveler votre saisie.
+    ====================================
     """,
     "register_players": """
-    \t================================================
-    \tLe tournoi a déjà démarré.
-    \tVous ne pouvez plus inscrire de nouveaux joueurs
-    \t================================================
+    ================================================
+    Le tournoi a déjà démarré.
+    Vous ne pouvez plus inscrire de nouveaux joueurs
+    ================================================
     """,
     "delete_player": """
-    \t============================================================
-    \tVous ne pouvez pas supprimer de joueur:
-    \t- soit parce que le tournoi a déjà démarré,
-    \t- soit parce qu'il n'y a pas de joueurs inscrits au tournoi
-    \t============================================================
+    ============================================================
+    Vous ne pouvez pas supprimer de joueur:
+    - soit parce que le tournoi a déjà démarré,
+    - soit parce qu'il n'y a pas de joueurs inscrits au tournoi
+    ============================================================
     """,
     "generate_round": """
-    \t=============================================================
-    \tVous ne pouvez pas générer de tour:
-    \t- soit le nombre de joueurs inscrits est inférieur à 4
-    \t- soit le total de joueurs inscrits est un nombre impair
-    \t- soit la date du tournoi est dans le futur.
-    \t=============================================================
+    =============================================================
+    Vous ne pouvez pas générer de tour:
+    - soit le nombre de joueurs inscrits est inférieur à 4
+    - soit le total de joueurs inscrits est un nombre impair
+    - soit la date du tournoi est dans le futur.
+    =============================================================
     """,
     "no_generate_round": """
-    \t=============================================================
-    \tVous ne pouvez pas générer de "nouveau tour.
-    \tLe tour précédent n'est pas terminé.
-    \tVeuillez sélectionner le tour en cours afin de le terminer.
-    \t=============================================================
+    =============================================================
+    Vous ne pouvez pas générer de "nouveau tour.
+    Le tour précédent n'est pas terminé.
+    Veuillez sélectionner le tour en cours afin de le terminer.
+    =============================================================
     """,
     "round_already_ended": """
-    \t====================================================================
-    \tLe tour que vous avez sélectionné est terminé et les scores ont
-    \tdéjà été enregistrés.
-    \tVeuillez sélectionner un tour en cours ou générer un nouveau tour.
-    \t====================================================================
+    ====================================================================
+    Le tour que vous avez sélectionné est terminé et les scores ont
+    déjà été enregistrés.
+    Veuillez sélectionner un tour en cours ou générer un nouveau tour.
+    ====================================================================
     """,
     "all_rounds_reached": """
-    \t==============================================================
-    \tVous avez atteint le nombre de tours maximum pour ce tournoi.
-    \tVous ne pouvez plus générer de nouveaux tours.
-    \t==============================================================
+    ==============================================================
+    Vous avez atteint le nombre de tours maximum pour ce tournoi.
+    Vous ne pouvez plus générer de nouveaux tours.
+    ==============================================================
     """,
     "exit_application": """
-    \t============================
-    \tVous quittez l'application.
-    \tAu revoir et à bientôt 👋.
-    \t============================
+    ============================
+    Vous quittez l'application.
+    Au revoir et à bientôt 👋.
+    ============================
     """,
     "congratulations": """
-    \t=================================================================
-    \t🎉 🎉  L E  T O U R N O I  E S T  T E R M I N É. 🎉 🎉
-    \tFélicitations au vainqueur 🏆!
-    \tVous allez être redirigé dans un instant vers le menu principal.
-    \t=================================================================
+    =================================================================
+    🎉 🎉  L E  T O U R N O I  E S T  T E R M I N É. 🎉 🎉
+    Félicitations au vainqueur 🏆!
+    Vous allez être redirigé dans un instant vers le menu principal.
+    =================================================================
     """,
     "round_generated": """
     \t========================================================
@@ -75,16 +75,16 @@ MESSAGES = {
     \t========================================================
     """,
     "round_started": """
-    \t============================================
-    \tLe tour a démarré.
-    \tLes joueurs peuvent commencer leurs matchs.
-    \t============================================
+    ============================================
+    Le tour a démarré.
+    Les joueurs peuvent commencer leurs matchs.
+    ============================================
     """,
     "error_on_save": """
-    \t=================================================
-    \tUne erreur est survenue lors de l'enregistrement.
-    \tRenouvelez votre action.
-    \t=================================================
+    =================================================
+    Une erreur est survenue lors de l'enregistrement.
+    Renouvelez votre action.
+    =================================================
     """,
     "player_registered": """
     \t======================================
@@ -92,45 +92,45 @@ MESSAGES = {
     \t=======================================
     """,
     "tournament_created": """
-    \t===============================================
-    \tLe nouveau tournoi a été créé avec succès.
-    \tVous allez être redirigé vers le menu principal.
-    \t===============================================
+    ===============================================
+    Le nouveau tournoi a été créé avec succès.
+    Vous allez être redirigé vers le menu principal.
+    ===============================================
     """,
     "invalid_end_date": """
-    \t=================================================================
-    \tLa date de fin doit être égale ou postérieure à la date de début.
-    \tVeuillez entrer une date valide.
-    \t==================================================================
+    =================================================================
+    La date de fin doit être égale ou postérieure à la date de début.
+    Veuillez entrer une date valide.
+    ==================================================================
     """,
     "round_not_started": """
-    \t=============================================================
-    \tLe tour n'a pas encore démarré.
-    \tVous ne pouvez pas terminer ce tour avant de l'avoir démarré.
-    \t=============================================================
+    =============================================================
+    Le tour n'a pas encore démarré.
+    Vous ne pouvez pas terminer ce tour avant de l'avoir démarré.
+    =============================================================
     """,
     "round_ended": """
-    \t=============================================================
-    \tLe tour est terminé.
-    \tVous allez à présent être invité à enregistrer les scores
-    \tpour chaque matchs du tour.
-    \t=============================================================
+    =============================================================
+    Le tour est terminé.
+    Vous allez à présent être invité à enregistrer les scores
+    pour chaque matchs du tour.
+    =============================================================
     """,
     "points_updated": """
-    \t=============================================================
-    \tLes points ont été mis à jour.
-    \tVous allez être redirigé vers le menu de gestion du tournoi.
-    \t=============================================================
+    =============================================================
+    Les points ont été mis à jour.
+    Vous allez être redirigé vers le menu de gestion du tournoi.
+    =============================================================
     """,
     "player_deleted": """
-    \t=========================================
-    \tLe joueur a bien été supprimé du tournoi.
-    \t=========================================
+    =========================================
+    Le joueur a bien été supprimé du tournoi.
+    =========================================
     """,
     "invalid_national_id": """
-    \t===================================================
-    \tLe format de l'identitifant national est incorrect.
-    \tFormat attendu : 1 lettre + 5 chiffres
-    \t===================================================
+    ===================================================
+    Le format de l'identitifant national est incorrect.
+    Format attendu : 1 lettre + 5 chiffres
+    ===================================================
     """
 }

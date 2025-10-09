@@ -1,3 +1,6 @@
+import time
+
+
 class ConsoleDisplayer:
     """Class to manage console print messages"""
 
@@ -9,7 +12,7 @@ class ConsoleDisplayer:
             "ERROR": "[ERREUR]",
         }
 
-        print(f"\n\t{levels.get(level,'[ℹ️]')}\n\t{message}")
+        print(f"\n{levels.get(level,'[ℹ️]')}\n{message}")
 
     @staticmethod
     def display_menu(title, options, **kwargs):
@@ -44,3 +47,22 @@ class ConsoleDisplayer:
         response = input(f"{text}: ")
 
         return response
+
+
+def clear_and_wait(message=None, level="WARNING", delay=6, console_view=None,
+                   clear_before=False):
+    """Display a message, wait and clear the console
+        Args:
+            message (str, optional): message to display.
+            level (str, optional): level of the message.
+            delay (int, optional): delay before cleaning the console.
+            console_view (ConsoleView, optional): instance of the view.
+            clear_before (bool, optional): whether to clear the console
+    """
+    if clear_before and console_view:
+        console_view.clear_console()
+    if message:
+        ConsoleDisplayer.log(message, level=level)
+    time.sleep(delay)
+    if console_view:
+        console_view.clear_console()

@@ -511,8 +511,8 @@
             "tournament_id": 3,
             "name": "LE TOURNOI DES BONS COPAINS",
             "location": "Amicale de la bonne fortune",
-            "start_date": "08/10/2025",
-            "end_date": "08/10/2025",
+            "start_date": "09/10/2025",
+            "end_date": "09/10/2025",
             "description": "le tournoi d\u00e9butera \u00e0 10H00.",
             "number_of_rounds": "6",
             "round_number": "5",
@@ -807,7 +807,29 @@
             "description": "un jour peut-\u00eatre",
             "number_of_rounds": "5",
             "round_number": 0,
-            "players": [],
+            "players": [
+                {
+                    "national_id": "P85930",
+                    "last_name": "PROUST",
+                    "first_name": "Marcel",
+                    "birth_date": "10/07/1871",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "B48392",
+                    "last_name": "BOURNE",
+                    "first_name": "Jason",
+                    "birth_date": "09/02/1989",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "D59304",
+                    "last_name": "DOE",
+                    "first_name": "Jonathan",
+                    "birth_date": "20/01/2000",
+                    "points": 0.0
+                }
+            ],
             "rounds": []
         }
     ]
