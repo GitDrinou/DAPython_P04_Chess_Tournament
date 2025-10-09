@@ -12,26 +12,31 @@ class PlayerController:
 
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
-        for tournament in tournaments:
-            if tournament["tournament_id"] == tournament_id:
-                tournament["players"].append({
-                    "national_id": player.national_id,
-                    "last_name": player.last_name.upper(),
-                    "first_name": player.first_name.capitalize(),
-                    "birth_date": player.birth_date,
-                    "points": 0.0
-                })
+        tournament = next(
+            (t for t in tournaments if t["tournament_id"] == tournament_id),
+            None
+        )
 
-                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                  tournament["tournament_id"],
-                                  tournament)
+        if tournament:
+            tournament["players"].append({
+                "national_id": player.national_id,
+                "last_name": player.last_name.upper(),
+                "first_name": player.first_name.capitalize(),
+                "birth_date": player.birth_date,
+                "points": 0.0
+            })
 
-                if not check_player_is_exist(player.national_id):
-                    save_to_json("players",
-                                 national_id=player.national_id,
-                                 last_name=player.last_name.upper(),
-                                 first_name=player.first_name.capitalize(),
-                                 birth_date=player.birth_date)
+            update_tournament(
+                PATH_DATA_TOURNAMENTS_JSON_FILE,
+                tournament["tournament_id"],
+                tournament
+            )
 
-                ConsoleDisplayer.log(MESSAGES["player_registered"],
-                                     level="INFO")
+            if not check_player_is_exist(player.national_id):
+                save_to_json("players",
+                             national_id=player.national_id,
+                             last_name=player.last_name.upper(),
+                             first_name=player.first_name.capitalize(),
+                             birth_date=player.birth_date)
+
+            ConsoleDisplayer.log(MESSAGES["player_registered"], level="INFO")

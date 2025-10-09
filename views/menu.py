@@ -43,33 +43,37 @@ class MenusView:
         """Display the current tournament menu"""
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
-        for tournament in tournaments:
-            if tournament["tournament_id"] == tournament_id:
-                current_round_number = tournament["round_number"]
-                number_pf_rounds = tournament["number_of_rounds"]
+        tournament = next(
+            (t for t in tournaments if t["tournament_id"] == tournament_id),
+            None
+        )
+        if tournament:
+            current_round_number = tournament["round_number"]
+            number_pf_rounds = tournament["number_of_rounds"]
 
-                if not tournament_is_finished(tournament):
+            if not tournament_is_finished(tournament):
 
-                    options = [
-                        "Inscrire un joueur au tournoi",
-                        "Supprimer un joueur du tournoi",
-                        f"Générer ou continuer un tour (tour "
-                        f"{current_round_number}/{number_pf_rounds})",
-                        "Mettre en pause le tournoi",
-                        "Revenir au menu principal"
-                    ]
+                options = [
+                    "Inscrire un joueur au tournoi",
+                    "Supprimer un joueur du tournoi",
+                    f"Générer ou continuer un tour (tour "
+                    f"{current_round_number}/{number_pf_rounds})",
+                    "Mettre en pause le tournoi",
+                    "Revenir au menu principal"
+                ]
 
-                    choice = ConsoleDisplayer.display_menu(
-                        title="Gestion d'un tournoi",
-                        options=options,
-                        current_round_number=current_round_number,
-                        number_pf_rounds=number_pf_rounds
-                    )
-                    return choice
-                else:
-                    return ConsoleDisplayer.log(MESSAGES["congratulations"],
-                                                level="INFO")
-        return None
+                choice = ConsoleDisplayer.display_menu(
+                    title="Gestion d'un tournoi",
+                    options=options,
+                    current_round_number=current_round_number,
+                    number_pf_rounds=number_pf_rounds
+                )
+                return choice
+            else:
+                return ConsoleDisplayer.log(MESSAGES["congratulations"],
+                                            level="INFO")
+        else:
+            return None
 
     @staticmethod
     def show_round_menu():

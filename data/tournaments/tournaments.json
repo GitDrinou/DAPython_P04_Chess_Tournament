@@ -750,6 +750,94 @@
                     ]
                 }
             ]
+        },
+        {
+            "tournament_id": 4,
+            "name": "TOURNOI TEST",
+            "location": "Test",
+            "start_date": "09/10/2025",
+            "end_date": "09/10/2025",
+            "description": "test",
+            "number_of_rounds": "4",
+            "round_number": "1",
+            "players": [
+                {
+                    "national_id": "T48392",
+                    "last_name": "TOMMY",
+                    "first_name": "Jane",
+                    "birth_date": "09/04/1980",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "J48372",
+                    "last_name": "JOSH",
+                    "first_name": "Brian",
+                    "birth_date": "01/12/1987",
+                    "points": 1.0
+                },
+                {
+                    "national_id": "K34567",
+                    "last_name": "KID",
+                    "first_name": "Kessy",
+                    "birth_date": "02/03/1978",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "Q67493",
+                    "last_name": "JONES",
+                    "first_name": "Quincy",
+                    "birth_date": "14/03/1933",
+                    "points": 1.0
+                }
+            ],
+            "rounds": [
+                {
+                    "round_id": 1,
+                    "name": "Round 1",
+                    "round_start_date": "09-10-2025 17:26:49",
+                    "round_end_date": "09-10-2025 17:44:40",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "T48392",
+                                    "0"
+                                ],
+                                [
+                                    "J48372",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "Q67493",
+                                    "1"
+                                ],
+                                [
+                                    "K34567",
+                                    "0"
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tournament_id": 5,
+            "name": "TOURNOI TEST 2",
+            "location": "Tes",
+            "start_date": "10/10/2025",
+            "end_date": "10/10/2025",
+            "description": "test",
+            "number_of_rounds": "4",
+            "round_number": 0,
+            "players": [],
+            "rounds": []
         }
     ]
 }

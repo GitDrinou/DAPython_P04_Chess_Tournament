@@ -45,25 +45,30 @@ class TournamentController:
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
 
-        for tournament in tournaments:
+        tournament = next(
+            (t for t in tournaments if t["tournament_id"] == tournament_id),
+            None
+        )
+
+        if tournament:
             count_matchs = 0
             total_matchs = 0
             count_round_ended = 0
 
-            if round_id == 0 and tournament["tournament_id"] == tournament_id:
+            if round_id == 0 :
 
                 # Count total of no ended rounds
-                for round_detail in tournament["rounds"]:
-                    if (round_detail["round_end_date"] == "" and
-                            round_detail["round_start_date"] != "") or (
-                            round_detail["round_start_date"] == "" and
-                            round_detail["round_end_date"] == ""):
+                for round_ in tournament["rounds"]:
+                    start_date = round_["round_start_date"]
+                    end_date = round_["round_end_date"]
+                    if ((end_date == "" and start_date != "") or
+                            (start_date == "" and end_date == "")):
                         count_round_ended += 1
 
                 if count_round_ended == 0:
                     round_number += 1
                     round_name = "Round {}".format(round_number)
-                    round_detail = Round(round_number, round_name)
+                    round_ = Round(round_number, round_name)
 
                     if round_number == 1:
                         random.shuffle(players)
@@ -96,7 +101,7 @@ class TournamentController:
                                               player2=player2["national_id"],
                                               score2=0.0).to_dict()
 
-                                round_detail.matches.append(match)
+                                round_.matches.append(match)
                                 self.historical_pairs.append(pair)
                                 id_match += 1
                                 used_index.update((i, j))
@@ -117,7 +122,7 @@ class TournamentController:
                                                   player2=player2[
                                                       "national_id"],
                                                   score2=0.0).to_dict()
-                                    round_detail.matches.append(match)
+                                    round_.matches.append(match)
                                     self.historical_pairs.append(pair)
                                     id_match += 1
                                     used_index.update((i, j))
@@ -126,9 +131,9 @@ class TournamentController:
                     data_round = {
                         "round_id": round_number,
                         "name": round_name,
-                        "round_start_date": str(round_detail.start_date),
-                        "round_end_date": str(round_detail.end_date),
-                        "matchs": round_detail.matches
+                        "round_start_date": str(round_.start_date),
+                        "round_end_date": str(round_.end_date),
+                        "matchs": round_.matches
                     }
 
                     tournament["rounds"].append(data_round)
@@ -145,86 +150,105 @@ class TournamentController:
                                          level="WARNING")
                     return None
             else:
-                if (round_id > 0 and tournament["tournament_id"] ==
-                        tournament_id):
-                    for round_detail in tournament["rounds"]:
-                        if round_detail["round_id"] == round_id:
-                            total_matchs += len(round_detail["matchs"])
-                            for match in round_detail["matchs"]:
-                                for player_id, score in match["match"]:
-                                    if score == 0.0:
-                                        count_matchs += 1
+                rounds = tournament["rounds"]
+                round_ = next(
+                    (r for r in rounds if r["round_id"] == round_id),
+                    None
+                )
 
-                            if ((count_matchs/total_matchs == 2) or
-                                    round_detail["round_start_date"] == ""):
-                                return tournament
-                            else:
-                                ConsoleDisplayer.log(MESSAGES[
-                                                      "round_already_ended"],
-                                                     level="WARNING")
-                                return None
-        return None
+                if round_:
+                    total_matchs += len(round_["matchs"])
+                    for match in round_["matchs"]:
+                        for player_id, score in match["match"]:
+                            if score == 0.0:
+                                count_matchs += 1
+
+                    if ((count_matchs/total_matchs == 2) or
+                            round_["round_start_date"] == ""):
+                        return tournament
+                    else:
+                        ConsoleDisplayer.log(
+                            MESSAGES["round_already_ended"],
+                            level="WARNING")
+                        return None
+                return None
+        else:
+            return None
 
     @staticmethod
     def update_player_points(tournament_id, round_id):
         """Update player's points"""
         data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data["tournaments"]
-        for tournament in tournaments:
-            if tournament["tournament_id"] == tournament_id:
-                players = {
-                    player["national_id"]: player for player in tournament[
-                        "players"]
-                }
+        tournament = next(
+            (t for t in tournaments if t["tournament_id"] == tournament_id),
+            None
+        )
 
-                for round_detail in tournament["rounds"]:
-                    if round_detail.get("round_id") == int(round_id):
-                        for match_detail in round_detail["matchs"]:
-                            player1_id, player1_score = match_detail[
-                                "match"][0]
-                            player2_id, player2_score = match_detail[
-                                "match"][1]
-                            player1_score = float(player1_score)
-                            player2_score = float(player2_score)
+        if tournament:
+            players = {
+                player["national_id"]: player for player in tournament[
+                    "players"]
+            }
 
-                            if player1_score == player2_score:
-                                players[player1_id]["points"] += 0.5
-                                players[player2_id]["points"] += 0.5
-                            else:
-                                if player1_score > player2_score:
-                                    players[player1_id]["points"] += 1
-                                else:
-                                    players[player2_id]["points"] += 1
+            rounds = tournament["rounds"]
+            round_ = next(
+                (r for r in rounds if r["round_id"] == int(round_id)),
+                None
+            )
+            for match_detail in round_["matchs"]:
+                player1_id, player1_score = match_detail["match"][0]
+                player2_id, player2_score = match_detail["match"][1]
+                player1_score = float(player1_score)
+                player2_score = float(player2_score)
 
-                # save to json file
-                for player in tournament["players"]:
-                    if player["national_id"] == players[player["national_id"]][
-                                    "national_id"]:
-                        player["points"] = players[player["national_id"]][
-                            "points"]
+                if player1_score == player2_score:
+                    players[player1_id]["points"] += 0.5
+                    players[player2_id]["points"] += 0.5
+                else:
+                    if player1_score > player2_score:
+                        players[player1_id]["points"] += 1
+                    else:
+                        players[player2_id]["points"] += 1
 
-                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                  tournament["tournament_id"],
-                                  tournament)
+            # save to json file
+            for player in tournament["players"]:
+                if player["national_id"] == players[player["national_id"]][
+                    "national_id"]:
+                    player["points"] = players[player["national_id"]]["points"]
 
-                return ConsoleDisplayer.log(MESSAGES["points_updated"],
-                                            level="INFO")
-        return None
+            update_tournament(
+                PATH_DATA_TOURNAMENTS_JSON_FILE,
+                tournament["tournament_id"],
+                tournament
+            )
+
+            return ConsoleDisplayer.log(MESSAGES["points_updated"],
+                                        level="INFO")
+        else:
+            return None
 
     @staticmethod
     def delete_a_player(tournament_id, national_id):
         """Delete an identify player from the tournament"""
         data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data["tournaments"]
-        for tournament in tournaments:
-            if tournament["tournament_id"] == tournament_id:
-                tournament["players"] = [player for player in tournament[
-                    "players"] if player.get('national_id') != national_id]
+        tournament = next(
+            (t for t in tournaments if t["tournament_id"] == tournament_id),
+            None
+        )
 
-                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                  tournament["tournament_id"],
-                                  tournament)
+        if tournament:
+            tournament["players"] = [player for player in tournament[
+                "players"] if player.get('national_id') != national_id]
 
-                return ConsoleDisplayer.log(MESSAGES["player_deleted"],
-                                            level="INFO")
-        return None
+            update_tournament(
+                PATH_DATA_TOURNAMENTS_JSON_FILE,
+                tournament["tournament_id"],
+                tournament
+            )
+
+            return ConsoleDisplayer.log(MESSAGES["player_deleted"],
+                                        level="INFO")
+        else:
+            return None
