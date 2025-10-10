@@ -2,7 +2,7 @@ import random
 
 from models.match import Match
 from models.round import Round
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
+from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file, save_to_json, update_tournament
 from utils.console_utils import ConsoleDisplayer
 
@@ -55,7 +55,7 @@ class TournamentController:
             total_matchs = 0
             count_round_ended = 0
 
-            if round_id == 0 :
+            if round_id == 0:
 
                 # Count total of no ended rounds
                 for round_ in tournament["rounds"]:
@@ -212,10 +212,10 @@ class TournamentController:
                         players[player2_id]["points"] += 1
 
             # save to json file
-            for player in tournament["players"]:
-                if player["national_id"] == players[player["national_id"]][
-                    "national_id"]:
-                    player["points"] = players[player["national_id"]]["points"]
+            for p in tournament["players"]:
+                national_id = p["national_id"]
+                if national_id == players[national_id]["national_id"]:
+                    p["points"] = players[national_id]["points"]
 
             update_tournament(
                 PATH_DATA_TOURNAMENTS_JSON_FILE,

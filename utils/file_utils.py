@@ -1,8 +1,8 @@
 import json
 from datetime import datetime
 
-from utils.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
-                             PATH_DATA_PLAYERS_JSON_FILE)
+from core.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
+                            PATH_DATA_PLAYERS_JSON_FILE)
 
 
 def read_json_file(path_file):

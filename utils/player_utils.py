@@ -1,7 +1,7 @@
 import json
 import re
 
-from utils.constants import PATH_DATA_PLAYERS_JSON_FILE
+from core.constants import PATH_DATA_PLAYERS_JSON_FILE
 
 
 def check_format_national_id(national_id):

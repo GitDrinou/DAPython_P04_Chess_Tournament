@@ -8,8 +8,8 @@ from controllers.player import PlayerController
 from controllers.report import ReportController
 from controllers.round import RoundController
 from controllers.tournament import TournamentController
-from utils.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
-                             PATH_DATA_PLAYERS_JSON_FILE)
+from core.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
+                            PATH_DATA_PLAYERS_JSON_FILE)
 from views.menu import MenusView
 from views.display_table import DisplayTableView
 from views.prompt import PromptView

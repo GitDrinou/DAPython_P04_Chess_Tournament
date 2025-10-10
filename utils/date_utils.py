@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from utils.console_utils import ConsoleDisplayer
-from utils.constants import MESSAGES
+from core.constants import MESSAGES
 
 
 def validate_date(date_to_validate):

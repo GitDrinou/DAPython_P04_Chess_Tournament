@@ -27,12 +27,17 @@ MESSAGES = {
     - soit parce qu'il n'y a pas de joueurs inscrits au tournoi
     ============================================================
     """,
-    "generate_round": """
+    "generate_round_date": """
+    =============================================================
+    Vous ne pouvez pas générer de tour car la date du tournoi est
+    supérieur à la date du jour.
+    =============================================================
+    """,
+    "generate_round_players": """
     =============================================================
     Vous ne pouvez pas générer de tour:
     - soit le nombre de joueurs inscrits est inférieur à 4
     - soit le total de joueurs inscrits est un nombre impair
-    - soit la date du tournoi est dans le futur.
     =============================================================
     """,
     "no_generate_round": """
@@ -132,5 +137,9 @@ MESSAGES = {
     Le format de l'identitifant national est incorrect.
     Format attendu : 1 lettre + 5 chiffres
     ===================================================
-    """
+    """,
+    "failure_registration": "Échec lors de l'inscription.",
+    "failure_deletion": "Échec lors de la suppression.",
+    "failure_generation_round": "Échec lors de la génération du tour.",
+    "failure_selected_tournament": "Aucun tournoi sélectionné."
 }

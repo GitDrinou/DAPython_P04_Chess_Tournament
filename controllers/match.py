@@ -1,4 +1,4 @@
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
+from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from utils.file_utils import update_tournament
 
 

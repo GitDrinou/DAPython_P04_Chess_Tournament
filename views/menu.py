@@ -1,7 +1,7 @@
 import os
 
 from utils.console_utils import ConsoleDisplayer
-from utils.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
+from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file
 from utils.tournament_utils import tournament_is_finished
 

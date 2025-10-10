@@ -2,7 +2,7 @@ import os
 import platform
 
 from jinja2 import Template
-from utils.constants import PATH_REPORTS_FILES
+from core.constants import PATH_REPORTS_FILES
 from utils.file_utils import write_file
 
 

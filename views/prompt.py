@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from utils.console_utils import ConsoleDisplayer
-from utils.constants import MESSAGES
+from core.constants import MESSAGES
 from utils.date_utils import validate_date, checks_dates
 from utils.player_utils import check_format_national_id, check_player_is_exist
 

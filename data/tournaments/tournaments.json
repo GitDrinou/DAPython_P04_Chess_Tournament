@@ -755,8 +755,8 @@
             "tournament_id": 4,
             "name": "TOURNOI TEST",
             "location": "Test",
-            "start_date": "09/10/2025",
-            "end_date": "09/10/2025",
+            "start_date": "10/10/2025",
+            "end_date": "10/10/2025",
             "description": "test",
             "number_of_rounds": "4",
             "round_number": "1",
@@ -836,7 +836,15 @@
             "description": "test",
             "number_of_rounds": "4",
             "round_number": 0,
-            "players": [],
+            "players": [
+                {
+                    "national_id": "Y59483",
+                    "last_name": "YANN",
+                    "first_name": "Julia",
+                    "birth_date": "09/12/2004",
+                    "points": 0.0
+                }
+            ],
             "rounds": []
         }
     ]
