@@ -1,7 +1,9 @@
 from datetime import datetime
 
-from core.exceptions import PlayerRegistrationError, PlayerDeletionError, \
-    RoundGenerationError, InvalidTournamentStateError, InvalidTournamentError
+from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
+                             RoundGenerationError, InvalidTournamentStateError,
+                             InvalidTournamentError, RoundEndError,
+                             MatchScoreError, RoundStartError)
 from models.player import Player
 from models.tournament import Tournament
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
@@ -50,7 +52,7 @@ class ApplicationController:
                 if tournaments:
                     self.display_view.display_tournaments(tournaments)
                     selection = self.prompt_view.select_tournament_prompt()
-                    if not selection == 0:
+                    if selection > 0:
                         self.tournament_choice(selection)
                 else:
                     clear_and_wait(message=MESSAGES["tournament_detail"])
@@ -113,9 +115,11 @@ class ApplicationController:
         )
         if (len(selected_tournament["players"]) < 4 or len(
                 selected_tournament["players"]) % 2 != 0):
+            clear_and_wait(delay=0, console_view=self.menu_view)
             raise RoundGenerationError(MESSAGES["generate_round_players"])
 
         if start_date.date() > today:
+            clear_and_wait(delay=0, console_view=self.menu_view)
             raise RoundGenerationError(MESSAGES["generate_round_date"])
 
         round_number = len(last_round)
@@ -140,16 +144,19 @@ class ApplicationController:
         )
 
         if generation is None:
+            clear_and_wait(delay=0, console_view=self.menu_view)
             raise RoundGenerationError(MESSAGES["failure_generation_round"])
 
         if int(selected_tournament["number_of_rounds"]) < round_number:
+            clear_and_wait(delay=0, console_view=self.menu_view)
             raise InvalidTournamentStateError(MESSAGES["all_rounds_reached"])
 
+        clear_and_wait(delay=3, console_view=self.menu_view)
         self.round_choice(selected_tournament["tournament_id"], selected_round)
 
     def tournament_choice(self, selection):
         """Display conditions for tournament choice"""
-
+        clear_and_wait(delay=0, console_view=self.menu_view)
         while True:
             clear_and_wait(delay=0, console_view=self.menu_view)
             try:
@@ -158,6 +165,7 @@ class ApplicationController:
                     selection
                 )
                 if not selected_tournament:
+                    clear_and_wait(delay=0, console_view=self.menu_view)
                     raise InvalidTournamentError(
                         MESSAGES["failure_selected_tournament"]
                     )
@@ -173,12 +181,16 @@ class ApplicationController:
                         self._handle_player_deletion(selected_tournament)
                     elif tournament_choice == "3":
                         self._handle_round_generation(selected_tournament)
+                        clear_and_wait(delay=3, console_view=self.menu_view)
                     elif tournament_choice in ["4", "5"]:
                         clear_and_wait(delay=0, console_view=self.menu_view)
                         break
                     else:
                         clear_and_wait(MESSAGES["invalid_choice"],
                                        console_view=self.menu_view)
+                else:
+                    clear_and_wait(delay=10, console_view=self.menu_view)
+                    break
 
             except PlayerRegistrationError as e:
                 clear_and_wait(str(e), level="ERROR",
@@ -198,57 +210,99 @@ class ApplicationController:
                                level="ERROR",
                                console_view=self.menu_view)
 
-    def _handle_round_start(self, tournament_id, selected_round):
-        clear_and_wait(delay=0, console_view=self.menu_view)
-        round_detail = self.round_controller.start_up(tournament_id,
-                                                      selected_round)
-        clear_and_wait(delay=0, console_view=self.menu_view)
-        self.display_view.display_a_round(round_detail)
-
     def _handle_round_end(self, tournament_id, selected_round):
         clear_and_wait(delay=0, console_view=self.menu_view)
-        round_detail = self.round_controller.end_up(tournament_id,
-                                                    selected_round)
-        clear_and_wait(delay=0, console_view=self.menu_view)
-        self.display_view.display_a_round(round_detail)
-        clear_and_wait(delay=0, console_view=self.menu_view)
-        tournament = load_tournament(
-            PATH_DATA_TOURNAMENTS_JSON_FILE, tournament_id)
-        last_round = tournament["rounds"][-1]
-        index = 0
-        while index < len(last_round["matchs"]):
-            self.display_view.display_a_round(last_round)
-            match_id = index + 1
-            match = self.prompt_view.match_prompt(match_id)
-            if match is not None:
-                self.match_controller.save_score(
-                    tournament, last_round["round_id"],
-                    user_match_id=match_id, score1=match["score1"],
-                    score2=match["score2"])
-                self.menu_view.clear_console()
-                index += 1
-        self.tournament_controller.update_player_points(
-            tournament_id, last_round["round_id"])
-        clear_and_wait(console_view=self.menu_view)
-        return True
+        try:
+            round_detail = self.round_controller.end_up(tournament_id,
+                                                        selected_round)
+            if not round_detail:
+                clear_and_wait(delay=0, console_view=self.menu_view)
+                raise RoundEndError(MESSAGES["failure_end_of_round"])
+
+            clear_and_wait(delay=2, console_view=self.menu_view)
+            self.display_view.display_a_round(round_detail)
+            tournament = load_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                         tournament_id)
+            last_round = tournament["rounds"][-1]
+            if last_round["round_start_date"] == "":
+                clear_and_wait(delay=0, console_view=self.menu_view)
+                raise RoundEndError(MESSAGES["round_not_started"])
+
+            for match_id, match in enumerate(last_round["matchs"], start=1):
+                self.display_view.display_a_round(last_round)
+                match_score = self.prompt_view.match_prompt(match_id)
+                if not match_score:
+                    clear_and_wait(delay=0, console_view=self.menu_view)
+                    raise MatchScoreError(MESSAGES["failure_invalid_score"],
+                                          match_id=match_id)
+
+                try:
+                    self.match_controller.save_score(
+                        tournament, last_round["round_id"],
+                        user_match_id=match_id, score1=match_score["score1"],
+                        score2=match_score["score2"])
+                except Exception as e:
+                    clear_and_wait(delay=0, console_view=self.menu_view)
+                    raise MatchScoreError(
+                        f"{MESSAGES['failure_saved_score']}: {str(e)}",
+                        match_id=match_id)
+
+            self.tournament_controller.update_player_points(
+                tournament_id,
+                last_round["round_id"]
+            )
+
+            return True
+
+        except RoundEndError:
+            raise
+        except Exception as e:
+            raise RoundEndError(f"{MESSAGES['failure_saved_round']}: {str(e)}")
 
     def round_choice(self, tournament_id, selected_round):
         """ Display conditions for round choice"""
         while True:
-            round_choice = (self.menu_view.show_round_menu())
-            if round_choice == "1":
-                self._handle_round_start(tournament_id, selected_round)
-            elif round_choice == "2":
-                exit_menu = self._handle_round_end(tournament_id,
-                                                   selected_round)
-                if exit_menu:
+            try:
+                round_choice = self.menu_view.show_round_menu()
+                if round_choice == "1":
+                    try:
+                        clear_and_wait(delay=0, console_view=self.menu_view)
+                        round_detail = self.round_controller.start_up(
+                            tournament_id,
+                            selected_round)
+                        if not round_detail:
+                            raise RoundStartError(
+                                MESSAGES["failure_started_round"]
+                            )
+                        clear_and_wait(delay=3, console_view=self.menu_view)
+                        self.display_view.display_a_round(round_detail)
+                    except RoundStartError as e:
+                        clear_and_wait(str(e), level="ERROR",
+                                       console_view=self.menu_view)
+                elif round_choice == "2":
+                    try:
+                        if self._handle_round_end(tournament_id,
+                                                  selected_round):
+                            break
+                    except RoundEndError as e:
+                        clear_and_wait(str(e), level="ERROR",
+                                       console_view=self.menu_view)
+                    except MatchScoreError as e:
+                        clear_and_wait(str(e), level="ERROR",
+                                       console_view=self.menu_view)
+                elif round_choice == "3":
                     break
-            elif round_choice == "3":
-                clear_and_wait(delay=0, console_view=self.menu_view)
-                break
-            else:
-                clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
-                               console_view=self.menu_view, clear_before=True)
+                else:
+                    clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
+                                   console_view=self.menu_view,
+                                   clear_before=True)
+
+            except Exception as e:
+                clear_and_wait(
+                    f"Erreur inattendue : {str(e)}",
+                    level="ERROR",
+                    console_view=self.menu_view
+                )
 
     def report_choice(self):
         """Display conditions for report choice"""

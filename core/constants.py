@@ -74,10 +74,10 @@ MESSAGES = {
     =================================================================
     """,
     "round_generated": """
-    \t========================================================
-    \tLe tour a été généré avec succès.
-    \tVous allez être redirigé vers le menu de gestion du tour.
-    \t========================================================
+    ========================================================
+    Le tour a été généré avec succès.
+    Vous allez être redirigé vers le menu de gestion du tour.
+    ========================================================
     """,
     "round_started": """
     ============================================
@@ -92,9 +92,9 @@ MESSAGES = {
     =================================================
     """,
     "player_registered": """
-    \t======================================
-    \tCe joueur est bien inscrit au tournoi.
-    \t=======================================
+    ======================================
+    Ce joueur est bien inscrit au tournoi.
+    =======================================
     """,
     "tournament_created": """
     ===============================================
@@ -141,5 +141,11 @@ MESSAGES = {
     "failure_registration": "Échec lors de l'inscription.",
     "failure_deletion": "Échec lors de la suppression.",
     "failure_generation_round": "Échec lors de la génération du tour.",
-    "failure_selected_tournament": "Aucun tournoi sélectionné."
+    "failure_selected_tournament": "Aucun tournoi sélectionné.",
+    "failure_end_of_round": "Échec de la finalisation du tour.",
+    "failure_invalid_score": "Score non valide",
+    "failure_saved_score": "Échec de l'enregistrement du score",
+    "failure_saved_round": "Erreur inattendue lors de l'enregistrement du "
+                           "tour.",
+    "failure_started_round": "Échec lors du démarrage du tour."
 }

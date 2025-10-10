@@ -27,3 +27,31 @@ class InvalidTournamentError(TournamentError):
 class PlayerDeletionError(TournamentError):
     """Raised an exception when a player deletion fails."""
     pass
+
+
+class RoundError(TournamentError):
+    """Basic exception for round related errors."""
+    pass
+
+
+class RoundStartError(RoundError):
+    """Raised an exception when a round start fails."""
+    pass
+
+
+class RoundEndError(RoundError):
+    """Raised an exception when a round end fails."""
+    pass
+
+
+class MatchScoreError(RoundError):
+    """Raised an exception when scores saving fails."""
+
+    def __init__(self, message, match_id=None):
+        super().__init__(message)
+        self.match_id = match_id
+
+    def __str__(self):
+        if self.match_id:
+            return f"{super().__str__()} (ID du match : {self.match_id})"
+        return super().__str__()
