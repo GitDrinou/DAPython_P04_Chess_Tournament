@@ -8,7 +8,7 @@ from models.player import Player
 from models.tournament import Tournament
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
     PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
-from utils.file_utils import load_tournament, read_json_file
+from utils.file_utils import load_tournament, read_json_file, update_tournament
 from utils.console_utils import clear_and_wait
 
 
@@ -211,28 +211,30 @@ class ApplicationController:
                                console_view=self.menu_view)
 
     def _handle_round_end(self, tournament_id, selected_round):
-        clear_and_wait(delay=0, console_view=self.menu_view)
         try:
             round_detail = self.round_controller.end_up(tournament_id,
                                                         selected_round)
             if not round_detail:
-                clear_and_wait(delay=0, console_view=self.menu_view)
                 raise RoundEndError(MESSAGES["failure_end_of_round"])
 
-            clear_and_wait(delay=2, console_view=self.menu_view)
             self.display_view.display_a_round(round_detail)
             tournament = load_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
                                          tournament_id)
             last_round = tournament["rounds"][-1]
             if last_round["round_start_date"] == "":
                 clear_and_wait(delay=0, console_view=self.menu_view)
+                last_round["round_end_date"] = ""
+                update_tournament(
+                    PATH_DATA_TOURNAMENTS_JSON_FILE,
+                    tournament["tournament_id"],
+                    tournament
+                )
                 raise RoundEndError(MESSAGES["round_not_started"])
 
             for match_id, match in enumerate(last_round["matchs"], start=1):
                 self.display_view.display_a_round(last_round)
                 match_score = self.prompt_view.match_prompt(match_id)
                 if not match_score:
-                    clear_and_wait(delay=0, console_view=self.menu_view)
                     raise MatchScoreError(MESSAGES["failure_invalid_score"],
                                           match_id=match_id)
 
@@ -242,7 +244,6 @@ class ApplicationController:
                         user_match_id=match_id, score1=match_score["score1"],
                         score2=match_score["score2"])
                 except Exception as e:
-                    clear_and_wait(delay=0, console_view=self.menu_view)
                     raise MatchScoreError(
                         f"{MESSAGES['failure_saved_score']}: {str(e)}",
                         match_id=match_id)
