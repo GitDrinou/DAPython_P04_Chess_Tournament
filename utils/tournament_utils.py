@@ -2,7 +2,12 @@ from controllers.round import RoundController
 
 
 def tournament_is_finished(tournament):
-    """Check if tournament is finished"""
+    """Check if tournament is finished
+        Args:
+            tournament (dict): tournament details
+        Returns:
+            bool: True if tournament is finished
+    """
     number_of_rounds = tournament["number_of_rounds"]
     rounds = tournament["rounds"]
     list_finished_rounds = RoundController().is_finished(rounds)

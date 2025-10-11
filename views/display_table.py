@@ -6,7 +6,10 @@ class DisplayTableView:
 
     @staticmethod
     def display_a_round(round_detail):
-        """Display a table with a round's details"""
+        """Display a table with a round's details
+            Args:
+                round_detail (Round): Round details
+        """
         if round_detail:
             round_name = round_detail["name"]
             start_round = round_detail["round_start_date"]
@@ -22,16 +25,19 @@ class DisplayTableView:
             headers = ["Match n°", "Joueur 1", "Joueur 2", "Score1", "Score2"]
 
             print("--------------------------------------------------------")
-            print(f">> {round_name}:")
-            print(f"\tDébut: {start_round}")
-            print(f"\tFin: {end_round}\n")
+            print(f"** {round_name} **")
+            print(f"\tDébut du tour: {start_round}")
+            print(f"\tFin du tour: {end_round}\n")
 
             print(tabulate(rows_round, headers=headers, tablefmt="github"))
             print("--------------------------------------------------------")
 
     @staticmethod
     def display_players(tournament):
-        """Display a table with the tournament's players"""
+        """Display a table with the tournament's players
+            Args:
+                tournament (Tournament): Tournament details
+        """
         tournament_name = tournament["name"]
         start_date = tournament["start_date"]
         end_date = tournament["end_date"]
@@ -51,7 +57,7 @@ class DisplayTableView:
                    "Date de naissance", "Points"]
 
         print("\n...........................................................")
-        print(f">> {tournament_name}:\n")
+        print(f"** {tournament_name} **\n")
         print(f"\tDu: {start_date}")
         print(f"\tAu: {end_date}\n")
         print(f"Nombre de joueurs inscrits: {total_players}\n")
@@ -72,10 +78,14 @@ class DisplayTableView:
             total_players = len(entry["players"])
             rows.append([tournament_id, name, start_date, total_players,
                          round_number])
-        headers = ["ID Tournoi", "Nom", "Date de début", "Total de joueurs",
-                   "N° du tour"]
+        headers = [
+            "Identifiant du tournoi",
+            "Nom",
+            "Date de début", "Total de joueurs",
+            "N° du tour"
+        ]
 
-        print("\nLISTE DES TOURNOIS EN COURS OU A VENIR")
+        print("\n** LISTE DES TOURNOIS EN COURS OU A VENIR **")
         print(tabulate(rows, headers=headers, tablefmt="outline"))
 
     def display_rounds(self, rounds, finished_rounds):
@@ -91,8 +101,13 @@ class DisplayTableView:
             rows.append([round_id, round_name, start_date, end_date,
                          is_finished])
 
-        headers = ["ID Tour", "Nom", "Date de début", "Date de fin",
-                   "Scores enregistrés"]
+        headers = [
+            "Identifiant du tour",
+            "Nom",
+            "Date de début",
+            "Date de fin",
+            "Scores enregistrés"
+        ]
         print("\n...........................................................")
         print(tabulate(rows, headers=headers, tablefmt="github"))
         print("\n...........................................................")

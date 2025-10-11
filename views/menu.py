@@ -28,19 +28,22 @@ class MenusView:
         options = [
             "Créer un nouveau tournoi",
             "Démarrer ou reprendre la gestion d'un tournoi",
-            "Générer les rapports",
+            "Générer des rapports",
             "Quitter l'application"
         ]
 
         choice = ConsoleDisplayer.display_menu(
-            title="Menu principal",
+            title="MENU PRINCIPAL",
             options=options
         )
         return choice
 
     @staticmethod
     def show_tournament_menu(tournament_id):
-        """Display the current tournament menu"""
+        """Display the current tournament menu
+            Args:
+                tournament_id (str): Identifier of the tournament
+        """
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
         tournament = next(
@@ -63,7 +66,7 @@ class MenusView:
                 ]
 
                 choice = ConsoleDisplayer.display_menu(
-                    title="Gestion d'un tournoi",
+                    title="MENU DE GESTION D'UN TOURNOI",
                     options=options,
                     current_round_number=current_round_number,
                     number_pf_rounds=number_pf_rounds
@@ -82,11 +85,11 @@ class MenusView:
         options = [
             "Démarrer le tour",
             "Terminer le tour et saisir les scores des matchs",
-            "Revenir au menu principal de l'application"
+            "Revenir au menu de gestion du tournoi"
         ]
 
         choice = ConsoleDisplayer.display_menu(
-            title="Gestion d'un tour",
+            title="MENU DE GESTION D'UN TOUR",
             options=options
         )
 
@@ -106,7 +109,7 @@ class MenusView:
         ]
 
         choice = ConsoleDisplayer.display_menu(
-            title="Génération de rapports",
+            title="MENU DE GÉNÉRATION DES RAPPORTS",
             options=options
         )
 

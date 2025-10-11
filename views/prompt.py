@@ -98,7 +98,7 @@ class PromptView:
         description = ConsoleDisplayer.display_prompt(
             text="Saisissez une description du tournoi")
         number_of_rounds = ConsoleDisplayer.display_prompt(
-            text="Saisissez le nombre de tours par défaut 4)")
+            text="Saisissez le nombre de tours (par défaut 4)")
 
         dates = self.dates_tournament_prompt()
 
