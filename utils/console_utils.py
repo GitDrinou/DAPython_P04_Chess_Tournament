@@ -21,6 +21,8 @@ class ConsoleDisplayer:
             title (str): title of the menu
             options (list): list of options
             **kwargs: optional variable(s) to add in a manu option
+        Returns:
+            String: user choice
         """
 
         print(f"\n{title}")

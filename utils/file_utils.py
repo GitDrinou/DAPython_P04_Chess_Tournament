@@ -6,7 +6,10 @@ from core.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
 
 
 def read_json_file(path_file):
-    """Read a JSON file and return a list"""
+    """Read a JSON file and return a list
+        Args:
+            path_file (str): Path to the JSON file
+    """
     with open(path_file, "r") as f:
         data = json.load(f)
         if data:
@@ -16,13 +19,21 @@ def read_json_file(path_file):
 
 
 def write_json_file(path_file, data):
-    """Write data to a JSON file"""
+    """Write data to a JSON file
+        Args:
+            path_file (str): Path to the JSON file
+            data (dict): Data to be written
+    """
     with open(path_file, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
 
 def save_to_json(key, **kwargs):
-    """Save specific (tournament or player) data to the json file"""
+    """Save specific (tournament or player) data to the json file
+        Args:
+            key (str): Key of the data to be saved (tournament or player)
+            kwargs (dict): Data to be saved
+    """
 
     if key == "tournaments":
         data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
@@ -53,7 +64,13 @@ def save_to_json(key, **kwargs):
 
 
 def load_tournament(path_file, tournament_id=None, all_tournaments=False):
-    """Load the last tournament data from the json file"""
+    """Load the last tournament data from the json file
+        Args:
+            path_file (str): Path to the JSON file
+            tournament_id (str): Identifier of the tournament
+            all_tournaments (bool): True to load all tournaments (by
+            default = False)
+    """
     with open(path_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
         datas = data.get("tournaments", [])
@@ -85,7 +102,12 @@ def load_tournament(path_file, tournament_id=None, all_tournaments=False):
 
 
 def update_tournament(path_file, tournament_id, new_value):
-    """Update the last tournament data from the json file"""
+    """Update the last tournament data from the json file
+        Args:
+            path_file (str): Path to the JSON file
+            tournament_id (str): Identifier of the tournament
+            new_value (str): New value for the tournament key
+    """
     data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
 
     for index, tournament in enumerate(data["tournaments"]):
@@ -97,6 +119,10 @@ def update_tournament(path_file, tournament_id, new_value):
 
 
 def write_file(path_file, data):
-    """Write data to a file"""
+    """Write data to a file
+        Args:
+            path_file (str): Path to the file
+            data (dict): Data to be written
+    """
     with open(path_file, "w", encoding="utf-8") as f:
         f.write(data)

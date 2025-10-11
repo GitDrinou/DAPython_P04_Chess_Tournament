@@ -5,7 +5,10 @@ from core.constants import MESSAGES
 
 
 def validate_date(date_to_validate):
-    """Function to validate the date entered by the user"""
+    """Function to validate the date entered by the user
+        Args:
+            date_to_validate (str): Date entered by the user
+    """
     try:
         return datetime.strptime(date_to_validate, "%d/%m/%Y")
     except ValueError:
@@ -15,7 +18,11 @@ def validate_date(date_to_validate):
 
 def checks_dates(start_date, end_date):
     """Function to check if the end date is equal or later than the start
-    date"""
+    date
+        Args:
+            start_date (str): Start date entered by the user
+            end_date (str): End date entered by the user
+    """
     if end_date >= start_date:
         return start_date, end_date
     else:

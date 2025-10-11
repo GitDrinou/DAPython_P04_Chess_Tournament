@@ -5,7 +5,7 @@ PATH_REPORTS_FILES = "./reports/html/"
 MESSAGES = {
     "all_rounds_reached": """
     ==============================================================
-    Vous avez atteint le nombre de tours maximum pour ce tournoi.
+    Vous avez atteint le nombre maximum de tours pour ce tournoi.
     Vous ne pouvez plus générer de nouveaux tours.
     ==============================================================
     """,
@@ -19,7 +19,7 @@ MESSAGES = {
     "delete_player": """
     ============================================================
     Vous ne pouvez pas supprimer de joueur:
-    - soit parce que le tournoi a déjà démarré,
+    - soit parce que le tournoi a déjà démarré
     - soit parce qu'il n'y a pas de joueurs inscrits au tournoi
     ============================================================
     """,
@@ -77,14 +77,14 @@ MESSAGES = {
     ==================================================================
     """,
     "invalid_national_id": """
-    ===================================================
+    ====================================================
     Le format de l'identitifant national est incorrect.
-    Format attendu : 1 lettre + 5 chiffres
-    ===================================================
+    Format attendu : 1 lettre + 5 chiffres (ex. A12345)
+    ====================================================
     """,
     "no_generate_round": """
     =============================================================
-    Vous ne pouvez pas générer de "nouveau tour.
+    Vous ne pouvez pas générer de nouveau tour.
     Le tour précédent n'est pas terminé.
     Veuillez sélectionner le tour en cours afin de le terminer.
     =============================================================
