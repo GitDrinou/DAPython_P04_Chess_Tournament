@@ -310,7 +310,7 @@ class ApplicationController:
     def _select_tournament_and_generate_report(self, report_type):
         """Select a tournament and generate a specific report.
             Args:
-                report_type: (str) report type to generate ("tournaments",
+                report_type: (str) report type to generate ("tournament",
                 "players", "round")
             Return:
                Bool: True if report is generated, False otherwise.
@@ -341,8 +341,8 @@ class ApplicationController:
                 MESSAGES["failure_no_tournaments_found"]
             )
 
-        if report_type == "tournaments":
-            self.report_controller.tournaments(tournament_report)
+        if report_type == "tournament":
+            self.report_controller.tournaments(tournament_report, unique=True)
         elif report_type == "players":
             self.report_controller.players(tournament_report["players"], True,
                                            tournament_report["name"])
@@ -363,6 +363,7 @@ class ApplicationController:
                 )
 
                 if report_choice == "1":
+                    # Players report
                     clear_and_wait(delay=0, console_view=self.menu_view)
                     players = sorted(data_players["players"], key=lambda x: (x[
                         "last_name"]))
@@ -372,6 +373,7 @@ class ApplicationController:
                     self.report_controller.players(players)
                     clear_and_wait(delay=8, console_view=self.menu_view)
                 elif report_choice == "2":
+                    # Tournaments report
                     clear_and_wait(delay=0, console_view=self.menu_view)
                     tournaments = data_tournaments["tournaments"]
                     if not tournaments:
@@ -381,8 +383,9 @@ class ApplicationController:
                     self.report_controller.tournaments(tournaments)
                     clear_and_wait(delay=10, console_view=self.menu_view)
                 elif report_choice == "3":
+                    # Tournament detail
                     clear_and_wait(delay=0, console_view=self.menu_view)
-                    self._select_tournament_and_generate_report("tournaments")
+                    self._select_tournament_and_generate_report("tournament")
                     clear_and_wait(delay=10, console_view=self.menu_view)
                 elif report_choice == "4":
                     clear_and_wait(delay=0, console_view=self.menu_view)

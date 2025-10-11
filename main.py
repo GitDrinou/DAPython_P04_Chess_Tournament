@@ -8,27 +8,31 @@ from controllers.player import PlayerController
 from controllers.report import ReportController
 from controllers.round import RoundController
 from controllers.tournament import TournamentController
-from core.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
-                            PATH_DATA_PLAYERS_JSON_FILE)
+from core.constants import PATH_DATA
 from views.menu import MenusView
 from views.display_table import DisplayTableView
 from views.prompt import PromptView
 
 
-def initialize():
-    """Initialize the application."""
+def init_json_file():
+    """Initialize the json file"""
 
-    if not os.path.isfile(PATH_DATA_PLAYERS_JSON_FILE):
-        default_data = {"players": [], }
-        with open(PATH_DATA_PLAYERS_JSON_FILE, "w",
-                  encoding="utf-8") as json_file:
-            json.dump(default_data, json_file, indent=4)
+    data_dir = PATH_DATA
+    os.makedirs(data_dir, exist_ok=True)
 
-    if not os.path.isfile(PATH_DATA_TOURNAMENTS_JSON_FILE):
-        default_data = {"tournaments": [], }
-        with (open(PATH_DATA_TOURNAMENTS_JSON_FILE, "w", encoding="utf-8")
-              as json_file):
-            json.dump(default_data, json_file, indent=4)
+    files = {
+        os.path.join(data_dir, "tournaments.json"): {
+            "tournaments": []
+        },
+        os.path.join(data_dir, "players.json"): {
+            "players": []
+        }
+    }
+
+    for filepath, default_data in files.items():
+        if not os.path.exists(filepath):
+            with open(filepath, "w") as f:
+                json.dump(default_data, f, indent=4)
 
 
 def main():
@@ -53,5 +57,5 @@ def main():
 
 
 if __name__ == "__main__":
-    initialize()
+    init_json_file()
     main()
