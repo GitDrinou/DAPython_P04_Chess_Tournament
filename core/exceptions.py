@@ -55,3 +55,23 @@ class MatchScoreError(RoundError):
         if self.match_id:
             return f"{super().__str__()} (ID du match : {self.match_id})"
         return super().__str__()
+
+
+class ReportError(TournamentError):
+    """Basic exception for report related errors."""
+    pass
+
+
+class NoPlayersError(ReportError):
+    """Raised an exception when no players are registered."""
+    pass
+
+
+class NoTournamentsError(ReportError):
+    """Raised an exception when no tournaments are registered."""
+    pass
+
+
+class InvalidTournamentsSelectionError(ReportError):
+    """Raised an exception when a tournament selection fails."""
+    pass

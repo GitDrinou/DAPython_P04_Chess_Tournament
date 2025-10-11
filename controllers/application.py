@@ -3,7 +3,9 @@ from datetime import datetime
 from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
                              RoundGenerationError, InvalidTournamentStateError,
                              InvalidTournamentError, RoundEndError,
-                             MatchScoreError, RoundStartError)
+                             MatchScoreError, RoundStartError, NoPlayersError,
+                             NoTournamentsError,
+                             InvalidTournamentsSelectionError)
 from models.player import Player
 from models.tournament import Tournament
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
@@ -305,96 +307,110 @@ class ApplicationController:
                     console_view=self.menu_view
                 )
 
+    def _select_tournament_and_generate_report(self, report_type):
+        """Select a tournament and generate a specific report.
+            Args:
+                report_type: (str) report type to generate ("tournaments",
+                "players", "round")
+            Return:
+               Bool: True if report is generated, False otherwise.
+        """
+
+        tournaments = load_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                      all_tournaments=True)
+        if not tournaments:
+            raise NoTournamentsError(MESSAGES["failure_no_tournaments"])
+
+        self.display_view.display_tournaments(tournaments)
+        tournament_id = self.prompt_view.select_tournament_prompt()
+
+        if tournament_id is None:
+            raise InvalidTournamentsSelectionError(
+                MESSAGES["failure_selected_tournament"]
+            )
+
+        clear_and_wait(delay=0, console_view=self.menu_view)
+        tournament_report = next(
+            (t for t in read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)[
+                "tournaments"] if t["tournament_id"] == int(tournament_id)),
+            None
+        )
+
+        if not tournament_report:
+            raise InvalidTournamentsSelectionError(
+                MESSAGES["failure_no_tournaments_found"]
+            )
+
+        if report_type == "tournaments":
+            self.report_controller.tournaments(tournament_report)
+        elif report_type == "players":
+            self.report_controller.players(tournament_report["players"], True,
+                                           tournament_report["name"])
+        elif report_type == "rounds":
+            self.report_controller.tournament_rounds(tournament_report)
+
+        return True
+
     def report_choice(self):
         """Display conditions for report choice"""
 
         while True:
-            report_choice = self.menu_view.show_report_menu()
-            data_players = read_json_file(PATH_DATA_PLAYERS_JSON_FILE)
-            data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-            if report_choice == "1":
-                clear_and_wait(delay=0, console_view=self.menu_view)
-                players = sorted(data_players["players"], key=lambda x: (x[
-                    "last_name"]))
-                self.report_controller.players(players)
-                clear_and_wait(delay=10, console_view=self.menu_view)
-            elif report_choice == "2":
-                clear_and_wait(delay=0, console_view=self.menu_view)
-                tournaments = data_tournaments["tournaments"]
-                self.report_controller.tournaments(tournaments)
-                clear_and_wait(delay=10, console_view=self.menu_view)
-            elif report_choice == "3":
-                clear_and_wait(delay=0, console_view=self.menu_view)
-                tournaments = load_tournament(
-                    PATH_DATA_TOURNAMENTS_JSON_FILE, all_tournaments=True)
-                if tournaments:
-                    self.display_view.display_tournaments(tournaments)
-                    tournament_id = self.prompt_view.select_tournament_prompt()
-                    if tournament_id is not None:
-                        clear_and_wait(delay=0, console_view=self.menu_view)
-                        tournaments = data_tournaments["tournaments"]
-                        tournament_report = []
-                        for tournament in tournaments:
-                            if tournament["tournament_id"] == int(
-                                    tournament_id):
-                                tournament_report.append(tournament)
-                                break
-                        self.report_controller.tournaments(tournament_report)
-                        clear_and_wait(delay=10, console_view=self.menu_view)
+            try:
+                report_choice = self.menu_view.show_report_menu()
+                data_players = read_json_file(PATH_DATA_PLAYERS_JSON_FILE)
+                data_tournaments = read_json_file(
+                    PATH_DATA_TOURNAMENTS_JSON_FILE
+                )
+
+                if report_choice == "1":
+                    clear_and_wait(delay=0, console_view=self.menu_view)
+                    players = sorted(data_players["players"], key=lambda x: (x[
+                        "last_name"]))
+                    if not players:
+                        raise NoPlayersError(
+                            MESSAGES["failure_no_players_found"])
+                    self.report_controller.players(players)
+                    clear_and_wait(delay=8, console_view=self.menu_view)
+                elif report_choice == "2":
+                    clear_and_wait(delay=0, console_view=self.menu_view)
+                    tournaments = data_tournaments["tournaments"]
+                    if not tournaments:
+                        raise NoTournamentsError(
+                            MESSAGES["failure_no_tournaments_found"]
+                        )
+                    self.report_controller.tournaments(tournaments)
+                    clear_and_wait(delay=10, console_view=self.menu_view)
+                elif report_choice == "3":
+                    clear_and_wait(delay=0, console_view=self.menu_view)
+                    self._select_tournament_and_generate_report("tournaments")
+                    clear_and_wait(delay=10, console_view=self.menu_view)
+                elif report_choice == "4":
+                    clear_and_wait(delay=0, console_view=self.menu_view)
+                    self._select_tournament_and_generate_report("players")
+                    clear_and_wait(delay=10, console_view=self.menu_view)
+                elif report_choice == "5":
+                    clear_and_wait(delay=0, console_view=self.menu_view)
+                    self._select_tournament_and_generate_report("rounds")
+                    clear_and_wait(delay=10, console_view=self.menu_view)
+                elif report_choice == "6":
+                    clear_and_wait(delay=0, console_view=self.menu_view)
+                    break
                 else:
-                    clear_and_wait(message=MESSAGES["tournament_detail"],
-                                   console_view=self.menu_view,
+                    clear_and_wait(message=MESSAGES["invalid_choice"],
+                                   delay=3, console_view=self.menu_view,
                                    clear_before=True)
-            elif report_choice == "4":
-                clear_and_wait(delay=0, console_view=self.menu_view)
-                tournaments = load_tournament(
-                    PATH_DATA_TOURNAMENTS_JSON_FILE, all_tournaments=True)
-                if tournaments:
-                    self.display_view.display_tournaments(tournaments)
-                    tournament_id = self.prompt_view.select_tournament_prompt()
-                    if tournament_id is not None:
-                        clear_and_wait(delay=0, console_view=self.menu_view)
-                        tournaments = data_tournaments["tournaments"]
-                        tournament_report = {}
-                        for tournament in tournaments:
-                            if tournament["tournament_id"] == int(
-                                    tournament_id):
-                                tournament_report = tournament
-                                break
-                        self.report_controller.players(
-                            tournament_report["players"], True,
-                            tournament_report["name"])
-                        clear_and_wait(delay=10, console_view=self.menu_view)
-                else:
-                    clear_and_wait(message=MESSAGES["tournament_detail"],
-                                   console_view=self.menu_view,
-                                   clear_before=True)
-            elif report_choice == "5":
-                clear_and_wait(delay=0, console_view=self.menu_view)
-                tournaments = load_tournament(
-                    PATH_DATA_TOURNAMENTS_JSON_FILE, all_tournaments=True)
-                if tournaments:
-                    self.display_view.display_tournaments(tournaments)
-                    tournament_id = self.prompt_view.select_tournament_prompt()
-                    if tournament_id is not None:
-                        clear_and_wait(delay=0, console_view=self.menu_view)
-                        tournaments = data_tournaments["tournaments"]
-                        tournament_report = {}
-                        for tournament in tournaments:
-                            if tournament["tournament_id"] == int(
-                                    tournament_id):
-                                tournament_report = tournament
-                                break
-                        self.report_controller.tournament_round(
-                            tournament_report)
-                        clear_and_wait(delay=10, console_view=self.menu_view)
-                else:
-                    clear_and_wait(message=MESSAGES["tournament_detail"],
-                                   console_view=self.menu_view,
-                                   clear_before=True)
-            elif report_choice == "6":
-                clear_and_wait(delay=0, console_view=self.menu_view)
-                break
-            else:
-                clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
-                               console_view=self.menu_view, clear_before=True)
+
+            except NoPlayersError as e:
+                clear_and_wait(str(e), level="WARNING",
+                               console_view=self.menu_view)
+            except NoTournamentsError as e:
+                clear_and_wait(str(e), level="WARNING",
+                               console_view=self.menu_view)
+            except InvalidTournamentsSelectionError as e:
+                clear_and_wait(str(e), level="WARNING",
+                               console_view=self.menu_view)
+            except Exception as e:
+                clear_and_wait(
+                    f"{MESSAGES['failure_basic']}:{str(e)}",
+                    level="ERROR",
+                    console_view=self.menu_view)

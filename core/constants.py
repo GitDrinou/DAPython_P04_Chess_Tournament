@@ -37,13 +37,19 @@ MESSAGES = {
     "failure_registration": "Échec lors de l'inscription.",
     "failure_deletion": "Échec lors de la suppression.",
     "failure_generation_round": "Échec lors de la génération du tour.",
-    "failure_selected_tournament": "Aucun tournoi sélectionné.",
+    "failure_selected_tournament": "Sélection de tournoi invalide. Veuillez "
+                                   "réessayer.",
     "failure_end_of_round": "Échec de la finalisation du tour.",
     "failure_invalid_score": "Score non valide",
     "failure_saved_score": "Échec de l'enregistrement du score",
     "failure_saved_round": "Erreur inattendue lors de l'enregistrement du "
                            "tour.",
+    "failure_no_players_found": "Aucun joueur trouvé. Impossible de générer "
+                                "le rapport.",
+    "failure_no_tournaments_found": "Aucun tournoi trouvé. Impossible de "
+                                    "générer le rapport",
     "failure_started_round": "Échec lors du démarrage du tour.",
+    "failure_basic": "Erreur inattendue",
     "generate_round_date": """
     =============================================================
     Vous ne pouvez pas générer de tour car la date du tournoi est

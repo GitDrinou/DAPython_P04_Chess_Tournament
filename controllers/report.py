@@ -206,7 +206,7 @@ class ReportController:
                      f"{absolute_path_file}\n"
                      f"ou en allant dans le dossier REPORTS de l'application.")
 
-    def tournament_round(self, tournament):
+    def tournament_rounds(self, tournament):
         """Generate the report for all rounds of a tournament"""
         title = "Détail des tours et matchs du tournoi"
         file = PATH_REPORTS_FILES + "tournament_rounds_detail.html"
