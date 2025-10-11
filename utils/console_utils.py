@@ -49,7 +49,7 @@ class ConsoleDisplayer:
         return response
 
 
-def clear_and_wait(message=None, level="WARNING", delay=6, console_view=None,
+def clear_and_wait(message=None, level="WARNING", delay=4, console_view=None,
                    clear_before=False):
     """Display a message, wait and clear the console
         Args:

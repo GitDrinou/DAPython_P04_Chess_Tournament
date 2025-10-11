@@ -2,7 +2,7 @@
 import json
 import os
 
-from controllers.application import ApplicationController
+from controllers.main import MainController
 from controllers.match import MatchController
 from controllers.player import PlayerController
 from controllers.report import ReportController
@@ -46,13 +46,13 @@ def main():
     main_view = MenusView()
     prompt_view = PromptView()
     display_view = DisplayTableView()
-    application_controller = ApplicationController(player_controller,
-                                                   tournament_controller,
-                                                   round_controller,
-                                                   match_controller,
-                                                   report_controller,
-                                                   main_view, prompt_view,
-                                                   display_view)
+    application_controller = MainController(player_controller,
+                                            tournament_controller,
+                                            round_controller,
+                                            match_controller,
+                                            report_controller,
+                                            main_view, prompt_view,
+                                            display_view)
     application_controller.run()
 
 

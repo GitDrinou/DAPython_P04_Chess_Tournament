@@ -7,6 +7,7 @@ from utils.file_utils import write_file
 
 
 class ReportController:
+    """ Report class controller"""
 
     os_name = platform.system()
     if os_name == "Windows":
@@ -16,7 +17,12 @@ class ReportController:
 
     def players(self, players, tournament=False, tournament_name=""):
         """Generate the report for all players with alphabetic order (for a
-        tournament or not)"""
+        tournament or not)
+        Args:
+            players (list): list of players
+            tournament (bool): if the players list is for a tournament or not
+            tournament_name (str): name of the tournament
+        """
 
         if tournament:
             title = "Liste des joueurs du tournoi<br>(par ordre alphabétique)"
@@ -86,7 +92,11 @@ class ReportController:
 
     def tournaments(self, tournaments, unique=False):
         """Generate the report for all tournaments or for a specific
-        tournament"""
+        tournament
+        Args:
+            tournaments (list): list of tournaments
+            unique (bool): True for one tournament, False for all tournaments
+        """
         if unique:
             title = "Détail du tournoi"
             file = PATH_REPORTS_FILES + "tournament_detail.html"
@@ -292,7 +302,10 @@ class ReportController:
                      f"ou en allant dans le dossier REPORTS de l'application.")
 
     def tournament_rounds(self, tournament):
-        """Generate the report for all rounds of a tournament"""
+        """Generate the report for all rounds of a tournament
+        Args:
+            tournament (tournament): data for a specific tournament
+        """
         title = "Détail des tours et matchs du tournoi"
         file = PATH_REPORTS_FILES + "tournament_rounds_detail.html"
         absolute_path_file = self.file_part + os.path.abspath(

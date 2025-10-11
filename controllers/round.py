@@ -10,7 +10,13 @@ class RoundController:
 
     @staticmethod
     def start_up(tournament_id, round_id):
-        """Method that starts a round."""
+        """Method that starts a round
+            Args:
+                tournament_id (int): Identifier of a specific tournament
+                round_id (int): Identifier of a specific round
+            Returns:
+                round_item (round): round details
+        """
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
         tournament = next(
@@ -55,7 +61,13 @@ class RoundController:
 
     @staticmethod
     def end_up(tournament_id, round_id):
-        """Method that terminate the round."""
+        """Method that terminates a round
+            Args:
+                tournament_id (int): Identifier of a specific tournament
+                round_id (int): Identifier of a specific round
+            Returns:
+                round_item (round): round details
+        """
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
         tournament = next(
@@ -102,7 +114,12 @@ class RoundController:
 
     @staticmethod
     def is_finished(rounds):
-        """Method that checks if the round is finished."""
+        """Method that checks if a round is finished or not..
+            Args:
+                rounds (list): list of rounds
+            Returns:
+                list_finished_rounds (list): round list finished or not.
+        """
         list_finished_rounds = []
 
         count_match = 0

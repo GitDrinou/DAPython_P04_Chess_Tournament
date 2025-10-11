@@ -7,7 +7,16 @@ class MatchController:
 
     @staticmethod
     def save_score(tournament, round_id, user_match_id, score1, score2):
-        """ Update score for specific match """
+        """Save a match score
+            Args;
+                tournament (dict): tournament detail
+                round_id (int): Identifier of the current round
+                user_match_id (int): Identifier of the current match
+                score1 (float): Score 1 for the player1
+                score2 (float): Score 2 for the player2
+            Returns:
+                round_ (round): round detail
+        """
         rounds = tournament["rounds"]
         round_ = next(
             (r for r in rounds if r["round_id"] == round_id),

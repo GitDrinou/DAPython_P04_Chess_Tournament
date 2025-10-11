@@ -14,12 +14,24 @@ from utils.file_utils import load_tournament, read_json_file, update_tournament
 from utils.console_utils import clear_and_wait
 
 
-class ApplicationController:
-    """ Application class controller"""
+class MainController:
+    """ Main class controller for the application"""
+
     def __init__(self, player_controller, tournament_controller,
                  round_controller, match_controller, report_controller,
                  menu_view, prompt_view, display_view):
-        """ Initialize the application controller """
+        """Initialize the main controller
+            Args:
+                player_controller (PlayerController)
+                tournament_controller (TournamentController)
+                round_controller (RoundController)
+                match_controller (MatchController)
+                report_controller (ReportController)
+                menu_view (MenuView)
+                prompt_view (PromptView)
+                display_view (DisplayView)
+        """
+
         self.player_controller = player_controller
         self.tournament_controller = tournament_controller
         self.round_controller = round_controller
@@ -30,13 +42,14 @@ class ApplicationController:
         self.display_view = display_view
 
     def run(self):
-        """ Main method of the application controller """
+        """Method to run the application"""
 
         while True:
             clear_and_wait(delay=0, console_view=self.menu_view)
             user_choice = self.menu_view.show_main_menu()
 
             if user_choice == "1":
+                # Create a tournament
                 clear_and_wait(delay=0, console_view=self.menu_view)
                 tournament = self.prompt_view.tournament_prompt()
                 clear_and_wait(delay=0, console_view=self.menu_view)
@@ -48,20 +61,23 @@ class ApplicationController:
                                tournament["number_of_rounds"]))
                 clear_and_wait(delay=5)
             elif user_choice == "2":
+                # Start a tournament or continue a started tournament
                 clear_and_wait(delay=0, console_view=self.menu_view)
                 tournaments = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE)
                 if tournaments:
                     self.display_view.display_tournaments(tournaments)
-                    selection = self.prompt_view.select_tournament_prompt()
-                    if selection > 0:
-                        self.tournament_choice(selection)
+                    tournament_id = self.prompt_view.select_tournament_prompt()
+                    if tournament_id > 0:
+                        self._handle_tournament_choice(tournament_id)
                 else:
                     clear_and_wait(message=MESSAGES["tournament_detail"])
             elif user_choice == "3":
+                # Generates reports
                 clear_and_wait(delay=0, console_view=self.menu_view)
-                self.report_choice()
+                self._handle_report_choice()
             elif user_choice == "4":
+                # exit the application
                 clear_and_wait(message=MESSAGES["exit_application"],
                                level="INFO", console_view=self.menu_view,
                                clear_before=True)
@@ -71,6 +87,11 @@ class ApplicationController:
                                console_view=self.menu_view, clear_before=True)
 
     def _handle_player_registration(self, selected_tournament):
+        """Handle a player registration request
+            Args:
+                selected_tournament (tournament): data for a tournament
+                selected by the user
+        """
         clear_and_wait(delay=0, console_view=self.menu_view)
         tournament_id = selected_tournament["tournament_id"]
         if len(selected_tournament["rounds"]) > 0:
@@ -89,6 +110,11 @@ class ApplicationController:
             )
 
     def _handle_player_deletion(self, selected_tournament):
+        """Handle a player deletion request
+            Args:
+                selected_tournament (tournament): data for a tournament
+                selected by the user
+        """
         clear_and_wait(delay=0, console_view=self.menu_view)
         if len(selected_tournament["rounds"]) > 0 or len(
                 selected_tournament["players"]) == 0:
@@ -108,6 +134,11 @@ class ApplicationController:
             )
 
     def _handle_round_generation(self, selected_tournament):
+        """Handle a round generation request
+            Args:
+                selected_tournament (tournament): data for a tournament
+                selected by the user
+        """
         clear_and_wait(delay=0, console_view=self.menu_view)
         last_round = selected_tournament["rounds"]
         today = datetime.today().date()
@@ -154,17 +185,21 @@ class ApplicationController:
             raise InvalidTournamentStateError(MESSAGES["all_rounds_reached"])
 
         clear_and_wait(delay=3, console_view=self.menu_view)
-        self.round_choice(selected_tournament["tournament_id"], selected_round)
+        self._handle_round_choice(selected_tournament["tournament_id"],
+                                  selected_round)
 
-    def tournament_choice(self, selection):
-        """Display conditions for tournament choice"""
+    def _handle_tournament_choice(self, tournament_id):
+        """Handle a tournament choice request
+            Args:
+                tournament_id (str): identifier of the tournament
+        """
         clear_and_wait(delay=0, console_view=self.menu_view)
         while True:
             clear_and_wait(delay=0, console_view=self.menu_view)
             try:
                 selected_tournament = load_tournament(
                     PATH_DATA_TOURNAMENTS_JSON_FILE,
-                    selection
+                    tournament_id
                 )
                 if not selected_tournament:
                     clear_and_wait(delay=0, console_view=self.menu_view)
@@ -178,13 +213,17 @@ class ApplicationController:
 
                 if tournament_choice is not None:
                     if tournament_choice == "1":
+                        # Register a player
                         self._handle_player_registration(selected_tournament)
                     elif tournament_choice == "2":
+                        # Deletion a specific player
                         self._handle_player_deletion(selected_tournament)
                     elif tournament_choice == "3":
+                        # Generate a round or continue a started round
                         self._handle_round_generation(selected_tournament)
                         clear_and_wait(delay=3, console_view=self.menu_view)
                     elif tournament_choice in ["4", "5"]:
+                        # [4] Pause the tournament [5] Return to the main menu
                         clear_and_wait(delay=0, console_view=self.menu_view)
                         break
                     else:
@@ -213,6 +252,11 @@ class ApplicationController:
                                console_view=self.menu_view)
 
     def _handle_round_end(self, tournament_id, selected_round):
+        """Handle a round end request
+            Args:
+                tournament_id (str): identifier of the tournament
+                selected_round (int): identifier of the selected round
+        """
         try:
             round_detail = self.round_controller.end_up(tournament_id,
                                                         selected_round)
@@ -262,12 +306,17 @@ class ApplicationController:
         except Exception as e:
             raise RoundEndError(f"{MESSAGES['failure_saved_round']}: {str(e)}")
 
-    def round_choice(self, tournament_id, selected_round):
-        """ Display conditions for round choice"""
+    def _handle_round_choice(self, tournament_id, selected_round):
+        """Handle a round choice request
+            Args:
+                tournament_id (str): identifier of the tournament
+                selected_round (int): identifier of the selected round
+        """
         while True:
             try:
                 round_choice = self.menu_view.show_round_menu()
                 if round_choice == "1":
+                    # Start the round
                     try:
                         clear_and_wait(delay=0, console_view=self.menu_view)
                         round_detail = self.round_controller.start_up(
@@ -283,6 +332,7 @@ class ApplicationController:
                         clear_and_wait(str(e), level="ERROR",
                                        console_view=self.menu_view)
                 elif round_choice == "2":
+                    # Terminate the round
                     try:
                         if self._handle_round_end(tournament_id,
                                                   selected_round):
@@ -294,6 +344,7 @@ class ApplicationController:
                         clear_and_wait(str(e), level="ERROR",
                                        console_view=self.menu_view)
                 elif round_choice == "3":
+                    # Return to the previous menu
                     break
                 else:
                     clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
@@ -351,9 +402,8 @@ class ApplicationController:
 
         return True
 
-    def report_choice(self):
-        """Display conditions for report choice"""
-
+    def _handle_report_choice(self):
+        """Handle a report choice request"""
         while True:
             try:
                 report_choice = self.menu_view.show_report_menu()

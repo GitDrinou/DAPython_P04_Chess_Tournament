@@ -8,7 +8,11 @@ class PlayerController:
 
     @staticmethod
     def add(player, tournament_id):
-        """Add a player to the tournament"""
+        """Add a player to a specific tournament
+            Args:
+                player (Player): player info to add
+                tournament_id (int): Identifier of a specific tournament
+        """
 
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]

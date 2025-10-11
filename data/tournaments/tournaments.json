@@ -177,6 +177,18 @@
                     ]
                 }
             ]
+        },
+        {
+            "tournament_id": 2,
+            "name": "TEST",
+            "location": "Tes",
+            "start_date": "11/10/2025",
+            "end_date": "11/10/2025",
+            "description": "test",
+            "number_of_rounds": "4",
+            "round_number": 0,
+            "players": [],
+            "rounds": []
         }
     ]
 }

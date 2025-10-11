@@ -9,12 +9,17 @@ from utils.console_utils import ConsoleDisplayer
 
 class TournamentController:
     """Tournament controller class"""
+
     def __init__(self):
+        """Constructor"""
         self.historical_pairs = []
 
     @staticmethod
     def create(tournament_detail):
-        """Create a new tournament"""
+        """Create a new tournament
+            Args:
+                tournament_detail (dict): tournament details
+        """
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments['tournaments']
         tournament_id = max(1, len(tournaments) + 1)
@@ -41,7 +46,14 @@ class TournamentController:
 
     def generate_a_round(self,  round_number, players,
                          tournament_id, round_id=None):
-        """Generate a random tournament round"""
+        """Generate a random tournament round
+            Args:
+                round_number (int): the current round number
+                players (list): list of players
+                tournament_id (int): Identifier of the tournament
+                round_id (int): Identifier of the current round (by default
+                None)
+        """
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
 
@@ -177,7 +189,11 @@ class TournamentController:
 
     @staticmethod
     def update_player_points(tournament_id, round_id):
-        """Update player's points"""
+        """Update player's points
+        Args:
+            tournament_id (int): Identifier of the tournament
+            round_id (int): Identifier of the current round
+        """
         data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data["tournaments"]
         tournament = next(
@@ -230,7 +246,11 @@ class TournamentController:
 
     @staticmethod
     def delete_a_player(tournament_id, national_id):
-        """Delete an identify player from the tournament"""
+        """Delete an identify player from the tournament
+            Args:
+                tournament_id (int): Identifier of the tournament
+                national_id (int): Identifier of the player
+        """
         data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data["tournaments"]
         tournament = next(
