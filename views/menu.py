@@ -58,7 +58,7 @@ class MenusView:
 
                 options = [
                     "Inscrire un joueur au tournoi",
-                    "Supprimer un joueur du tournoi",
+                    "Désinscrire un joueur du tournoi",
                     f"Générer ou continuer un tour (tour "
                     f"{current_round_number}/{number_pf_rounds})",
                     "Mettre en pause le tournoi",

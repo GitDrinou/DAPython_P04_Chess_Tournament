@@ -6,8 +6,8 @@ from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
                              MatchScoreError, RoundStartError, NoPlayersError,
                              NoTournamentsError,
                              InvalidTournamentsSelectionError)
-from models.player import Player
-from models.tournamentmodel import TournamentModel
+from models.player import PlayerModel
+from models.tournament import TournamentModel
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
     PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
 from utils.file_utils import load_tournament, read_json_file, update_tournament
@@ -17,14 +17,12 @@ from utils.console_utils import clear_and_wait
 class MainController:
     """ Main class controller for the application"""
 
-    def __init__(self, tournament_model, player_controller,
-                 tournament_controller,
+    def __init__(self, tournament_model, tournament_controller,
                  round_controller, match_controller, report_controller,
                  menu_view, prompt_view, display_view):
         """Initialize the main controller
             Args:
                 tournament_model (TournamentModel): Tournament model
-                player_controller (PlayerController)
                 tournament_controller (TournamentController)
                 round_controller (RoundController)
                 match_controller (MatchController)
@@ -34,7 +32,6 @@ class MainController:
                 display_view (DisplayView)
         """
         self.tournament_model = tournament_model
-        self.player_controller = player_controller
         self.tournament_controller = tournament_controller
         self.round_controller = round_controller
         self.match_controller = match_controller
@@ -55,7 +52,7 @@ class MainController:
                 clear_and_wait(delay=0, console_view=self.menu_view)
                 tournament = self.prompt_view.tournament_prompt()
                 clear_and_wait(delay=0, console_view=self.menu_view)
-                self.tournament_model.create(
+                self.tournament_controller.create_a_tournament(
                     TournamentModel(
                         None,
                         tournament["name"],
@@ -106,10 +103,15 @@ class MainController:
 
         player = self.prompt_view.player_prompt()
         try:
-            self.player_controller.add(Player(
-                player["national_id"], player["lastname"],
-                player["firstname"], player["birthdate"]),
-                tournament_id)
+            self.tournament_controller.register_a_player_to_a_tournament(
+                PlayerModel(
+                    player["national_id"],
+                    player["lastname"],
+                    player["firstname"],
+                    player["birthdate"]
+                ),
+                tournament_id
+            )
             clear_and_wait(delay=2)
         except Exception as e:
             raise PlayerRegistrationError(
@@ -130,7 +132,7 @@ class MainController:
         self.display_view.display_players(selected_tournament)
         national_id = self.prompt_view.delete_player_prompt()
         try:
-            self.tournament_controller.delete_a_player(
+            self.tournament_controller.unregister_a_player_from_a_tournament(
                 selected_tournament["tournament_id"],
                 national_id
             )

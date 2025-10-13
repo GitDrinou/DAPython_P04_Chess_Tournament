@@ -89,10 +89,10 @@ MESSAGES = {
     Veuillez sélectionner le tour en cours afin de le terminer.
     =============================================================
     """,
-    "player_deleted": """
-    =========================================
-    Le joueur a bien été supprimé du tournoi.
-    =========================================
+    "player_unregistered": """
+    ===========================================
+    Le joueur a bien été désinscrit du tournoi.
+    ===========================================
     """,
     "player_registered": """
     ======================================

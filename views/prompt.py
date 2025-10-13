@@ -202,7 +202,7 @@ class PromptView:
 
         national_id = ConsoleDisplayer.display_prompt(
             text="Saisissez l'identifiant du joueur",
-            title="SUPPRIMER UN JOUEUR"
+            title="DÉSINSCRIRE UN JOUEUR"
         )
 
         return national_id

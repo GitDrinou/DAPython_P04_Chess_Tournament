@@ -1,10 +1,10 @@
 from typing import List
 
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
-from models.player import Player
+from models.player import PlayerModel
 from models.round import Round
 from utils.console_utils import ConsoleDisplayer
-from utils.file_utils import read_json_file, save_to_json
+from utils.file_utils import read_json_file, save_to_json, update_tournament
 
 
 class TournamentModel:
@@ -40,10 +40,13 @@ class TournamentModel:
 
         # lists of rounds and players by tournament
         self.rounds: List[Round] = []
-        self.players: List[Player] = []
+        self.players: List[PlayerModel] = []
 
     def create(self, tournament):
-        """Create a new tournament and save it to JSON file"""
+        """Create a new tournament and save it to JSON file
+            Args:
+                tournament: Tournament instance
+        """
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments['tournaments']
         id_tournament = self.tournament_id
@@ -71,6 +74,67 @@ class TournamentModel:
 
         return ConsoleDisplayer.log(MESSAGES["tournament_created"],
                                     level="INFO")
+
+    @staticmethod
+    def register_a_player(player: PlayerModel, tournament_id: int):
+        """Register a player to a specific tournament and save it to JSON file
+        Args:
+            player (PlayerModel): player info to add and save
+            tournament_id (int): Identifier of a specific tournament
+        """
+        data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        tournaments = data_tournaments["tournaments"]
+        tournament = next(
+            (t for t in tournaments if t["tournament_id"] == tournament_id),
+            None
+        )
+
+        if tournament:
+            tournament["players"].append({
+                "national_id": player.national_id,
+                "last_name": player.last_name.upper(),
+                "first_name": player.first_name.capitalize(),
+                "birth_date": player.birth_date,
+                "points": 0.0
+            })
+
+            update_tournament(
+                PATH_DATA_TOURNAMENTS_JSON_FILE,
+                tournament["tournament_id"],
+                tournament
+            )
+
+            ConsoleDisplayer.log(MESSAGES["player_registered"], level="INFO")
+
+    @staticmethod
+    def unregister_a_player(tournament_id, national_id):
+        """Unregister an identified player from the tournament
+            Args:
+                tournament_id (int): Identifier of the tournament
+                national_id (int): Identifier of the player
+        """
+        data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        tournaments = data["tournaments"]
+        tournament = next(
+            (t for t in tournaments if t["tournament_id"] == int(
+                tournament_id)),
+            None
+        )
+
+        if tournament:
+            tournament["players"] = [player for player in tournament[
+                "players"] if player.get("national_id") != national_id]
+
+            update_tournament(
+                PATH_DATA_TOURNAMENTS_JSON_FILE,
+                tournament["tournament_id"],
+                tournament
+            )
+
+            return ConsoleDisplayer.log(MESSAGES["player_unregistered"],
+                                        level="INFO")
+        else:
+            return None
 
     def __str__(self):
         """Return string representation of tournament"""

@@ -1,9 +1,10 @@
 import random
 
 from models.match import Match
+from models.player import PlayerModel
 from models.round import Round
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
-from models.tournamentmodel import TournamentModel
+from models.tournament import TournamentModel
 from utils.file_utils import read_json_file, update_tournament
 from utils.console_utils import ConsoleDisplayer
 
@@ -13,12 +14,24 @@ class TournamentController:
 
     def __init__(self):
         """Constructor"""
-        self.model = TournamentModel()
+        self.tournament_model = TournamentModel()
+        self.player_model = PlayerModel()
         self.historical_pairs = []
 
     def create_a_tournament(self, tournament):
         """Create a new tournament"""
-        self.model.create(tournament)
+        self.tournament_model.create(tournament)
+
+    def register_a_player_to_a_tournament(self, player, tournament_id):
+        """Register a player to the specified tournament and save the player to
+        the JSON file."""
+        self.tournament_model.register_a_player(player, tournament_id)
+        self.player_model.save_player_to_json(player)
+
+    def unregister_a_player_from_a_tournament(self, tournament_id,
+                                              national_id):
+        """Unregister a player from the specified tournament"""
+        self.tournament_model.unregister_a_player(tournament_id, national_id)
 
     def generate_a_round(self,  round_number, players,
                          tournament_id, round_id=None):
@@ -216,35 +229,6 @@ class TournamentController:
             )
 
             return ConsoleDisplayer.log(MESSAGES["points_updated"],
-                                        level="INFO")
-        else:
-            return None
-
-    @staticmethod
-    def delete_a_player(tournament_id, national_id):
-        """Delete an identify player from the tournament
-            Args:
-                tournament_id (int): Identifier of the tournament
-                national_id (int): Identifier of the player
-        """
-        data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        tournaments = data["tournaments"]
-        tournament = next(
-            (t for t in tournaments if t["tournament_id"] == tournament_id),
-            None
-        )
-
-        if tournament:
-            tournament["players"] = [player for player in tournament[
-                "players"] if player.get('national_id') != national_id]
-
-            update_tournament(
-                PATH_DATA_TOURNAMENTS_JSON_FILE,
-                tournament["tournament_id"],
-                tournament
-            )
-
-            return ConsoleDisplayer.log(MESSAGES["player_deleted"],
                                         level="INFO")
         else:
             return None

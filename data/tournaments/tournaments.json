@@ -2,11 +2,11 @@
     "tournaments": [
         {
             "tournament_id": 1,
-            "name": "TOURNOI DE TEST",
-            "location": "Ici",
+            "name": "LE TOURNOI DE LA B\udcc3ELLE \u00c9TOILE",
+            "location": "Salle dark vador du 3\u00e8me \u00e9tage de l'\u00e9toile de la mort",
             "start_date": "13/10/2025",
             "end_date": "13/10/2025",
-            "description": "maintenant",
+            "description": "Le tournoi d\u00e9marre \u00e0 10H00.",
             "number_of_rounds": "4",
             "round_number": 0,
             "players": [],
