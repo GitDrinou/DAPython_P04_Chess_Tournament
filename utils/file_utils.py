@@ -32,7 +32,7 @@ def save_to_json(key, **kwargs):
     """Save specific (tournament or player) data to the json file
         Args:
             key (str): Key of the data to be saved (tournament or player)
-            kwargs (dict): Data to be saved
+            **kwargs: Data to be saved
     """
 
     if key == "tournaments":
@@ -40,8 +40,8 @@ def save_to_json(key, **kwargs):
         path = PATH_DATA_TOURNAMENTS_JSON_FILE
         data["tournaments"].append({
             "tournament_id": kwargs["tournament_id"],
-            "name": kwargs["name"].upper(),
-            "location": kwargs["location"].capitalize(),
+            "name": kwargs["name"],
+            "location": kwargs["location"],
             "start_date": kwargs["start_date"].strftime("%d/%m/%Y"),
             "end_date": kwargs["end_date"].strftime("%d/%m/%Y"),
             "description": kwargs["description"],

@@ -7,7 +7,7 @@ from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
                              NoTournamentsError,
                              InvalidTournamentsSelectionError)
 from models.player import Player
-from models.tournament import Tournament
+from models.tournamentmodel import TournamentModel
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
     PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
 from utils.file_utils import load_tournament, read_json_file, update_tournament
@@ -17,11 +17,13 @@ from utils.console_utils import clear_and_wait
 class MainController:
     """ Main class controller for the application"""
 
-    def __init__(self, player_controller, tournament_controller,
+    def __init__(self, tournament_model, player_controller,
+                 tournament_controller,
                  round_controller, match_controller, report_controller,
                  menu_view, prompt_view, display_view):
         """Initialize the main controller
             Args:
+                tournament_model (TournamentModel): Tournament model
                 player_controller (PlayerController)
                 tournament_controller (TournamentController)
                 round_controller (RoundController)
@@ -31,7 +33,7 @@ class MainController:
                 prompt_view (PromptView)
                 display_view (DisplayView)
         """
-
+        self.tournament_model = tournament_model
         self.player_controller = player_controller
         self.tournament_controller = tournament_controller
         self.round_controller = round_controller
@@ -53,12 +55,17 @@ class MainController:
                 clear_and_wait(delay=0, console_view=self.menu_view)
                 tournament = self.prompt_view.tournament_prompt()
                 clear_and_wait(delay=0, console_view=self.menu_view)
-                self.tournament_controller.create(
-                    Tournament(tournament["name"], tournament["location"],
-                               tournament["start_date"],
-                               tournament["end_date"],
-                               tournament["description"],
-                               tournament["number_of_rounds"]))
+                self.tournament_model.create(
+                    TournamentModel(
+                        None,
+                        tournament["name"],
+                        tournament["location"],
+                        tournament["start_date"],
+                        tournament["end_date"],
+                        tournament["description"],
+                        tournament["number_of_rounds"]
+                    )
+                )
                 clear_and_wait(delay=5)
             elif user_choice == "2":
                 # Start a tournament or continue a started tournament

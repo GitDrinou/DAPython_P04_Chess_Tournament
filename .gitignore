@@ -2,8 +2,8 @@
 .idea/
 .DS_Store
 
-controllers/__pycache__/
-core/__pycache__/
-models/__pycache__/
-views/__pycache__/
-utils/__pycache__/
+controllers/__pycache__
+core/__pycache__
+models/__pycache__
+views/__pycache__
+utils/__pycache__

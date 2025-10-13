@@ -1,3 +1,16 @@
 {
-    "tournaments": []
+    "tournaments": [
+        {
+            "tournament_id": 1,
+            "name": "TOURNOI DE TEST",
+            "location": "Ici",
+            "start_date": "13/10/2025",
+            "end_date": "13/10/2025",
+            "description": "maintenant",
+            "number_of_rounds": "4",
+            "round_number": 0,
+            "players": [],
+            "rounds": []
+        }
+    ]
 }

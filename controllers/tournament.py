@@ -3,7 +3,8 @@ import random
 from models.match import Match
 from models.round import Round
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
-from utils.file_utils import read_json_file, save_to_json, update_tournament
+from models.tournamentmodel import TournamentModel
+from utils.file_utils import read_json_file, update_tournament
 from utils.console_utils import ConsoleDisplayer
 
 
@@ -12,37 +13,12 @@ class TournamentController:
 
     def __init__(self):
         """Constructor"""
+        self.model = TournamentModel()
         self.historical_pairs = []
 
-    @staticmethod
-    def create(tournament_detail):
-        """Create a new tournament
-            Args:
-                tournament_detail (dict): tournament details
-        """
-        data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        tournaments = data_tournaments['tournaments']
-        tournament_id = max(1, len(tournaments) + 1)
-
-        # check if the number of rounds is empty or under de default number
-        if (tournament_detail.number_of_rounds == "" or int(
-                tournament_detail.number_of_rounds) < 4):
-            tournament_detail.number_of_rounds = 4
-
-        save_to_json("tournaments",
-                     tournament_id=tournament_id,
-                     name=tournament_detail.name.upper(),
-                     location=tournament_detail.location.capitalize(),
-                     start_date=tournament_detail.start_date,
-                     end_date=tournament_detail.end_date,
-                     description=tournament_detail.description,
-                     number_of_rounds=tournament_detail.number_of_rounds,
-                     round_number=tournament_detail.round_number,
-                     players=[]
-                     )
-
-        return ConsoleDisplayer.log(MESSAGES["tournament_created"],
-                                    level="INFO")
+    def create_a_tournament(self, tournament):
+        """Create a new tournament"""
+        self.model.create(tournament)
 
     def generate_a_round(self,  round_number, players,
                          tournament_id, round_id=None):
