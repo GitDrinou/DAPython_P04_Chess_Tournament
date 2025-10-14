@@ -1,3 +1,4 @@
+from models.match import MatchModel
 from models.player import PlayerModel
 from models.tournament import TournamentModel
 
@@ -9,6 +10,7 @@ class TournamentController:
         """Constructor"""
         self.tournament_model = TournamentModel()
         self.player_model = PlayerModel()
+        self.match_model = MatchModel()
         # self.historical_pairs = []
 
     def create_a_tournament(self, tournament):
@@ -31,6 +33,12 @@ class TournamentController:
         """Generate a new tournament round."""
         self.tournament_model.generate_a_round(round_number, players,
                                                tournament_id, round_id)
+
+    def save_round_matchs_scores(self, tournament, round_id, match_id,
+                                 score1, score2):
+        """Save all matchs scores for a round."""
+        self.match_model.save_scores(tournament, round_id, match_id,
+                                     score1, score2)
 
     def update_players_points_for_a_tournament(self, tournament_id, round_id):
         """Update all players' points."""

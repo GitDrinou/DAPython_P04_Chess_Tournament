@@ -18,14 +18,13 @@ class MainController:
     """ Main class controller for the application"""
 
     def __init__(self, tournament_model, tournament_controller,
-                 round_controller, match_controller, report_controller,
+                 round_controller, report_controller,
                  menu_view, prompt_view, display_view):
         """Initialize the main controller
             Args:
                 tournament_model (TournamentModel): Tournament model
                 tournament_controller (TournamentController)
                 round_controller (RoundController)
-                match_controller (MatchController)
                 report_controller (ReportController)
                 menu_view (MenuView)
                 prompt_view (PromptView)
@@ -34,7 +33,6 @@ class MainController:
         self.tournament_model = tournament_model
         self.tournament_controller = tournament_controller
         self.round_controller = round_controller
-        self.match_controller = match_controller
         self.report_controller = report_controller
         self.menu_view = menu_view
         self.prompt_view = prompt_view
@@ -293,9 +291,9 @@ class MainController:
                                           match_id=match_id)
 
                 try:
-                    self.match_controller.save_score(
+                    self.tournament_controller.save_round_matchs_scores(
                         tournament, last_round["round_id"],
-                        user_match_id=match_id, score1=match_score["score1"],
+                        match_id=match_id, score1=match_score["score1"],
                         score2=match_score["score2"])
                 except Exception as e:
                     raise MatchScoreError(

@@ -2,7 +2,7 @@ import random
 from typing import List
 
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
-from models.match import Match
+from models.match import MatchModel
 from models.player import PlayerModel
 from models.round import Round
 from utils.console_utils import ConsoleDisplayer
@@ -204,11 +204,12 @@ class TournamentModel:
                                                  player2["national_id"])))
 
                             if pair not in self.historical_pairs:
-                                match = Match(id_match,
-                                              player1=player1["national_id"],
-                                              score1=0.0,
-                                              player2=player2["national_id"],
-                                              score2=0.0).to_dict()
+                                match = MatchModel(
+                                    id_match,
+                                    player1=player1["national_id"],
+                                    score1=0.0,
+                                    player2=player2["national_id"],
+                                    score2=0.0).to_dict()
 
                                 round_.matches.append(match)
                                 self.historical_pairs.append(pair)
@@ -224,13 +225,12 @@ class TournamentModel:
                                     pair = tuple(sorted(
                                                     (player1["national_id"],
                                                      player2["national_id"])))
-                                    match = Match(id_match,
-                                                  player1=player1[
-                                                      "national_id"],
-                                                  score1=0.0,
-                                                  player2=player2[
-                                                      "national_id"],
-                                                  score2=0.0).to_dict()
+                                    match = MatchModel(
+                                        id_match,
+                                        player1=player1["national_id"],
+                                        score1=0.0,
+                                        player2=player2["national_id"],
+                                        score2=0.0).to_dict()
                                     round_.matches.append(match)
                                     self.historical_pairs.append(pair)
                                     id_match += 1

@@ -3,7 +3,6 @@ import json
 import os
 
 from controllers.main import MainController
-from controllers.match import MatchController
 from controllers.report import ReportController
 from controllers.round import RoundController
 from controllers.tournament import TournamentController
@@ -40,7 +39,6 @@ def main():
     tournament_model = TournamentModel()
     tournament_controller = TournamentController()
     round_controller = RoundController()
-    match_controller = MatchController()
     report_controller = ReportController()
     main_view = MenusView()
     prompt_view = PromptView()
@@ -48,7 +46,6 @@ def main():
     application_controller = MainController(tournament_model,
                                             tournament_controller,
                                             round_controller,
-                                            match_controller,
                                             report_controller,
                                             main_view, prompt_view,
                                             display_view)
