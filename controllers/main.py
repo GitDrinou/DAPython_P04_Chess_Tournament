@@ -177,15 +177,15 @@ class MainController:
 
         clear_and_wait(delay=0, console_view=self.menu_view)
         generation = (
-            self.tournament_controller.generate_a_round(
-                round_number,
-                selected_tournament["players"],
-                selected_tournament["tournament_id"],
-                selected_round
+            self.tournament_controller.generate_a_tournament_round(
+                round_number=round_number,
+                players=selected_tournament["players"],
+                tournament_id=selected_tournament["tournament_id"],
+                round_id=selected_round
             )
         )
 
-        if generation is None:
+        if generation is not None:
             clear_and_wait(delay=0, console_view=self.menu_view)
             raise RoundGenerationError(MESSAGES["failure_generation_round"])
 
@@ -193,7 +193,7 @@ class MainController:
             clear_and_wait(delay=0, console_view=self.menu_view)
             raise InvalidTournamentStateError(MESSAGES["all_rounds_reached"])
 
-        clear_and_wait(delay=3, console_view=self.menu_view)
+        clear_and_wait(delay=2, console_view=self.menu_view)
         self._handle_round_choice(selected_tournament["tournament_id"],
                                   selected_round)
 

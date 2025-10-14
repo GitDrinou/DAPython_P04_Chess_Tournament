@@ -4,13 +4,111 @@
             "tournament_id": 1,
             "name": "LE TOURNOI DE LA B\udcc3ELLE \u00c9TOILE",
             "location": "Salle dark vador du 3\u00e8me \u00e9tage de l'\u00e9toile de la mort",
-            "start_date": "13/10/2025",
-            "end_date": "13/10/2025",
+            "start_date": "14/10/2025",
+            "end_date": "14/10/2025",
             "description": "Le tournoi d\u00e9marre \u00e0 10H00.",
             "number_of_rounds": "4",
-            "round_number": 0,
-            "players": [],
-            "rounds": []
+            "round_number": "1",
+            "players": [
+                {
+                    "national_id": "W58475",
+                    "last_name": "WERBER",
+                    "first_name": "Bernard",
+                    "birth_date": "18/09/1961",
+                    "points": 0.0
+                },
+                {
+                    "national_id": "M68954",
+                    "last_name": "MUSSP",
+                    "first_name": "Guillaume",
+                    "birth_date": "06/06/1974",
+                    "points": 1.0
+                },
+                {
+                    "national_id": "C32049",
+                    "last_name": "CHATTAM",
+                    "first_name": "Maxime",
+                    "birth_date": "19/02/1974",
+                    "points": 0.5
+                },
+                {
+                    "national_id": "L04859",
+                    "last_name": "LEVY",
+                    "first_name": "Marc",
+                    "birth_date": "16/10/1961",
+                    "points": 0.5
+                }
+            ],
+            "rounds": [
+                {
+                    "round_id": 1,
+                    "name": "Round 1",
+                    "round_start_date": "14-10-2025 10:45:42",
+                    "round_end_date": "14-10-2025 10:45:54",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "M68954",
+                                    "1"
+                                ],
+                                [
+                                    "W58475",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "L04859",
+                                    "1"
+                                ],
+                                [
+                                    "C32049",
+                                    "1"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 2,
+                    "name": "Round 2",
+                    "round_start_date": "",
+                    "round_end_date": "",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "M68954",
+                                    0.0
+                                ],
+                                [
+                                    "L04859",
+                                    0.0
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "C32049",
+                                    0.0
+                                ],
+                                [
+                                    "W58475",
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

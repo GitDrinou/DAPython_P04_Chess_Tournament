@@ -1,8 +1,4 @@
-import random
-
-from models.match import Match
 from models.player import PlayerModel
-from models.round import Round
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from models.tournament import TournamentModel
 from utils.file_utils import read_json_file, update_tournament
@@ -16,7 +12,7 @@ class TournamentController:
         """Constructor"""
         self.tournament_model = TournamentModel()
         self.player_model = PlayerModel()
-        self.historical_pairs = []
+        # self.historical_pairs = []
 
     def create_a_tournament(self, tournament):
         """Create a new tournament"""
@@ -33,148 +29,11 @@ class TournamentController:
         """Unregister a player from the specified tournament"""
         self.tournament_model.unregister_a_player(tournament_id, national_id)
 
-    def generate_a_round(self,  round_number, players,
-                         tournament_id, round_id=None):
-        """Generate a random tournament round
-            Args:
-                round_number (int): the current round number
-                players (list): list of players
-                tournament_id (int): Identifier of the tournament
-                round_id (int): Identifier of the current round (by default
-                None)
-        """
-        data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        tournaments = data_tournaments["tournaments"]
-
-        tournament = next(
-            (t for t in tournaments if t["tournament_id"] == tournament_id),
-            None
-        )
-
-        if tournament:
-            count_matchs = 0
-            total_matchs = 0
-            count_round_ended = 0
-
-            if round_id == 0:
-
-                # Count total of no ended rounds
-                for round_ in tournament["rounds"]:
-                    start_date = round_["round_start_date"]
-                    end_date = round_["round_end_date"]
-                    if ((end_date == "" and start_date != "") or
-                            (start_date == "" and end_date == "")):
-                        count_round_ended += 1
-
-                if count_round_ended == 0:
-                    round_number += 1
-                    round_name = "Round {}".format(round_number)
-                    round_ = Round(round_number, round_name)
-
-                    if round_number == 1:
-                        random.shuffle(players)
-                    else:
-                        players.sort(key=lambda player: (player["points"],
-                                                         random.random()),
-                                     reverse=True)
-
-                    id_match = 1
-                    used_index = set()
-
-                    for i in range(0, len(players)):
-                        if i in used_index:
-                            continue
-                        player1 = players[i]
-                        pair_found = False
-
-                        for j in range(i + 1, len(players)):
-                            if j in used_index:
-                                continue
-
-                            player2 = players[j]
-                            pair = tuple(sorted((player1["national_id"],
-                                                 player2["national_id"])))
-
-                            if pair not in self.historical_pairs:
-                                match = Match(id_match,
-                                              player1=player1["national_id"],
-                                              score1=0.0,
-                                              player2=player2["national_id"],
-                                              score2=0.0).to_dict()
-
-                                round_.matches.append(match)
-                                self.historical_pairs.append(pair)
-                                id_match += 1
-                                used_index.update((i, j))
-                                pair_found = True
-                                break
-
-                        if not pair_found:
-                            for j in range(i + 1, len(players)):
-                                if j not in used_index:
-                                    player2 = players[j]
-                                    pair = tuple(sorted(
-                                                    (player1["national_id"],
-                                                     player2["national_id"])))
-                                    match = Match(id_match,
-                                                  player1=player1[
-                                                      "national_id"],
-                                                  score1=0.0,
-                                                  player2=player2[
-                                                      "national_id"],
-                                                  score2=0.0).to_dict()
-                                    round_.matches.append(match)
-                                    self.historical_pairs.append(pair)
-                                    id_match += 1
-                                    used_index.update((i, j))
-                                    break
-
-                    data_round = {
-                        "round_id": round_number,
-                        "name": round_name,
-                        "round_start_date": str(round_.start_date),
-                        "round_end_date": str(round_.end_date),
-                        "matchs": round_.matches
-                    }
-
-                    tournament["rounds"].append(data_round)
-
-                    update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                      tournament["tournament_id"],
-                                      tournament)
-
-                    ConsoleDisplayer.log(MESSAGES["round_generated"],
-                                         level="INFO")
-                    return tournament
-                else:
-                    ConsoleDisplayer.log(MESSAGES["no_generate_round"],
-                                         level="WARNING")
-                    return None
-            else:
-                rounds = tournament["rounds"]
-                round_ = next(
-                    (r for r in rounds if r["round_id"] == round_id),
-                    None
-                )
-
-                if round_:
-                    total_matchs += len(round_["matchs"])
-                    for match in round_["matchs"]:
-                        for player_id, score in match["match"]:
-                            if score == 0.0:
-                                count_matchs += 1
-
-                    if ((count_matchs/total_matchs == 2) or
-                            round_["round_start_date"] == ""):
-                        return tournament
-                    else:
-                        ConsoleDisplayer.log(
-                            MESSAGES["round_already_ended"],
-                            level="WARNING")
-                        return None
-                return None
-        else:
-            return None
+    def generate_a_tournament_round(self, round_number, players,
+                                    tournament_id, round_id):
+        """Generate a new tournament round."""
+        self.tournament_model.generate_a_round(round_number, players,
+                                               tournament_id, round_id)
 
     @staticmethod
     def update_player_points(tournament_id, round_id):
