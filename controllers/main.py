@@ -175,7 +175,6 @@ class MainController:
         if selected_round < 0:
             return
 
-        clear_and_wait(delay=0, console_view=self.menu_view)
         generation = (
             self.tournament_controller.generate_a_tournament_round(
                 round_number=round_number,
@@ -303,7 +302,7 @@ class MainController:
                         f"{MESSAGES['failure_saved_score']}: {str(e)}",
                         match_id=match_id)
 
-            self.tournament_controller.update_player_points(
+            self.tournament_controller.update_players_points_for_a_tournament(
                 tournament_id,
                 last_round["round_id"]
             )
