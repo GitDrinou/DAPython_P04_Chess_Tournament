@@ -40,6 +40,10 @@ class TournamentController:
         round_info = self.round_model.start_up(tournament_id, round_id)
         return round_info
 
+    def terminate_a_round(self, tournament_id, round_id):
+        round_info = self.round_model.end_up(tournament_id, round_id)
+        return round_info
+
     def save_round_matchs_scores(self, tournament, round_id, match_id,
                                  score1, score2):
         """Save all matchs scores for a round."""

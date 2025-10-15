@@ -48,9 +48,25 @@ class RoundModel:
 
         if tournament:
             rounds = tournament["rounds"]
+            round_ = next(
+                (r for r in rounds if r["round_id"] == round_id),
+                None
+            )
+
             start_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
-            if round_id == 0:
+            if round_:
+                tournament["round_number"] = round_["name"][-1]
+                round_["round_start_date"] = start_date
+
+                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                  tournament["tournament_id"], tournament)
+
+                ConsoleDisplayer.log(MESSAGES["round_started"],
+                                     level="INFO")
+
+                return round_
+            else:
                 last_round = tournament["rounds"][-1]
                 tournament["round_number"] = last_round["name"][-1]
                 last_round["round_start_date"] = start_date
@@ -61,24 +77,58 @@ class RoundModel:
                 ConsoleDisplayer.log(MESSAGES["round_started"], level="INFO")
 
                 return last_round
-            else:
-                round_ = next(
-                    (r for r in rounds if r["round_id"] == round_id),
-                    None
-                )
+        else:
+            return None
 
-                if round_:
-                    tournament["round_number"] = round_["name"][-1]
-                    round_["round_start_date"] = start_date
+    @staticmethod
+    def end_up(tournament_id, round_id):
+        """Method that terminates a round
+            Args:
+                tournament_id (int): Identifier of a specific tournament
+                round_id (int): Identifier of a specific round
+            Returns:
+                round_item (round): round details
+        """
+        data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+        tournaments = data_tournaments["tournaments"]
+        tournament = next(
+            (t for t in tournaments if t["tournament_id"] == tournament_id),
+            None
+        )
+
+        if tournament:
+            rounds = tournament["rounds"]
+            round_ = next(
+                (r for r in rounds if r["round_id"] == round_id),
+                None
+            )
+
+            end_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+
+            if round_:
+                if round_["round_start_date"] == "":
+                    ConsoleDisplayer.log(MESSAGES["round_not_started"],
+                                         level="WARNING")
+                    return None
+                else:
+                    round_["round_end_date"] = end_date
 
                     update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
                                       tournament["tournament_id"], tournament)
 
-                    ConsoleDisplayer.log(MESSAGES["round_started"],
-                                         level="INFO")
+                    ConsoleDisplayer.log(MESSAGES["round_ended"], level="INFO")
 
                     return round_
-                return None
+            else:
+                last_round = tournament["rounds"][-1]
+                last_round["round_end_date"] = end_date
+
+                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                  tournament["tournament_id"], tournament)
+
+                ConsoleDisplayer.log(MESSAGES["round_ended"], level="INFO")
+
+                return last_round
         else:
             return None
 

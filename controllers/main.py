@@ -264,12 +264,15 @@ class MainController:
                 selected_round (int): identifier of the selected round
         """
         try:
-            round_detail = self.round_controller.end_up(tournament_id,
-                                                        selected_round)
-            if not round_detail:
+            round_ = self.tournament_controller.terminate_a_round(
+                tournament_id,
+                selected_round
+            )
+
+            if not round_:
                 raise RoundEndError(MESSAGES["failure_end_of_round"])
 
-            self.display_view.display_a_round(round_detail)
+            self.display_view.display_a_round(round_)
             tournament = load_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
                                          tournament_id)
             last_round = tournament["rounds"][-1]
