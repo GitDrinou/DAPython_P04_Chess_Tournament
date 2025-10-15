@@ -181,15 +181,15 @@ class MainController:
             )
         )
 
-        if generation is not None:
+        if generation is None:
             clear_and_wait(delay=0, console_view=self.menu_view)
-            raise RoundGenerationError(MESSAGES["failure_generation_round"])
+            raise RoundGenerationError(MESSAGES["no_generate_round"])
 
         if int(selected_tournament["number_of_rounds"]) < round_number:
             clear_and_wait(delay=0, console_view=self.menu_view)
             raise InvalidTournamentStateError(MESSAGES["all_rounds_reached"])
 
-        clear_and_wait(delay=2, console_view=self.menu_view)
+        clear_and_wait(delay=0, console_view=self.menu_view)
         self._handle_round_choice(selected_tournament["tournament_id"],
                                   selected_round)
 

@@ -153,7 +153,6 @@ class TournamentModel:
         """
         data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data_tournaments["tournaments"]
-
         tournament = next(
             (t for t in tournaments if t["tournament_id"] == tournament_id),
             None
@@ -167,97 +166,93 @@ class TournamentModel:
             if round_id == 0:
 
                 # Count total of no ended rounds
-                for round_ in tournament["rounds"]:
-                    start_date = round_["round_start_date"]
-                    end_date = round_["round_end_date"]
-                    if ((end_date == "" and start_date != "") or
-                            (start_date == "" and end_date == "")):
-                        count_round_ended += 1
+                count_round_ended = sum(1 for r in tournament["rounds"] if
+                                        not r["round_end_date"] and r[
+                                            "round_start_date"])
 
-                if count_round_ended == 0:
-                    round_number += 1
-                    round_name = "Round {}".format(round_number)
-                    round_ = RoundModel(round_number, round_name)
+                if count_round_ended > 0:
+                    return None
 
-                    if round_number == 1:
-                        random.shuffle(players)
-                    else:
-                        players.sort(key=lambda player: (player["points"],
-                                                         random.random()),
-                                     reverse=True)
+                round_number += 1
+                round_name = "Round {}".format(round_number)
+                round_ = RoundModel(round_number, round_name)
 
-                    id_match = 1
-                    used_index = set()
+                if round_number == 1:
+                    random.shuffle(players)
+                else:
+                    players.sort(key=lambda player: (player["points"],
+                                                     random.random()),
+                                 reverse=True)
 
-                    for i in range(0, len(players)):
-                        if i in used_index:
+                id_match = 1
+                used_index = set()
+
+                for i in range(0, len(players)):
+                    if i in used_index:
+                        continue
+                    player1 = players[i]
+                    pair_found = False
+
+                    for j in range(i + 1, len(players)):
+                        if j in used_index:
                             continue
-                        player1 = players[i]
-                        pair_found = False
 
+                        player2 = players[j]
+                        pair = tuple(sorted((player1["national_id"],
+                                             player2["national_id"])))
+
+                        if pair not in self.historical_pairs:
+                            match = MatchModel(
+                                id_match,
+                                player1=player1["national_id"],
+                                score1=0.0,
+                                player2=player2["national_id"],
+                                score2=0.0).to_dict()
+
+                            round_.matchs.append(match)
+                            self.historical_pairs.append(pair)
+                            id_match += 1
+                            used_index.update((i, j))
+                            pair_found = True
+                            break
+
+                    if not pair_found:
                         for j in range(i + 1, len(players)):
-                            if j in used_index:
-                                continue
-
-                            player2 = players[j]
-                            pair = tuple(sorted((player1["national_id"],
+                            if j not in used_index:
+                                player2 = players[j]
+                                pair = tuple(sorted(
+                                                (player1["national_id"],
                                                  player2["national_id"])))
-
-                            if pair not in self.historical_pairs:
                                 match = MatchModel(
                                     id_match,
                                     player1=player1["national_id"],
                                     score1=0.0,
                                     player2=player2["national_id"],
                                     score2=0.0).to_dict()
-
                                 round_.matchs.append(match)
                                 self.historical_pairs.append(pair)
                                 id_match += 1
                                 used_index.update((i, j))
-                                pair_found = True
                                 break
 
-                        if not pair_found:
-                            for j in range(i + 1, len(players)):
-                                if j not in used_index:
-                                    player2 = players[j]
-                                    pair = tuple(sorted(
-                                                    (player1["national_id"],
-                                                     player2["national_id"])))
-                                    match = MatchModel(
-                                        id_match,
-                                        player1=player1["national_id"],
-                                        score1=0.0,
-                                        player2=player2["national_id"],
-                                        score2=0.0).to_dict()
-                                    round_.matchs.append(match)
-                                    self.historical_pairs.append(pair)
-                                    id_match += 1
-                                    used_index.update((i, j))
-                                    break
+                data_round = {
+                    "round_id": round_number,
+                    "name": round_name,
+                    "round_start_date": str(round_.start_date),
+                    "round_end_date": str(round_.end_date),
+                    "matchs": round_.matchs
+                }
 
-                    data_round = {
-                        "round_id": round_number,
-                        "name": round_name,
-                        "round_start_date": str(round_.start_date),
-                        "round_end_date": str(round_.end_date),
-                        "matchs": round_.matchs
-                    }
+                tournament["rounds"].append(data_round)
 
-                    tournament["rounds"].append(data_round)
+                update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
+                                  tournament["tournament_id"],
+                                  tournament)
 
-                    update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                      tournament["tournament_id"],
-                                      tournament)
+                ConsoleDisplayer.log(MESSAGES["round_generated"],
+                                     level="INFO")
+                return tournament
 
-                    ConsoleDisplayer.log(MESSAGES["round_generated"],
-                                         level="INFO")
-                    return tournament
-                else:
-                    ConsoleDisplayer.log(MESSAGES["no_generate_round"],
-                                         level="WARNING")
-                    return None
             else:
                 rounds = tournament["rounds"]
                 round_ = next(
