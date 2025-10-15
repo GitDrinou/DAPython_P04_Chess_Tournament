@@ -4,7 +4,7 @@ from typing import List
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from models.match import MatchModel
 from models.player import PlayerModel
-from models.round import Round
+from models.round import RoundModel
 from utils.console_utils import ConsoleDisplayer
 from utils.file_utils import read_json_file, save_to_json, update_tournament
 
@@ -41,7 +41,7 @@ class TournamentModel:
         self.round_number = round_number
 
         # lists of rounds and players by tournament
-        self.rounds: List[Round] = []
+        self.rounds: List[RoundModel] = []
         self.players: List[PlayerModel] = []
 
         # use for pairing players
@@ -177,7 +177,7 @@ class TournamentModel:
                 if count_round_ended == 0:
                     round_number += 1
                     round_name = "Round {}".format(round_number)
-                    round_ = Round(round_number, round_name)
+                    round_ = RoundModel(round_number, round_name)
 
                     if round_number == 1:
                         random.shuffle(players)
@@ -211,7 +211,7 @@ class TournamentModel:
                                     player2=player2["national_id"],
                                     score2=0.0).to_dict()
 
-                                round_.matches.append(match)
+                                round_.matchs.append(match)
                                 self.historical_pairs.append(pair)
                                 id_match += 1
                                 used_index.update((i, j))
@@ -231,7 +231,7 @@ class TournamentModel:
                                         score1=0.0,
                                         player2=player2["national_id"],
                                         score2=0.0).to_dict()
-                                    round_.matches.append(match)
+                                    round_.matchs.append(match)
                                     self.historical_pairs.append(pair)
                                     id_match += 1
                                     used_index.update((i, j))
@@ -242,7 +242,7 @@ class TournamentModel:
                         "name": round_name,
                         "round_start_date": str(round_.start_date),
                         "round_end_date": str(round_.end_date),
-                        "matchs": round_.matches
+                        "matchs": round_.matchs
                     }
 
                     tournament["rounds"].append(data_round)

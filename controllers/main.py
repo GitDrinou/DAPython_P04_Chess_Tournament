@@ -325,15 +325,16 @@ class MainController:
                     # Start the round
                     try:
                         clear_and_wait(delay=0, console_view=self.menu_view)
-                        round_detail = self.round_controller.start_up(
+                        round_ = self.tournament_controller.start_a_round(
                             tournament_id,
-                            selected_round)
-                        if not round_detail:
+                            selected_round
+                        )
+                        if not round_:
                             raise RoundStartError(
                                 MESSAGES["failure_started_round"]
                             )
                         clear_and_wait(delay=3, console_view=self.menu_view)
-                        self.display_view.display_a_round(round_detail)
+                        self.display_view.display_a_round(round_)
                     except RoundStartError as e:
                         clear_and_wait(str(e), level="ERROR",
                                        console_view=self.menu_view)
