@@ -33,9 +33,11 @@ class TournamentController:
     def generate_a_tournament_round(self, round_number, players,
                                     tournament_id, round_id):
         """Generate a new tournament round."""
-        self.tournament_model.generate_a_round(round_number, players,
-                                               tournament_id,
-                                               round_id)
+        tournament = self.tournament_model.generate_a_round(round_number,
+                                                            players,
+                                                            tournament_id,
+                                                            round_id)
+        return tournament
 
     def start_a_round(self, tournament_id, round_id):
         round_info = self.round_model.start_up(tournament_id, round_id)

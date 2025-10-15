@@ -161,7 +161,6 @@ class TournamentModel:
         if tournament:
             count_matchs = 0
             total_matchs = 0
-            count_round_ended = 0
 
             if round_id == 0:
 
@@ -174,7 +173,7 @@ class TournamentModel:
                     return None
 
                 round_number += 1
-                round_name = "Round {}".format(round_number)
+                round_name = f"Round {round_number}"
                 round_ = RoundModel(round_number, round_name)
 
                 if round_number == 1:
@@ -184,56 +183,22 @@ class TournamentModel:
                                                      random.random()),
                                  reverse=True)
 
-                id_match = 1
-                used_index = set()
+                # Generate pairing
+                try:
+                    pairings = self._generate_pairings(players)
+                except ValueError as e:
+                    ConsoleDisplayer.log(str(e), level="ERROR")
+                    return None
 
-                for i in range(0, len(players)):
-                    if i in used_index:
-                        continue
-                    player1 = players[i]
-                    pair_found = False
-
-                    for j in range(i + 1, len(players)):
-                        if j in used_index:
-                            continue
-
-                        player2 = players[j]
-                        pair = tuple(sorted((player1["national_id"],
-                                             player2["national_id"])))
-
-                        if pair not in self.historical_pairs:
-                            match = MatchModel(
-                                id_match,
-                                player1=player1["national_id"],
-                                score1=0.0,
-                                player2=player2["national_id"],
-                                score2=0.0).to_dict()
-
-                            round_.matchs.append(match)
-                            self.historical_pairs.append(pair)
-                            id_match += 1
-                            used_index.update((i, j))
-                            pair_found = True
-                            break
-
-                    if not pair_found:
-                        for j in range(i + 1, len(players)):
-                            if j not in used_index:
-                                player2 = players[j]
-                                pair = tuple(sorted(
-                                                (player1["national_id"],
-                                                 player2["national_id"])))
-                                match = MatchModel(
-                                    id_match,
-                                    player1=player1["national_id"],
-                                    score1=0.0,
-                                    player2=player2["national_id"],
-                                    score2=0.0).to_dict()
-                                round_.matchs.append(match)
-                                self.historical_pairs.append(pair)
-                                id_match += 1
-                                used_index.update((i, j))
-                                break
+                round_.matchs = [
+                    MatchModel(
+                        match_id=i+1,
+                        player1=p1["national_id"],
+                        score1=0.0,
+                        player2=p2["national_id"],
+                        score2=0.0).to_dict()
+                    for i, (p1, p2) in enumerate(pairings)
+                ]
 
                 data_round = {
                     "round_id": round_number,
@@ -244,7 +209,6 @@ class TournamentModel:
                 }
 
                 tournament["rounds"].append(data_round)
-
                 update_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
                                   tournament["tournament_id"],
                                   tournament)
@@ -278,6 +242,46 @@ class TournamentModel:
                 return None
         else:
             return None
+
+    def _generate_pairings(self, players):
+        """Generate pairings for a tournament
+            Args:
+                players (list): list of players
+        """
+
+        from itertools import combinations
+        possible_pairs = list(combinations(players, 2))
+        possible_pairs = [
+            (p1, p2) for p1, p2 in possible_pairs
+            if tuple(
+                sorted(
+                    (p1["national_id"], p2["national_id"])
+                )
+            ) not in self.historical_pairs
+        ]
+
+        if not possible_pairs:
+            raise ValueError(MESSAGES["players_already_played_together"])
+
+        possible_pairs.sort(key=lambda pair: abs(pair[0]["points"] - pair[
+            1]["points"]))
+
+        pairings = []
+        used = set()
+
+        # While there are unpaired players and possible pairs
+        while len(used) < len(players) and possible_pairs:
+            p1, p2 = possible_pairs.pop(0)
+            if p1["national_id"] not in used and p2["national_id"] not in used:
+                pairings.append((p1, p2))
+                used.update([p1["national_id"], p2["national_id"]])
+                self.historical_pairs.append(tuple((p1["national_id"],
+                                                    p2["national_id"])))
+
+        if len(used) != len(players):
+            raise ValueError(MESSAGES["no_possible_pairing"])
+
+        return pairings
 
     @staticmethod
     def update_players_points(tournament_id, round_id):

@@ -89,10 +89,15 @@ MESSAGES = {
     Veuillez sélectionner le tour en cours afin de le terminer.
     =============================================================
     """,
+    "no_possible_pairing" "Impossible de former des pairs sans doublon avec "
+    "les joueurs restants"
     "player_unregistered": """
     ===========================================
     Le joueur a bien été désinscrit du tournoi.
     ===========================================
+    """,
+    "players_already_played_together": """
+    Tous les joueurs ont déjà joué ensemble !
     """,
     "player_registered": """
     ======================================
