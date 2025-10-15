@@ -1,5 +1,4 @@
 import json
-from datetime import datetime
 
 from core.constants import (PATH_DATA_TOURNAMENTS_JSON_FILE,
                             PATH_DATA_PLAYERS_JSON_FILE)
@@ -63,44 +62,6 @@ def save_to_json(key, **kwargs):
     write_json_file(path, data)
 
 
-def load_tournament(path_file, tournament_id=None, all_tournaments=False):
-    """Load the last tournament data from the json file
-        Args:
-            path_file (str): Path to the JSON file
-            tournament_id (str): Identifier of the tournament
-            all_tournaments (bool): True to load all tournaments (by
-            default = False)
-    """
-    with open(path_file, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-        datas = data.get("tournaments", [])
-        if datas:
-            if tournament_id is not None:
-                for tournament in datas:
-                    if tournament["tournament_id"] == int(tournament_id):
-                        return tournament
-                return None
-            else:
-                tournaments = []
-                if all_tournaments:
-                    return datas
-                else:
-                    today = datetime.today().date()
-                    for tournament in datas:
-                        tournament_start = tournament["start_date"]
-                        start_date = datetime.strptime(tournament_start,
-                                                       "%d/%m/%Y"
-                                                       ).date()
-                        number_of_rounds = int(tournament["number_of_rounds"])
-                        round_number = int(tournament["round_number"])
-                        if (number_of_rounds > round_number and start_date
-                                >= today):
-                            tournaments.append(tournament)
-                    return tournaments
-        else:
-            return None
-
-
 def update_tournament(path_file, tournament_id, new_value):
     """Update the last tournament data from the json file
         Args:
@@ -122,7 +83,7 @@ def write_file(path_file, data):
     """Write data to a file
         Args:
             path_file (str): Path to the file
-            data (dict): Data to be written
+            data: Data to be written
     """
     with open(path_file, "w", encoding="utf-8") as f:
         f.write(data)

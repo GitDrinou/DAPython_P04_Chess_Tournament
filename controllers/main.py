@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 
 from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
@@ -10,8 +11,9 @@ from models.player import PlayerModel
 from models.tournament import TournamentModel
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
     PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
-from utils.file_utils import load_tournament, read_json_file, update_tournament
+from utils.file_utils import read_json_file, update_tournament
 from utils.console_utils import clear_and_wait
+from utils.tournament_utils import load_tournament
 
 
 class MainController:
@@ -215,7 +217,7 @@ class MainController:
                 self.display_view.display_players(selected_tournament)
                 tournament_choice = self.menu_view.show_tournament_menu(
                     selected_tournament["tournament_id"])
-
+                time.sleep(20)
                 if tournament_choice is not None:
                     if tournament_choice == "1":
                         # Register a player

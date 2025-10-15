@@ -159,11 +159,7 @@ class TournamentModel:
         )
 
         if tournament:
-            count_matchs = 0
-            total_matchs = 0
-
             if round_id == 0:
-
                 # Count total of no ended rounds
                 count_round_ended = sum(1 for r in tournament["rounds"] if
                                         not r["round_end_date"] and r[
@@ -218,21 +214,16 @@ class TournamentModel:
                 return tournament
 
             else:
+                # Case if manager or while application stop before saving
+                # scores
                 rounds = tournament["rounds"]
-                round_ = next(
+                current_round = next(
                     (r for r in rounds if r["round_id"] == round_id),
                     None
                 )
 
-                if round_:
-                    total_matchs += len(round_["matchs"])
-                    for match in round_["matchs"]:
-                        for player_id, score in match["match"]:
-                            if score == 0.0:
-                                count_matchs += 1
-
-                    if ((count_matchs/total_matchs == 2) or
-                            round_["round_start_date"] == ""):
+                if current_round:
+                    if self._is_round_ready_to_update(current_round):
                         return tournament
                     else:
                         ConsoleDisplayer.log(
@@ -240,8 +231,7 @@ class TournamentModel:
                             level="WARNING")
                         return None
                 return None
-        else:
-            return None
+        return None
 
     def _generate_pairings(self, players):
         """Generate pairings for a tournament
@@ -282,6 +272,20 @@ class TournamentModel:
             raise ValueError(MESSAGES["no_possible_pairing"])
 
         return pairings
+
+    @staticmethod
+    def _is_round_ready_to_update(round_data: dict):
+        """Check if a round is ready to update"""
+        total_matchs = 0
+        total_matchs += len(round_data["matchs"])
+        unscored_matchs = 0
+        for match in round_data["matchs"]:
+            for _, score in match["match"]:
+                if score == 0.0:
+                    unscored_matchs += 1
+
+        return (unscored_matchs / total_matchs == 2) or (round_data[
+            "round_start_date"] == "")
 
     @staticmethod
     def update_players_points(tournament_id, round_id):
@@ -339,6 +343,25 @@ class TournamentModel:
                                         level="INFO")
         else:
             return None
+
+    @staticmethod
+    def tournament_is_finished(tournament):
+        """Check if tournament is finished
+            Args:
+                tournament (dict): tournament details
+            Returns:
+                bool: True if tournament is finished
+        """
+        number_of_rounds = tournament["number_of_rounds"]
+        rounds = tournament["rounds"]
+        list_finished_rounds = RoundModel().is_finished(rounds)
+        counter = sum(
+            obj["is_finished"] == "X" for obj in list_finished_rounds)
+        print(f"DBUG: {counter}")
+        if counter == int(number_of_rounds):
+            return True
+        else:
+            return False
 
     def __str__(self):
         """Return string representation of tournament"""

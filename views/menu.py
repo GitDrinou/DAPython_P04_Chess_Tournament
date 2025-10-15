@@ -1,9 +1,9 @@
 import os
 
+from models.tournament import TournamentModel
 from utils.console_utils import ConsoleDisplayer
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file
-from utils.tournament_utils import tournament_is_finished
 
 
 class MenusView:
@@ -12,6 +12,8 @@ class MenusView:
     - Tournament,
     - Round
     - Report"""
+    def __init__(self):
+        self.tournament_model = TournamentModel()
 
     @staticmethod
     def clear_console():
@@ -38,8 +40,7 @@ class MenusView:
         )
         return choice
 
-    @staticmethod
-    def show_tournament_menu(tournament_id):
+    def show_tournament_menu(self, tournament_id):
         """Display the current tournament menu
             Args:
                 tournament_id (str): Identifier of the tournament
@@ -54,7 +55,7 @@ class MenusView:
             current_round_number = tournament["round_number"]
             number_pf_rounds = tournament["number_of_rounds"]
 
-            if not tournament_is_finished(tournament):
+            if not self.tournament_model.tournament_is_finished(tournament):
 
                 options = [
                     "Inscrire un joueur au tournoi",
