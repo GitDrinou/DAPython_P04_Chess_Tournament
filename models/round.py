@@ -132,6 +132,41 @@ class RoundModel:
         else:
             return None
 
+    @staticmethod
+    def is_finished(rounds):
+        """Method that checks if a round is finished or not..
+            Args:
+                rounds (list): list of rounds
+            Returns:
+                finished_rounds (list): List of rounds with finished
+                indicator (X).
+        """
+        finished_rounds = []
+        counter_match = 0
+        for round_ in rounds:
+            for match_ in round_["matchs"]:
+                player1_id, player1_score = match_["match"][0]
+                player2_id, player2_score = match_["match"][1]
+                player1_score = float(player1_score)
+                player2_score = float(player2_score)
+
+                if player1_score == 0.0 and player2_score == 0.0:
+                    counter_match += 1
+
+            if (counter_match == len(round_["matchs"])
+                    or round_["round_end_date"] == ""):
+                finished_rounds.append({
+                    "round_id": round_["round_id"],
+                    "is_finished": ""
+                })
+            else:
+                finished_rounds.append({
+                    "round_id": round_["round_id"],
+                    "is_finished": "X"
+                })
+
+        return finished_rounds
+
     def __str__(self):
         """Return string representation of round for printing"""
         round_info = f"{self.name} - du {self.start_date} au {self.end_date}\n"

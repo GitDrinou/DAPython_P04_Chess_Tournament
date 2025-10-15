@@ -4,9 +4,9 @@ import os
 
 from controllers.main import MainController
 from controllers.report import ReportController
-from controllers.round import RoundController
 from controllers.tournament import TournamentController
 from core.constants import PATH_DATA
+from models.round import RoundModel
 from models.tournament import TournamentModel
 from views.menu import MenusView
 from views.display_table import DisplayTableView
@@ -38,14 +38,14 @@ def main():
     """Main entry point of the application."""
     tournament_model = TournamentModel()
     tournament_controller = TournamentController()
-    round_controller = RoundController()
+    round_model = RoundModel()
     report_controller = ReportController()
     main_view = MenusView()
     prompt_view = PromptView()
     display_view = DisplayTableView()
     application_controller = MainController(tournament_model,
                                             tournament_controller,
-                                            round_controller,
+                                            round_model,
                                             report_controller,
                                             main_view, prompt_view,
                                             display_view)

@@ -17,14 +17,13 @@ from utils.console_utils import clear_and_wait
 class MainController:
     """ Main class controller for the application"""
 
-    def __init__(self, tournament_model, tournament_controller,
-                 round_controller, report_controller,
-                 menu_view, prompt_view, display_view):
+    def __init__(self, tournament_model, tournament_controller, round_model,
+                 report_controller, menu_view, prompt_view, display_view):
         """Initialize the main controller
             Args:
                 tournament_model (TournamentModel): Tournament model
                 tournament_controller (TournamentController)
-                round_controller (RoundController)
+                round_model (RoundModel): Round model
                 report_controller (ReportController)
                 menu_view (MenuView)
                 prompt_view (PromptView)
@@ -32,7 +31,7 @@ class MainController:
         """
         self.tournament_model = tournament_model
         self.tournament_controller = tournament_controller
-        self.round_controller = round_controller
+        self.round_model = round_model
         self.report_controller = report_controller
         self.menu_view = menu_view
         self.prompt_view = prompt_view
@@ -163,7 +162,7 @@ class MainController:
             raise RoundGenerationError(MESSAGES["generate_round_date"])
 
         round_number = len(last_round)
-        finished_rounds = self.round_controller.is_finished(
+        finished_rounds = self.round_model.is_finished(
             selected_tournament["rounds"])
         self.display_view.display_rounds(selected_tournament["rounds"],
                                          finished_rounds)

@@ -1,4 +1,4 @@
-from controllers.round import RoundController
+from models.round import RoundModel
 
 
 def tournament_is_finished(tournament):
@@ -10,7 +10,7 @@ def tournament_is_finished(tournament):
     """
     number_of_rounds = tournament["number_of_rounds"]
     rounds = tournament["rounds"]
-    list_finished_rounds = RoundController().is_finished(rounds)
+    list_finished_rounds = RoundModel().is_finished(rounds)
     counter = sum(obj["is_finished"] == "X" for obj in list_finished_rounds)
 
     if counter == int(number_of_rounds):
