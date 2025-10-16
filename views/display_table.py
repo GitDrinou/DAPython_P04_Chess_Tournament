@@ -15,8 +15,8 @@ class DisplayTableView:
             tournament_id = entry["tournament_id"]
             name = entry["name"]
             start_date = entry["start_date"]
-            round_number = entry["round_number"]
             total_players = len(entry["players"])
+            round_number = entry["round_number"]
             rows.append([tournament_id, name, start_date, total_players,
                          round_number])
         headers = [

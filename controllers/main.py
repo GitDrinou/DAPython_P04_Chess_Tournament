@@ -61,7 +61,7 @@ class MainController:
                         tournament["number_of_rounds"]
                     )
                 )
-                clear_and_wait(delay=5)
+                clear_and_wait(delay=5, console_view=self.menu_view)
             elif user_choice == "2":
                 # Start a tournament or continue a started tournament
                 clear_and_wait(delay=0, console_view=self.menu_view)
@@ -73,7 +73,7 @@ class MainController:
                     if tournament_id > 0:
                         self._handle_tournament_choice(tournament_id)
                 else:
-                    clear_and_wait(message=MESSAGES["tournament_detail"])
+                    clear_and_wait(message=MESSAGES["no_tournament_ongoing"])
             elif user_choice == "3":
                 # Generates reports
                 clear_and_wait(delay=0, console_view=self.menu_view)
@@ -97,7 +97,7 @@ class MainController:
         clear_and_wait(delay=0, console_view=self.menu_view)
         tournament_id = selected_tournament["tournament_id"]
         if len(selected_tournament["rounds"]) > 0:
-            raise PlayerRegistrationError(MESSAGES["register_players"])
+            raise PlayerRegistrationError(MESSAGES["no_registration_players"])
 
         player = self.prompt_view.player_prompt()
         try:
@@ -125,7 +125,7 @@ class MainController:
         clear_and_wait(delay=0, console_view=self.menu_view)
         if len(selected_tournament["rounds"]) > 0 or len(
                 selected_tournament["players"]) == 0:
-            raise PlayerDeletionError(MESSAGES["delete_player"])
+            raise PlayerDeletionError(MESSAGES["no_deletion_possible"])
 
         self.display_view.display_players(selected_tournament)
         national_id = self.prompt_view.delete_player_prompt()
@@ -142,22 +142,21 @@ class MainController:
                 f"{MESSAGES['failure_deletion']} : {str(e)}"
             )
 
-    def _validate_round_generation(self, selected_tournament):
+    @staticmethod
+    def _validate_round_generation(selected_tournament):
         """Validate a round generation
             Args:
                 selected_tournament (tournament): data for a tournament
         """
         if (len(selected_tournament["players"]) < 4 or len(
                 selected_tournament["players"]) % 2 != 0):
-            clear_and_wait(delay=2, console_view=self.menu_view)
-            raise RoundGenerationError(MESSAGES["generate_round_players"])
+            raise RoundGenerationError(MESSAGES["no_generate_due_to_players"])
 
         today = datetime.today().date()
         start_date = datetime.strptime(selected_tournament["start_date"],
                                        "%d/%m/%Y")
         if start_date.date() > today:
-            clear_and_wait(delay=2, console_view=self.menu_view)
-            raise RoundGenerationError(MESSAGES["generate_round_date"])
+            raise RoundGenerationError(MESSAGES["no_generate_due_to_date"])
 
     def _handle_round_generation(self, selected_tournament):
         """Handle a round generation request
@@ -195,7 +194,6 @@ class MainController:
             raise RoundGenerationError(MESSAGES["no_generate_round"])
 
         if int(selected_tournament["number_of_rounds"]) < round_number:
-            clear_and_wait(delay=0, console_view=self.menu_view)
             raise InvalidTournamentStateError(MESSAGES["all_rounds_reached"])
 
         clear_and_wait(delay=0, console_view=self.menu_view)
@@ -264,6 +262,18 @@ class MainController:
                                level="ERROR",
                                console_view=self.menu_view)
 
+    def _check_round_started(self, tournament):
+        last_round = tournament["rounds"][-1]
+        if last_round["round_start_date"] == "":
+            clear_and_wait(delay=0, console_view=self.menu_view)
+            last_round["round_end_date"] = ""
+            update_tournament(
+                PATH_DATA_TOURNAMENTS_JSON_FILE,
+                tournament["tournament_id"],
+                tournament
+            )
+            raise RoundEndError(MESSAGES["round_not_started"])
+
     def _handle_round_end(self, tournament_id, selected_round):
         """Handle a round end request
             Args:
@@ -282,17 +292,9 @@ class MainController:
             self.display_view.display_a_round(round_)
             tournament = load_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
                                          tournament_id)
-            last_round = tournament["rounds"][-1]
-            if last_round["round_start_date"] == "":
-                clear_and_wait(delay=0, console_view=self.menu_view)
-                last_round["round_end_date"] = ""
-                update_tournament(
-                    PATH_DATA_TOURNAMENTS_JSON_FILE,
-                    tournament["tournament_id"],
-                    tournament
-                )
-                raise RoundEndError(MESSAGES["round_not_started"])
 
+            self._check_round_started(tournament)
+            last_round = tournament["rounds"][-1]
             for match_id, match in enumerate(last_round["matchs"], start=1):
                 self.display_view.display_a_round(last_round)
                 match_score = self.prompt_view.match_prompt(match_id)
@@ -481,6 +483,6 @@ class MainController:
                                console_view=self.menu_view)
             except Exception as e:
                 clear_and_wait(
-                    f"{MESSAGES['failure_basic']}:{str(e)}",
+                    f"{MESSAGES['failure']}:{str(e)}",
                     level="ERROR",
                     console_view=self.menu_view)

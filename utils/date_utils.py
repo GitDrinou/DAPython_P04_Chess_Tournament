@@ -9,11 +9,15 @@ def validate_date(date_to_validate):
         Args:
             date_to_validate (str): Date entered by the user
     """
+    date_to_validate = date_to_validate.strip()
     try:
         return datetime.strptime(date_to_validate, "%d/%m/%Y")
     except ValueError:
-        print(f"La date {date_to_validate} est invalide. Veuillez entrer une "
-              f"date valide.")
+        ConsoleDisplayer.log(
+            message="La date est invalide. Veuillez entrer une date valide.",
+            level="ERROR",
+            dynamic_var="Format attendu : DD/MM/AAAA"
+        )
 
 
 def checks_dates(start_date, end_date):

@@ -43,19 +43,3 @@ def load_tournament(path_file, tournament_id=None, all_tournaments=False):
             return datas
 
     return tournaments
-
-# def update_tournament(path_file, tournament_id, new_value):
-#     """Update the last tournament data from the json file
-#         Args:
-#             path_file (str): Path to the JSON file
-#             tournament_id (str): Identifier of the tournament
-#             new_value (str): New value for the tournament key
-#     """
-#     data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-#
-#     for index, tournament in enumerate(data["tournaments"]):
-#         if tournament.get("tournament_id") == int(tournament_id):
-#             data["tournaments"][index] = new_value
-#             break
-#
-#     write_json_file(path_file, data)

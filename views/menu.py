@@ -76,8 +76,8 @@ class MenusView:
                 )
                 return choice
             else:
-                ConsoleDisplayer.log(MESSAGES["congratulations"], level="INFO")
-                return None
+                return ConsoleDisplayer.log(MESSAGES["congratulations"],
+                                            level="INFO")
         else:
             return None
 
