@@ -1,4 +1,3 @@
-import time
 from datetime import datetime
 
 from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
@@ -217,7 +216,6 @@ class MainController:
                 self.display_view.display_players(selected_tournament)
                 tournament_choice = self.menu_view.show_tournament_menu(
                     selected_tournament["tournament_id"])
-                time.sleep(20)
                 if tournament_choice is not None:
                     if tournament_choice == "1":
                         # Register a player
@@ -228,7 +226,7 @@ class MainController:
                     elif tournament_choice == "3":
                         # Generate a round or continue a started round
                         self._handle_round_generation(selected_tournament)
-                        clear_and_wait(delay=3, console_view=self.menu_view)
+                        clear_and_wait(delay=2, console_view=self.menu_view)
                     elif tournament_choice in ["4", "5"]:
                         # [4] Pause the tournament [5] Return to the main menu
                         clear_and_wait(delay=0, console_view=self.menu_view)

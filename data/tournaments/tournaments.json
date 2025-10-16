@@ -15,7 +15,7 @@
                     "last_name": "WERBER",
                     "first_name": "Bernard",
                     "birth_date": "18/09/1961",
-                    "points": 1.5
+                    "points": 2.0
                 },
                 {
                     "national_id": "M68954",
@@ -29,14 +29,14 @@
                     "last_name": "CHATTAM",
                     "first_name": "Maxime",
                     "birth_date": "19/02/1974",
-                    "points": 2.0
+                    "points": 2.5
                 },
                 {
                     "national_id": "L04859",
                     "last_name": "LEVY",
                     "first_name": "Marc",
                     "birth_date": "16/10/1961",
-                    "points": 3.0
+                    "points": 4.0
                 }
             ],
             "rounds": [
@@ -146,18 +146,18 @@
                     "round_id": 4,
                     "name": "Round 4",
                     "round_start_date": "15-10-2025 14:01:55",
-                    "round_end_date": "15-10-2025 14:02:00",
+                    "round_end_date": "16-10-2025 10:02:03",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
                                     "L04859",
-                                    0.0
+                                    "1"
                                 ],
                                 [
                                     "M68954",
-                                    0.0
+                                    "0"
                                 ]
                             ]
                         },
@@ -166,11 +166,11 @@
                             "match": [
                                 [
                                     "C32049",
-                                    0.0
+                                    "1"
                                 ],
                                 [
                                     "W58475",
-                                    0.0
+                                    "1"
                                 ]
                             ]
                         }

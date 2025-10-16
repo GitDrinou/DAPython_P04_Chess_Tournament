@@ -41,7 +41,8 @@ class MenusView:
         )
         return choice
 
-    def show_tournament_menu(self, tournament_id):
+    @staticmethod
+    def show_tournament_menu(tournament_id):
         """Display the current tournament menu
             Args:
                 tournament_id (str): Identifier of the tournament
