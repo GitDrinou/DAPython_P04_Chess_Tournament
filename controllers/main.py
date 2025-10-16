@@ -129,16 +129,35 @@ class MainController:
 
         self.display_view.display_players(selected_tournament)
         national_id = self.prompt_view.delete_player_prompt()
+        tournament_id = selected_tournament["tournament_id"]
+
         try:
             self.tournament_controller.unregister_a_player_from_a_tournament(
-                selected_tournament["tournament_id"],
+                tournament_id,
                 national_id
             )
-            clear_and_wait(delay=2, console_view=self.menu_view)
+            clear_and_wait(delay=2)
         except Exception as e:
             raise PlayerDeletionError(
                 f"{MESSAGES['failure_deletion']} : {str(e)}"
             )
+
+    def _validate_round_generation(self, selected_tournament):
+        """Validate a round generation
+            Args:
+                selected_tournament (tournament): data for a tournament
+        """
+        if (len(selected_tournament["players"]) < 4 or len(
+                selected_tournament["players"]) % 2 != 0):
+            clear_and_wait(delay=2, console_view=self.menu_view)
+            raise RoundGenerationError(MESSAGES["generate_round_players"])
+
+        today = datetime.today().date()
+        start_date = datetime.strptime(selected_tournament["start_date"],
+                                       "%d/%m/%Y")
+        if start_date.date() > today:
+            clear_and_wait(delay=2, console_view=self.menu_view)
+            raise RoundGenerationError(MESSAGES["generate_round_date"])
 
     def _handle_round_generation(self, selected_tournament):
         """Handle a round generation request
@@ -148,19 +167,8 @@ class MainController:
         """
         clear_and_wait(delay=0, console_view=self.menu_view)
         last_round = selected_tournament["rounds"]
-        today = datetime.today().date()
-        start_date = datetime.strptime(
-            selected_tournament["start_date"],
-            "%d/%m/%Y"
-        )
-        if (len(selected_tournament["players"]) < 4 or len(
-                selected_tournament["players"]) % 2 != 0):
-            clear_and_wait(delay=0, console_view=self.menu_view)
-            raise RoundGenerationError(MESSAGES["generate_round_players"])
 
-        if start_date.date() > today:
-            clear_and_wait(delay=0, console_view=self.menu_view)
-            raise RoundGenerationError(MESSAGES["generate_round_date"])
+        self._validate_round_generation(selected_tournament)
 
         round_number = len(last_round)
         finished_rounds = self.round_model.is_finished(

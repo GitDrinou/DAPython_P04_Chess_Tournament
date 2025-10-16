@@ -116,7 +116,7 @@ class TournamentModel:
         """Unregister an identified player from the tournament
             Args:
                 tournament_id (int): Identifier of the tournament
-                national_id (int): Identifier of the player
+                national_id (str): Identifier of the player
         """
         data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
         tournaments = data["tournaments"]
@@ -136,10 +136,7 @@ class TournamentModel:
                 tournament
             )
 
-            return ConsoleDisplayer.log(MESSAGES["player_unregistered"],
-                                        level="INFO")
-        else:
-            return None
+            ConsoleDisplayer.log(MESSAGES["player_unregistered"], level="INFO")
 
     def generate_a_round(self, round_number, players,
                          tournament_id, round_id=None):
