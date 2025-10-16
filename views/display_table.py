@@ -5,6 +5,31 @@ class DisplayTableView:
     """Report view class"""
 
     @staticmethod
+    def display_tournaments(tournament):
+        """Display a table with the all non-finished tournaments"""
+        data_report = sorted(tournament, key=lambda x: x[
+            "start_date"])
+
+        rows = []
+        for entry in data_report:
+            tournament_id = entry["tournament_id"]
+            name = entry["name"]
+            start_date = entry["start_date"]
+            round_number = entry["round_number"]
+            total_players = len(entry["players"])
+            rows.append([tournament_id, name, start_date, total_players,
+                         round_number])
+        headers = [
+            "Identifiant du tournoi",
+            "Nom",
+            "Date de début", "Total de joueurs",
+            "N° du tour"
+        ]
+
+        print("\n** LISTE DES TOURNOIS EN COURS OU A VENIR **")
+        print(tabulate(rows, headers=headers, tablefmt="outline"))
+
+    @staticmethod
     def display_a_round(round_detail):
         """Display a table with a round's details
             Args:
@@ -61,31 +86,6 @@ class DisplayTableView:
         print(f"\tDu: {start_date}")
         print(f"\tAu: {end_date}\n")
         print(f"Nombre de joueurs inscrits: {total_players}\n")
-        print(tabulate(rows, headers=headers, tablefmt="outline"))
-
-    @staticmethod
-    def display_tournaments(tournament):
-        """Display a table with the all non-finished tournaments"""
-        data_report = sorted(tournament, key=lambda x: x[
-            "start_date"])
-
-        rows = []
-        for entry in data_report:
-            tournament_id = entry["tournament_id"]
-            name = entry["name"]
-            start_date = entry["start_date"]
-            round_number = entry["round_number"]
-            total_players = len(entry["players"])
-            rows.append([tournament_id, name, start_date, total_players,
-                         round_number])
-        headers = [
-            "Identifiant du tournoi",
-            "Nom",
-            "Date de début", "Total de joueurs",
-            "N° du tour"
-        ]
-
-        print("\n** LISTE DES TOURNOIS EN COURS OU A VENIR **")
         print(tabulate(rows, headers=headers, tablefmt="outline"))
 
     def display_rounds(self, rounds, finished_rounds):

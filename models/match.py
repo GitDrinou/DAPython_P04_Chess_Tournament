@@ -1,5 +1,5 @@
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
-from utils.tournament_utils import update_tournament
+from utils.file_utils import update_tournament
 
 
 class MatchModel:

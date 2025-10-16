@@ -4,6 +4,7 @@ from models.tournament import TournamentModel
 from utils.console_utils import ConsoleDisplayer
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file
+from utils.tournament_helpers import tournament_is_finished
 
 
 class MenusView:
@@ -55,7 +56,7 @@ class MenusView:
             current_round_number = tournament["round_number"]
             number_pf_rounds = tournament["number_of_rounds"]
 
-            if not self.tournament_model.tournament_is_finished(tournament):
+            if not tournament_is_finished(tournament):
 
                 options = [
                     "Inscrire un joueur au tournoi",

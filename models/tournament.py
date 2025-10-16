@@ -344,25 +344,6 @@ class TournamentModel:
         else:
             return None
 
-    @staticmethod
-    def tournament_is_finished(tournament):
-        """Check if tournament is finished
-            Args:
-                tournament (dict): tournament details
-            Returns:
-                bool: True if tournament is finished
-        """
-        number_of_rounds = tournament["number_of_rounds"]
-        rounds = tournament["rounds"]
-        list_finished_rounds = RoundModel().is_finished(rounds)
-        counter = sum(
-            obj["is_finished"] == "X" for obj in list_finished_rounds)
-        print(f"DBUG: {counter}")
-        if counter == int(number_of_rounds):
-            return True
-        else:
-            return False
-
     def __str__(self):
         """Return string representation of tournament"""
         return (f"Identifiant du tournoi: {self.tournament_id} - {self.name}\n"
