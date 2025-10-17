@@ -139,7 +139,7 @@ class PromptView:
         while True:
             round_id = ConsoleDisplayer.display_prompt(
                 text=INSTRUCTIONS["round_id_input"],
-                title=INSTRUCTIONS["title_round_selection"]
+                title=TITLES["title_round_selection"]
             )
 
             try:

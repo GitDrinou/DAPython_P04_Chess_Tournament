@@ -2,8 +2,8 @@ PATH_DATA = "./data/tournaments/"
 PATH_DATA_PLAYERS_JSON_FILE = "./data/tournaments/players.json"
 PATH_DATA_TOURNAMENTS_JSON_FILE = "./data/tournaments/tournaments.json"
 PATH_REPORTS_FILES = "./reports/html/"
-WIN_VALUE = 1
-LOSE_VALUE = 0
+WIN_VALUE = "1"
+LOSE_VALUE = "0"
 MESSAGES = {
     "all_rounds_reached": """
     ==============================================================
@@ -197,27 +197,24 @@ INSTRUCTIONS = {
     "national_id_input": "Saisissez l'identifiant national du joueur",
     "last_name_input": "Saisissez le nom de famille du joueur",
     "first_name_input": "Saisissez le prénom du joueur",
-    "tournament_start_input": """
-    Saisissez la date de début du tournoi (format attendu: JJ/MM/AAAA)""",
-    "tournament_end_input": """
-    Saisissez la date de fin du tournoi (format attendu: JJ/MM/AAAA)""",
+    "tournament_start_input": "Saisissez la date de début du tournoi (format "
+    "attendu: JJ/MM/AAAA)",
+    "tournament_end_input": "Saisissez la date de fin du tournoi (format "
+    "attendu: JJ/MM/AAAA)",
     "tournament_name_input": "Saisissez le nom du tournoi",
     "tournament_localisation_input": "Saisissez la localisation du tournoi",
     "tournament_description_input": "Saisissez une description du tournoi",
     "tournament_number_round_input": "Saisissez le nombre de tours (par "
                                      "défaut 4)",
-    "tournament_id_input": """
-    Saisissez l'identifiant du tournoi parmi la liste ci-dessus
-    ou pour revenir au menu précédent, tapez sur la touche "R" de votre clavier
-    """,
-    "round_id_input": """
-    Les différentes possibilités:
-    \t- saisir l'identifiant du tour en cours
-    \t- taper sur la touche ENTREE de votre clavier pour générer un nouveau
-    tour
-    \t- taper sur la tour "R" de votre clavier pour revenir au menu précédent
-    Choisissez une option
-    """,
+    "tournament_id_input": "Saisissez l'identifiant du tournoi parmi la "
+                           "liste ci-dessus\nou pour revenir au menu "
+                           "précédent, tapez sur la touche 'R' de votre "
+                           "clavier",
+    "round_id_input": "Les différentes possibilités:\n- saisir l'identifiant "
+                      "du tour en cours\n- taper sur la touche ENTREE de "
+                      "votre clavier pour générer un nouveau tour\n- taper "
+                      "sur la tour 'R' de votre clavier pour revenir au menu "
+                      "précédent.\nChoisissez une option: ",
     "save_score1_input": "Saisissez le score du joueur 1 | Score 1",
     "save_score2_input": "Saisissez le score du joueur 2 | Score 2",
 }
