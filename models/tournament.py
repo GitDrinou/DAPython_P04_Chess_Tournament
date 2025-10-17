@@ -223,10 +223,7 @@ class TournamentModel:
                     if self._is_round_ready_to_update(current_round):
                         return tournament
                     else:
-                        ConsoleDisplayer.log(
-                            MESSAGES["round_already_ended"],
-                            level="WARNING")
-                        return None
+                        return "round_already_ended"
                 return None
         return None
 

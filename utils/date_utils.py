@@ -16,7 +16,7 @@ def validate_date(date_to_validate):
         ConsoleDisplayer.log(
             message="La date est invalide. Veuillez entrer une date valide.",
             level="ERROR",
-            dynamic_var="Format attendu : DD/MM/AAAA"
+            dynamic_var="Format attendu : JJ/MM/AAAA"
         )
 
 

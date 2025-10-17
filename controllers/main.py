@@ -11,7 +11,7 @@ from models.tournament import TournamentModel
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
     PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file, update_tournament
-from utils.console_utils import clear_and_wait
+from utils.console_utils import clear_and_wait, ConsoleDisplayer
 from utils.tournament_utils import load_tournament
 
 
@@ -61,7 +61,7 @@ class MainController:
                         tournament["number_of_rounds"]
                     )
                 )
-                clear_and_wait(delay=5, console_view=self.menu_view)
+                clear_and_wait(console_view=self.menu_view)
             elif user_choice == "2":
                 # Start a tournament or continue a started tournament
                 clear_and_wait(delay=0, console_view=self.menu_view)
@@ -189,8 +189,13 @@ class MainController:
             )
         )
 
+        if generation == "round_already_ended":
+            ConsoleDisplayer.log(MESSAGES["round_already_ended"],
+                                 level="WARNING")
+            return
+
         if generation is None:
-            clear_and_wait(delay=0, console_view=self.menu_view)
+            clear_and_wait(console_view=self.menu_view)
             raise RoundGenerationError(MESSAGES["no_generate_round"])
 
         if int(selected_tournament["number_of_rounds"]) < round_number:
