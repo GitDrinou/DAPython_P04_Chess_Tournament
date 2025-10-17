@@ -14,9 +14,9 @@ def validate_date(date_to_validate):
         return datetime.strptime(date_to_validate, "%d/%m/%Y")
     except ValueError:
         ConsoleDisplayer.log(
-            message="La date est invalide. Veuillez entrer une date valide.",
-            level="ERROR",
-            dynamic_var="Format attendu : JJ/MM/AAAA"
+            message="La date est invalide. Veuillez entrer une date "
+                    "valide.\nFormat attendu : JJ/MM/AAAA",
+            level="ERROR"
         )
 
 

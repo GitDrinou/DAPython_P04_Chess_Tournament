@@ -5,16 +5,14 @@ class ConsoleDisplayer:
     """Class to manage console print messages"""
 
     @staticmethod
-    def log(message, level=None, dynamic_var=None):
+    def log(message, level=None):
         levels = {
             "INFO": "[INFO]",
             "WARNING": "[ATTENTION]",
             "ERROR": "[ERREUR]",
         }
-        if dynamic_var is None:
-            dynamic_var = ""
 
-        print(f"\n{levels.get(level,'[ℹ️]')}\n{message}\n{dynamic_var}")
+        print(f"\n{levels.get(level,'[ℹ️]')}\n{message}")
 
     @staticmethod
     def display_menu(title, options, **kwargs):
@@ -51,6 +49,11 @@ class ConsoleDisplayer:
         response = input(f"{text}: ")
 
         return response
+
+    @staticmethod
+    def display_print(text):
+        """Display a simple print"""
+        print(text)
 
 
 def clear_and_wait(message=None, level="WARNING", delay=2, console_view=None,

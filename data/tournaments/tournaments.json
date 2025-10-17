@@ -6,7 +6,7 @@
             "location": "Salle dark vador - 3\u00e8me \u00e9tage gauche de l'\u00e9toile de la mort",
             "start_date": "17/10/2025",
             "end_date": "17/10/2025",
-            "description": "inLe tournoi sest fier d'invit\u00e9 Luke Skywalker . ",
+            "description": "Le tournoi est fier d'invit\u00e9 Luke Skywalker . ",
             "number_of_rounds": "4",
             "round_number": "4",
             "players": [
@@ -15,21 +15,21 @@
                     "last_name": "ZOOM",
                     "first_name": "Theodorus",
                     "birth_date": "15/02/1980",
-                    "points": 1.5
+                    "points": 2.0
                 },
                 {
                     "national_id": "T86950",
                     "last_name": "POLKA",
                     "first_name": "Trasher",
                     "birth_date": "31/12/2000",
-                    "points": 2.5
+                    "points": 3.5
                 },
                 {
                     "national_id": "H07945",
                     "last_name": "HELL",
                     "first_name": "Domus",
                     "birth_date": "05/04/1976",
-                    "points": 1.5
+                    "points": 2.0
                 },
                 {
                     "national_id": "M45930",
@@ -145,18 +145,18 @@
                 {
                     "round_id": 4,
                     "name": "Round 4",
-                    "round_start_date": "17-10-2025 09:57:01",
-                    "round_end_date": "17-10-2025 09:58:17",
+                    "round_start_date": "17-10-2025 11:01:17",
+                    "round_end_date": "17-10-2025 11:06:20",
                     "matchs": [
                         {
                             "match_id": 1,
                             "match": [
                                 [
-                                    "T86950",
-                                    "1"
+                                    "M45930",
+                                    "0"
                                 ],
                                 [
-                                    "M45930",
+                                    "T86950",
                                     "1"
                                 ]
                             ]

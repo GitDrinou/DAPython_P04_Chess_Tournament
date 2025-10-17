@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from utils.console_utils import ConsoleDisplayer
-from core.constants import MESSAGES
+from core.constants import MESSAGES, TITLES, INSTRUCTIONS, LOSE_VALUE, \
+    WIN_VALUE
 from utils.date_utils import validate_date, checks_dates
 from utils.player_utils import check_format_national_id, check_player_is_exist
 
@@ -28,8 +29,8 @@ class PromptView:
         """Prompt the user to enter player's lastname and firstname"""
         while True:
             national_id = ConsoleDisplayer.display_prompt(
-                text="Saisissez l'identifiant national du joueur",
-                title="INSCRIPTION D'UN JOUEUR"
+                text=INSTRUCTIONS["national_id_input"],
+                title=TITLES["title_player_registration"],
             )
 
             if check_format_national_id(national_id):
@@ -46,9 +47,9 @@ class PromptView:
                     break
                 else:
                     lastname = ConsoleDisplayer.display_prompt(
-                        text="Saisissez le nom de famille du joueur")
+                        text=INSTRUCTIONS["last_name_input"])
                     firstname = ConsoleDisplayer.display_prompt(
-                        text="Saisissez le prénom du joueur")
+                        text=INSTRUCTIONS["first_name_input"])
                     birthdate = self.birthdate_player_prompt()
                     player = {
                         "national_id": national_id,
@@ -60,7 +61,6 @@ class PromptView:
             else:
                 ConsoleDisplayer.log(MESSAGES["invalid_national_id"],
                                      level="WARNING")
-
         return player
 
     @staticmethod
@@ -69,11 +69,9 @@ class PromptView:
 
         while True:
             start_date = ConsoleDisplayer.display_prompt(
-                text="Saisissez la date de début du tournoi "
-                     "(format attendu: JJ/MM/AAAA)")
+                text=INSTRUCTIONS["tournament_start_input"])
             end_date = ConsoleDisplayer.display_prompt(
-                text="Saisissez la date de fin du tournoi "
-                     "(format attendu: JJ/MM/AAAA)")
+                text=INSTRUCTIONS["tournament_end_input"])
 
             start_date = validate_date(start_date)
             end_date = validate_date(end_date)
@@ -91,14 +89,14 @@ class PromptView:
         """Prompt the user to enter tournament's details"""
 
         name = ConsoleDisplayer.display_prompt(
-            text="Saisissez le nom du tournoi",
-            title="CRÉATION D'UN NOUVEAU TOURNOI")
+            text=INSTRUCTIONS["tournament_name_input"],
+            title=TITLES["title_tournament_creation"])
         location = ConsoleDisplayer.display_prompt(
-            text="Saisissez la localisation du tournoi")
+            text=INSTRUCTIONS["tournament_localisation_input"])
         description = ConsoleDisplayer.display_prompt(
-            text="Saisissez une description du tournoi")
+            text=INSTRUCTIONS["tournament_description_input"])
         number_of_rounds = ConsoleDisplayer.display_prompt(
-            text="Saisissez le nombre de tours (par défaut 4)")
+            text=INSTRUCTIONS["tournament_number_round_input"])
 
         dates = self.dates_tournament_prompt()
 
@@ -118,10 +116,8 @@ class PromptView:
         while True:
 
             tournament_id = ConsoleDisplayer.display_prompt(
-                text="Saisissez l'identifiant du tournoi parmi la liste "
-                     "ci-dessus\nou pour revenir au menu précédent, tapez sur "
-                     "la touche R de votre clavier.",
-                title="SÉLECTION D'UN TOURNOI"
+                text=INSTRUCTIONS["tournament_id_input"],
+                title=TITLES["title_tournament_selection"]
             )
 
             try:
@@ -142,12 +138,8 @@ class PromptView:
         """Prompt the user to select a round"""
         while True:
             round_id = ConsoleDisplayer.display_prompt(
-                text="Les différentes possibilités:\n\t- saisir "
-                     "l'identifiant du tour en cours\n\t- taper sur la "
-                     "touche ENTREE de votre clavier pour générer un nouveau "
-                     "tour\n\t- taper sur la tour R de votre clavier pour "
-                     "revenir au menu précédent\nChoisissez une option",
-                title="SÉLECTIONNER UN TOUR"
+                text=INSTRUCTIONS["round_id_input"],
+                title=INSTRUCTIONS["title_round_selection"]
             )
 
             try:
@@ -161,7 +153,7 @@ class PromptView:
                     round_id = int(round_id)
                     break
             except ValueError:
-                print("La valeur n'existe pas.")
+                ConsoleDisplayer.display_print(MESSAGES["value_not_exist"])
 
         return round_id
 
@@ -169,21 +161,18 @@ class PromptView:
     def match_prompt(match_id):
         """Prompt the user to enter the match's scores"""
         while True:
-
-            print(f"\nINSCRIRE LES SCORES DU MATCH N°{match_id}")
+            ConsoleDisplayer.display_print(
+                f"{TITLES['title_match_score']}{match_id}")
             print("*" * 70)
-            print("Instructions:")
-            print("\t- [1] pour le vainqueur du match")
-            print("\t- [0] pour le perdant du match")
-            print("\t- En cas de match nul, saisissez [1] pour les 2 scores")
+            ConsoleDisplayer.display_print(MESSAGES["scores_instructions"])
             print("*" * 70)
 
             score1 = ConsoleDisplayer.display_prompt(
-                text="Saisissez le score du joueur 1 | Score 1")
+                text=INSTRUCTIONS["save_score1_input"])
             score2 = ConsoleDisplayer.display_prompt(
-                text="Saisissez le score du joueur 2 | Score 2")
+                text=INSTRUCTIONS["save_score2_input"])
 
-            expected_values = ["0", "1"]
+            expected_values = [LOSE_VALUE, WIN_VALUE]
             if score1 in expected_values and score2 in expected_values:
                 scores = {
                     "score1": score1,
@@ -201,8 +190,8 @@ class PromptView:
         """Prompt the user to delete a player"""
 
         national_id = ConsoleDisplayer.display_prompt(
-            text="Saisissez l'identifiant du joueur",
-            title="DÉSINSCRIRE UN JOUEUR"
+            text=INSTRUCTIONS["national_id_input"],
+            title=TITLES["title_player_deletion"]
         )
 
         return national_id

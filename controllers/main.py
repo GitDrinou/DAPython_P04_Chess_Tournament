@@ -445,7 +445,7 @@ class MainController:
                         raise NoPlayersError(
                             MESSAGES["failure_no_players_found"])
                     self.report_controller.players(players)
-                    clear_and_wait(delay=8, console_view=self.menu_view)
+                    clear_and_wait(delay=5, console_view=self.menu_view)
                 elif report_choice == "2":
                     # Tournaments report
                     clear_and_wait(delay=0, console_view=self.menu_view)
@@ -455,7 +455,7 @@ class MainController:
                             MESSAGES["failure_no_tournaments_found"]
                         )
                     self.report_controller.tournaments(tournaments)
-                    clear_and_wait(delay=10, console_view=self.menu_view)
+                    clear_and_wait(delay=5, console_view=self.menu_view)
                 elif report_choice == "3":
                     # Tournament detail
                     clear_and_wait(delay=0, console_view=self.menu_view)
@@ -464,11 +464,11 @@ class MainController:
                 elif report_choice == "4":
                     clear_and_wait(delay=0, console_view=self.menu_view)
                     self._select_tournament_and_generate_report("players")
-                    clear_and_wait(delay=10, console_view=self.menu_view)
+                    clear_and_wait(delay=5, console_view=self.menu_view)
                 elif report_choice == "5":
                     clear_and_wait(delay=0, console_view=self.menu_view)
                     self._select_tournament_and_generate_report("rounds")
-                    clear_and_wait(delay=10, console_view=self.menu_view)
+                    clear_and_wait(delay=5, console_view=self.menu_view)
                 elif report_choice == "6":
                     clear_and_wait(delay=0, console_view=self.menu_view)
                     break

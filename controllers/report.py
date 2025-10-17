@@ -2,7 +2,8 @@ import os
 import platform
 
 from jinja2 import Template
-from core.constants import PATH_REPORTS_FILES
+from core.constants import PATH_REPORTS_FILES, MESSAGES
+from utils.console_utils import ConsoleDisplayer
 from utils.file_utils import write_file
 
 
@@ -85,10 +86,11 @@ class ReportController:
 
         write_file(file, content)
 
-        return print(f"\nLe rapport a été généré avec succès.\nVous pouvez "
-                     f"le retrouver en cliquant sur le lien suivant:\n"
-                     f"{absolute_path_file}\n"
-                     f"ou en allant dans le dossier REPORTS de l'application.")
+        return ConsoleDisplayer.log(
+            MESSAGES["report_generated"] + f"👉🏻  Rapport (format HTML):"
+                                           f" {absolute_path_file}",
+            level="INFO"
+        )
 
     def tournaments(self, tournaments, unique=False):
         """Generate the report for all tournaments or for a specific
@@ -296,10 +298,11 @@ class ReportController:
 
         write_file(file, content)
 
-        return print(f"\nLe rapport a été généré avec succès.\nVous pouvez "
-                     f"le retrouver en cliquant sur le lien suivant:\n"
-                     f"{absolute_path_file}\n"
-                     f"ou en allant dans le dossier REPORTS de l'application.")
+        return ConsoleDisplayer.log(
+            MESSAGES["report_generated"] + f"👉🏻  Rapport (format HTML):"
+                                           f" {absolute_path_file}",
+            level="INFO"
+        )
 
     def tournament_rounds(self, tournament):
         """Generate the report for all rounds of a tournament
@@ -382,7 +385,8 @@ class ReportController:
 
         write_file(file, content)
 
-        return print(f"\nLe rapport a été généré avec succès.\nVous pouvez "
-                     f"le retrouver en cliquant sur le lien suivant:\n"
-                     f"{absolute_path_file}\n"
-                     f"ou en allant dans le dossier REPORTS de l'application.")
+        return ConsoleDisplayer.log(
+            MESSAGES["report_generated"] + f"👉🏻  Rapport (format HTML):"
+                                           f" {absolute_path_file}",
+            level="INFO"
+        )

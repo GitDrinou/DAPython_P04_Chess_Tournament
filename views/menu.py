@@ -2,7 +2,8 @@ import os
 
 from models.tournament import TournamentModel
 from utils.console_utils import ConsoleDisplayer
-from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
+from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES, TITLES, \
+    SELECTIONS
 from utils.file_utils import read_json_file
 from utils.tournament_helpers import tournament_is_finished
 
@@ -25,18 +26,17 @@ class MenusView:
     def show_main_menu():
         """Method to display the main menu with title"""
         print("-" * 70)
-        print("G E S T I O N N A I R E   D E   T O U R N O I S   D ' É C H "
-              "E C S")
+        ConsoleDisplayer.display_print(TITLES["title_application"])
         print("-" * 70)
         options = [
-            "Créer un nouveau tournoi",
-            "Démarrer ou reprendre la gestion d'un tournoi",
-            "Générer des rapports",
-            "Quitter l'application"
+            SELECTIONS["create_tournament"],
+            SELECTIONS["start_or_continue_tournament"],
+            SELECTIONS["generate_reports"],
+            SELECTIONS["leave_application"]
         ]
 
         choice = ConsoleDisplayer.display_menu(
-            title="MENU PRINCIPAL",
+            title=TITLES["title_main_menu"],
             options=options
         )
         return choice
@@ -60,16 +60,16 @@ class MenusView:
             if not tournament_is_finished(tournament):
 
                 options = [
-                    "Inscrire un joueur au tournoi",
-                    "Désinscrire un joueur du tournoi",
-                    f"Générer ou continuer un tour (tour "
+                    SELECTIONS["register_player"],
+                    SELECTIONS["unregister_player"],
+                    f"{SELECTIONS['generate_round']} "
                     f"{current_round_number}/{number_pf_rounds})",
-                    "Mettre en pause le tournoi",
-                    "Revenir au menu principal"
+                    SELECTIONS["pause_tournament"],
+                    SELECTIONS["back_to_main_menu"]
                 ]
 
                 choice = ConsoleDisplayer.display_menu(
-                    title="MENU DE GESTION D'UN TOURNOI",
+                    title=TITLES["title_tournament_menu"],
                     options=options,
                     current_round_number=current_round_number,
                     number_pf_rounds=number_pf_rounds
@@ -86,13 +86,13 @@ class MenusView:
         """Display the round menu for the current tournament"""
 
         options = [
-            "Démarrer le tour",
-            "Terminer le tour et saisir les scores des matchs",
-            "Revenir au menu de gestion du tournoi"
+            SELECTIONS["start_round"],
+            SELECTIONS["end_round"],
+            SELECTIONS["back_to_tournament_menu"]
         ]
 
         choice = ConsoleDisplayer.display_menu(
-            title="MENU DE GESTION D'UN TOUR",
+            title=TITLES["title_round_menu"],
             options=options
         )
 
@@ -103,16 +103,16 @@ class MenusView:
         """Display the report menu"""
 
         options = [
-            "Liste des joueurs par ordre alphabétique",
-            "Liste de tous les tournois",
-            "Nom et dates d'un tournoi",
-            "Liste des joueurs d'un tournoi par ordre alphabétique",
-            "Liste de tous les tours du tournoi et de tous les matchs du tour",
-            "Revenir au menu principal de l'application"
+            SELECTIONS["players_list_report"],
+            SELECTIONS["tournaments_list_report"],
+            SELECTIONS["tournament_detail_report"],
+            SELECTIONS["tournament_players_report"],
+            SELECTIONS["tournament_rounds_report"],
+            SELECTIONS["back_to_main_menu"]
         ]
 
         choice = ConsoleDisplayer.display_menu(
-            title="MENU DE GÉNÉRATION DES RAPPORTS",
+            title=TITLES["tile_reports_menu"],
             options=options
         )
 

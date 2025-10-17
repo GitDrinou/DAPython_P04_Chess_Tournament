@@ -2,6 +2,8 @@ PATH_DATA = "./data/tournaments/"
 PATH_DATA_PLAYERS_JSON_FILE = "./data/tournaments/players.json"
 PATH_DATA_TOURNAMENTS_JSON_FILE = "./data/tournaments/tournaments.json"
 PATH_REPORTS_FILES = "./reports/html/"
+WIN_VALUE = 1
+LOSE_VALUE = 0
 MESSAGES = {
     "all_rounds_reached": """
     ==============================================================
@@ -55,6 +57,11 @@ MESSAGES = {
     Format attendu : 1 lettre + 5 chiffres (ex. A12345)
     ====================================================
     """,
+    "label_start_round": "\tDébut du tour: ",
+    "label_start_tournament": "\tDu: ",
+    "label_end_round": "\tFin du tour: ",
+    "label_end_tournament": "\tAu: ",
+    "label_total_players": "Nombre de joueurs inscrits: ",
     "no_deletion_possible": """
     ============================================================
     Vous ne pouvez pas supprimer de joueur:
@@ -144,6 +151,12 @@ MESSAGES = {
     Veuillez créer un nouveau tournoi.
     ===================================================
     """,
+    "report_generated": """
+    Le rapport a été généré avec succès.
+    Vous pouvez le retrouver :
+    - en allant dans le dossier "/reports" de l'application
+    - ou en cliquant sur le lien ci-dessous:\n
+    """,
     "round_not_started": """
     =============================================================
     Le tour n'a pas encore démarré.
@@ -156,5 +169,77 @@ MESSAGES = {
     Vous allez à présent être invité à enregistrer les scores
     pour chaque matchs du tour.
     =============================================================
-    """
+    """,
+    "scores_instructions": """
+    Instructions:
+    \t- [1] pour le vainqueur du match
+    \t- [0] pour le perdant du match
+    \t- En cas de match nul, saisissez [1] pour les 2 scores
+    """,
+    "value_not_exist": "La valeur n'existe pas."
+}
+TITLES = {
+    "title_application": "G E S T I O N N A I R E   D E   T O U R N O I S   "
+                         "D ' É C H E C S",
+    "title_main_menu": "MENU PRINCIPAL",
+    "title_tournament_menu": "MENU DE GESTION D'UN TOURNOI",
+    "title_tournament_list": "\n** LISTE DES TOURNOIS EN COURS OU A VENIR **",
+    "title_match_score": "\nINSCRIRE LES SCORES DU MATCH N°",
+    "title_player_registration": "INSCRIPTION D'UN JOUEUR",
+    "title_tournament_creation": "CRÉATION D'UN NOUVEAU TOURNOI",
+    "title_tournament_selection": "SÉLECTION D'UN TOURNOI",
+    "title_round_selection": "SÉLECTIONNER UN TOUR",
+    "title_player_deletion": "DÉSINSCRIRE UN JOUEUR",
+    "title_round_menu": "MENU DE GESTION D'UN TOUR",
+    "tile_reports_menu": "MENU DE GÉNÉRATION DES RAPPORTS"
+}
+INSTRUCTIONS = {
+    "national_id_input": "Saisissez l'identifiant national du joueur",
+    "last_name_input": "Saisissez le nom de famille du joueur",
+    "first_name_input": "Saisissez le prénom du joueur",
+    "tournament_start_input": """
+    Saisissez la date de début du tournoi (format attendu: JJ/MM/AAAA)""",
+    "tournament_end_input": """
+    Saisissez la date de fin du tournoi (format attendu: JJ/MM/AAAA)""",
+    "tournament_name_input": "Saisissez le nom du tournoi",
+    "tournament_localisation_input": "Saisissez la localisation du tournoi",
+    "tournament_description_input": "Saisissez une description du tournoi",
+    "tournament_number_round_input": "Saisissez le nombre de tours (par "
+                                     "défaut 4)",
+    "tournament_id_input": """
+    Saisissez l'identifiant du tournoi parmi la liste ci-dessus
+    ou pour revenir au menu précédent, tapez sur la touche "R" de votre clavier
+    """,
+    "round_id_input": """
+    Les différentes possibilités:
+    \t- saisir l'identifiant du tour en cours
+    \t- taper sur la touche ENTREE de votre clavier pour générer un nouveau
+    tour
+    \t- taper sur la tour "R" de votre clavier pour revenir au menu précédent
+    Choisissez une option
+    """,
+    "save_score1_input": "Saisissez le score du joueur 1 | Score 1",
+    "save_score2_input": "Saisissez le score du joueur 2 | Score 2",
+}
+SELECTIONS = {
+    "create_tournament": "Créer un nouveau tournoi",
+    "start_or_continue_tournament": "Démarrer ou reprendre la gestion d'un "
+                                    "tournoi",
+    "generate_reports": "Générer des rapports",
+    "leave_application": "Quitter l'application",
+    "register_player": "Inscrire un joueur au tournoi",
+    "unregister_player": "Désinscrire un joueur du tournoi",
+    "generate_round": "Générer ou continuer un tour (tour ",
+    "pause_tournament": "Mettre en pause le tournoi",
+    "back_to_main_menu": "Revenir au menu principal",
+    "start_round": "Démarrer le tour",
+    "end_round": "Terminer le tour et saisir les scores des matchs",
+    "back_to_tournament_menu": "Revenir au menu de gestion du tournoi",
+    "players_list_report": "Liste des joueurs par ordre alphabétique",
+    "tournaments_list_report": "Liste de tous les tournois",
+    "tournament_detail_report": "Nom et dates d'un tournoi",
+    "tournament_players_report": "Liste des joueurs d'un tournoi par ordre "
+                                 "alphabétique",
+    "tournament_rounds_report": "Liste de tous les tours du tournoi et de "
+                                "tous les matchs du tour",
 }

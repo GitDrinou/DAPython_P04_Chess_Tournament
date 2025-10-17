@@ -1,5 +1,8 @@
 from tabulate import tabulate
 
+from core.constants import MESSAGES, TITLES
+from utils.console_utils import ConsoleDisplayer
+
 
 class DisplayTableView:
     """Report view class"""
@@ -26,7 +29,7 @@ class DisplayTableView:
             "N° du tour"
         ]
 
-        print("\n** LISTE DES TOURNOIS EN COURS OU A VENIR **")
+        ConsoleDisplayer.display_print(TITLES["title_tournament_list"])
         print(tabulate(rows, headers=headers, tablefmt="outline"))
 
     @staticmethod
@@ -49,13 +52,16 @@ class DisplayTableView:
                 rows_round.append([match_id, player1, player2, score1, score2])
             headers = ["Match n°", "Joueur 1", "Joueur 2", "Score1", "Score2"]
 
-            print("--------------------------------------------------------")
+            print("." * 60)
             print(f"** {round_name} **")
-            print(f"\tDébut du tour: {start_round}")
-            print(f"\tFin du tour: {end_round}\n")
-
+            ConsoleDisplayer.display_print(
+                f"{MESSAGES['label_start_round']}{start_round}"
+            )
+            ConsoleDisplayer.display_print(
+                f"{MESSAGES['label_end_round']}{end_round}\n"
+            )
             print(tabulate(rows_round, headers=headers, tablefmt="github"))
-            print("--------------------------------------------------------")
+            print("." * 60)
 
     @staticmethod
     def display_players(tournament):
@@ -81,11 +87,14 @@ class DisplayTableView:
         headers = ["Identifiant national", "Nom de famille", "Prénom",
                    "Date de naissance", "Points"]
 
-        print("\n...........................................................")
+        print("." * 70)
         print(f"** {tournament_name} **\n")
-        print(f"\tDu: {start_date}")
-        print(f"\tAu: {end_date}\n")
-        print(f"Nombre de joueurs inscrits: {total_players}\n")
+        ConsoleDisplayer.display_print(
+            f"{MESSAGES['label_start_tournament']} {start_date}")
+        ConsoleDisplayer.display_print(
+            f"{MESSAGES['label_end_tournament']} {end_date}\n")
+        ConsoleDisplayer.display_print(
+            f"{MESSAGES['label_total_players']} {total_players}\n")
         print(tabulate(rows, headers=headers, tablefmt="outline"))
 
     def display_rounds(self, rounds, finished_rounds):
@@ -108,9 +117,9 @@ class DisplayTableView:
             "Date de fin",
             "Scores enregistrés"
         ]
-        print("\n...........................................................")
+        print("." * 60)
         print(tabulate(rows, headers=headers, tablefmt="github"))
-        print("\n...........................................................")
+        print("." * 60)
 
     @staticmethod
     def round_terminated(round_id, finished_rounds):
