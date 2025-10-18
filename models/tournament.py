@@ -45,7 +45,7 @@ class TournamentModel:
         self.players: List[PlayerModel] = []
 
         # use for pairing players
-        self.historical_pairs = []
+        self.historical_pairs = set()
 
     def create(self, tournament):
         """Create a new tournament and save it to JSON file
@@ -156,6 +156,7 @@ class TournamentModel:
         )
 
         if tournament:
+            self._register_previous_pairs(tournament["rounds"])
             if round_id == 0:
                 # Count total of no ended rounds
                 count_round_ended = sum(1 for r in tournament["rounds"] if
@@ -227,45 +228,78 @@ class TournamentModel:
                 return None
         return None
 
+    def _have_played_before(self, player1, player2):
+        """Check if players have already played before
+            Args:
+                player1 (str): player1 national_id
+                player2 (str): player2 national_id
+        """
+        return (frozenset((player1, player2))
+                in self.historical_pairs)
+
+    def _save_pair(self, player1, player2):
+        """Save a pair to historical pairings
+        Args:
+            player1 (str): player1 national_id
+            player2 (str): player2 national_id
+        """
+        self.historical_pairs.add(frozenset((player1, player2)))
+
+    def _register_previous_pairs(self, rounds):
+        """Load all prévious pairs from existing tournament rounds"""
+        for round_ in rounds:
+            for match in round_["matchs"]:
+                p1 = match["match"][0][0]
+                p2 = match["match"][0][1]
+                self._save_pair(p1, p2)
+
     def _generate_pairings(self, players):
         """Generate pairings for a tournament
             Args:
                 players (list): list of players
         """
-
-        from itertools import combinations
-        possible_pairs = list(combinations(players, 2))
-        possible_pairs = [
-            (p1, p2) for p1, p2 in possible_pairs
-            if tuple(
-                sorted(
-                    (p1["national_id"], p2["national_id"])
-                )
-            ) not in self.historical_pairs
-        ]
-
-        if not possible_pairs:
-            raise ValueError(MESSAGES["players_already_played_together"])
-
-        possible_pairs.sort(key=lambda pair: abs(pair[0]["points"] - pair[
-            1]["points"]))
-
-        pairings = []
+        pairs = []
         used = set()
 
-        # While there are unpaired players and possible pairs
-        while len(used) < len(players) and possible_pairs:
-            p1, p2 = possible_pairs.pop(0)
-            if p1["national_id"] not in used and p2["national_id"] not in used:
-                pairings.append((p1, p2))
-                used.update([p1["national_id"], p2["national_id"]])
-                self.historical_pairs.append(tuple((p1["national_id"],
-                                                    p2["national_id"])))
+        # Pairing logic
+        i = 0
+        while i < len(players) - 1:
+            p1 = players[i]
 
-        if len(used) != len(players):
-            raise ValueError(MESSAGES["no_possible_pairing"])
+            if p1["national_id"] in used:
+                i += 1
+                continue
 
-        return pairings
+            p2 = None
+
+            for j in range(i + 1, len(players)):
+                contender = players[j]
+                contender_id = contender["national_id"]
+                if (contender_id not in used
+                        and not self._have_played_before(p1["national_id"],
+                                                         contender_id)):
+                    p2 = contender
+                    break
+
+            # if not, force pairing with the next unpaired player
+            if not p2:
+                for j in range(i + 1, len(players)):
+                    contender = players[j]
+                    if contender["national_id"] not in used:
+                        p2 = contender
+                        break
+
+            if not p2:
+                break
+
+            # save new pairing
+            pairs.append((p1, p2))
+            self._save_pair(p1["national_id"], p2["national_id"])
+            used.update({p1["national_id"], p2["national_id"]})
+
+            i += 1
+
+        return pairs
 
     @staticmethod
     def _is_round_ready_to_update(round_data: dict):

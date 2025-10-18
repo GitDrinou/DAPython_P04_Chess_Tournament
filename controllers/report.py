@@ -146,6 +146,7 @@ class ReportController:
                                     <th>Identifiant national</th>
                                     <th>Nom de famille</th>
                                     <th>Prénom</th>
+                                    <th>Points</th>
                                 </tr>
                             <thead>
                             <tbody>
@@ -154,6 +155,7 @@ class ReportController:
                                         <td>{{ player["national_id"] }}</td>
                                         <td>{{ player["last_name"] }}</td>
                                         <td>{{ player["first_name"] }}</td>
+                                        <td>{{ player["points"] }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
