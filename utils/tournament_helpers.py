@@ -1,4 +1,4 @@
-from models.round import RoundModel
+from models.round_model import RoundModel
 
 
 def tournament_is_finished(tournament):

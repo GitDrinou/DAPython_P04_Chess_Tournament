@@ -2,9 +2,9 @@ import random
 from typing import List
 
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
-from models.match import MatchModel
-from models.player import PlayerModel
-from models.round import RoundModel
+from models.match_model import MatchModel
+from models.player_model import PlayerModel
+from models.round_model import RoundModel
 from utils.console_utils import ConsoleDisplayer
 from utils.file_utils import read_json_file, save_to_json, update_tournament
 

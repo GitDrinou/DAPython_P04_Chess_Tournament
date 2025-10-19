@@ -6,8 +6,8 @@ from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
                              MatchScoreError, RoundStartError, NoPlayersError,
                              NoTournamentsError,
                              InvalidTournamentsSelectionError)
-from models.player import PlayerModel
-from models.tournament import TournamentModel
+from models.player_model import PlayerModel
+from models.tournament_model import TournamentModel
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
     PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file, update_tournament

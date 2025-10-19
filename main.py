@@ -2,15 +2,15 @@
 import json
 import os
 
-from controllers.main import MainController
-from controllers.report import ReportController
+from controllers.main_controller import MainController
+from controllers.report_controller import ReportController
 from controllers.tournament import TournamentController
 from core.constants import PATH_DATA
-from models.round import RoundModel
-from models.tournament import TournamentModel
-from views.menu import MenusView
-from views.display_table import DisplayTableView
-from views.prompt import PromptView
+from models.round_model import RoundModel
+from models.tournament_model import TournamentModel
+from views.menu_view import MenusView
+from views.table_view import DisplayTableView
+from views.prompt_view import PromptView
 
 
 def init_json_file():

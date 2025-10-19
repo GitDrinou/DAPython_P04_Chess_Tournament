@@ -1,6 +1,6 @@
 import os
 
-from models.tournament import TournamentModel
+from models.tournament_model import TournamentModel
 from utils.console_utils import ConsoleDisplayer
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES, TITLES, \
     SELECTIONS

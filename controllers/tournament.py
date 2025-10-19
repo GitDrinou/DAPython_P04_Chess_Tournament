@@ -1,7 +1,7 @@
-from models.match import MatchModel
-from models.player import PlayerModel
-from models.round import RoundModel
-from models.tournament import TournamentModel
+from models.match_model import MatchModel
+from models.player_model import PlayerModel
+from models.round_model import RoundModel
+from models.tournament_model import TournamentModel
 
 
 class TournamentController:
@@ -13,7 +13,6 @@ class TournamentController:
         self.player_model = PlayerModel()
         self.match_model = MatchModel()
         self.round_model = RoundModel()
-        # self.historical_pairs = []
 
     def create_a_tournament(self, tournament):
         """Create a new tournament"""
