@@ -5,7 +5,7 @@
 
 ## Technical overview
 This offline standalone Python application is designed to manage a chess tournament system. 
-It is launched from the console (e.g., `python main.py`) and is compatible across Windows, macOS, and Linux operating systems. 
+It is launched from the console and is compatible across Windows, macOS, and Linux operating systems. 
 The program handles player and tournament management through JSON file storage, ensuring data persistence between sessions without the need for an online connection.
 
 ## Installation
@@ -33,9 +33,9 @@ to maintain code quality.
 
 To launch and check the flake8 report:
 1. open your terminal 
-2. copy and paste this command line:`flake8 --format=html 
+2. copy and paste this command line: `flake8 --format=html 
 --htmldir=flake8_rapport`
 3. the report is generated and saved on the folder **flake8_rapport**
 4. open your browser and open the file`ìndex.html` from the 
-   **flake8_rapport** folder of the application.
+   **/flake8_rapport** folder of the application.
 
