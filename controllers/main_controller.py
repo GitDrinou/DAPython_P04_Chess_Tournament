@@ -18,21 +18,22 @@ from utils.tournament_utils import load_tournament
 class MainController:
     """ Main class controller for the application"""
 
-    def __init__(self, tournament_model, tournament_controller, round_model,
-                 report_controller, menu_view, prompt_view, display_view):
+    def __init__(self, tournament_model, round_model,
+                 match_model, report_controller, menu_view, prompt_view,
+                 display_view):
         """Initialize the main controller
             Args:
                 tournament_model (TournamentModel): Tournament model
-                tournament_controller (TournamentController)
                 round_model (RoundModel): Round model
+                match_model (MatchModel): Match model
                 report_controller (ReportController)
                 menu_view (MenuView)
                 prompt_view (PromptView)
                 display_view (DisplayView)
         """
         self.tournament_model = tournament_model
-        self.tournament_controller = tournament_controller
         self.round_model = round_model
+        self.match_model = match_model
         self.report_controller = report_controller
         self.menu_view = menu_view
         self.prompt_view = prompt_view
@@ -50,7 +51,7 @@ class MainController:
                 clear_and_wait(delay=0, console_view=self.menu_view)
                 tournament = self.prompt_view.tournament_prompt()
                 clear_and_wait(delay=0, console_view=self.menu_view)
-                self.tournament_controller.create_a_tournament(
+                self.tournament_model.create(
                     TournamentModel(
                         None,
                         tournament["name"],
@@ -65,8 +66,7 @@ class MainController:
             elif user_choice == "2":
                 # Start a tournament or continue a started tournament
                 clear_and_wait(delay=0, console_view=self.menu_view)
-                tournaments = load_tournament(
-                    PATH_DATA_TOURNAMENTS_JSON_FILE)
+                tournaments = load_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE)
                 if tournaments:
                     self.display_view.display_tournaments(tournaments)
                     tournament_id = self.prompt_view.select_tournament_prompt()
@@ -101,7 +101,7 @@ class MainController:
 
         player = self.prompt_view.player_prompt()
         try:
-            self.tournament_controller.register_a_player_to_a_tournament(
+            self.tournament_model.register_a_player(
                 PlayerModel(
                     player["national_id"],
                     player["lastname"],
@@ -132,7 +132,7 @@ class MainController:
         tournament_id = selected_tournament["tournament_id"]
 
         try:
-            self.tournament_controller.unregister_a_player_from_a_tournament(
+            self.tournament_model.unregister_a_player(
                 tournament_id,
                 national_id
             )
@@ -165,11 +165,10 @@ class MainController:
                 selected by the user
         """
         clear_and_wait(delay=0, console_view=self.menu_view)
-        last_round = selected_tournament["rounds"]
-
+        rounds = selected_tournament["rounds"]
         self._validate_round_generation(selected_tournament)
 
-        round_number = len(last_round)
+        total_of_rounds = len(rounds)
         finished_rounds = self.round_model.is_finished(
             selected_tournament["rounds"])
         self.display_view.display_rounds(selected_tournament["rounds"],
@@ -181,8 +180,8 @@ class MainController:
             return
 
         generation = (
-            self.tournament_controller.generate_a_tournament_round(
-                round_number=round_number,
+            self.tournament_model.generate_a_round(
+                round_number=total_of_rounds,
                 players=selected_tournament["players"],
                 tournament_id=selected_tournament["tournament_id"],
                 round_id=selected_round
@@ -198,7 +197,7 @@ class MainController:
             clear_and_wait(console_view=self.menu_view)
             raise RoundGenerationError(MESSAGES["no_generate_round"])
 
-        if int(selected_tournament["number_of_rounds"]) < round_number:
+        if int(selected_tournament["number_of_rounds"]) < total_of_rounds:
             raise InvalidTournamentStateError(MESSAGES["all_rounds_reached"])
 
         clear_and_wait(delay=0, console_view=self.menu_view)
@@ -210,7 +209,6 @@ class MainController:
             Args:
                 tournament_id (str): identifier of the tournament
         """
-        clear_and_wait(delay=0, console_view=self.menu_view)
         while True:
             clear_and_wait(delay=0, console_view=self.menu_view)
             try:
@@ -286,7 +284,7 @@ class MainController:
                 selected_round (int): identifier of the selected round
         """
         try:
-            round_ = self.tournament_controller.terminate_a_round(
+            round_ = self.round_model.end_up(
                 tournament_id,
                 selected_round
             )
@@ -308,7 +306,7 @@ class MainController:
                                           match_id=match_id)
 
                 try:
-                    self.tournament_controller.save_round_matchs_scores(
+                    self.match_model.save_scores(
                         tournament, last_round["round_id"],
                         match_id=match_id, score1=match_score["score1"],
                         score2=match_score["score2"])
@@ -317,8 +315,8 @@ class MainController:
                         f"{MESSAGES['failure_saved_score']}: {str(e)}",
                         match_id=match_id)
 
-            self.tournament_controller.update_players_points_for_a_tournament(
-                tournament_id,
+            self.tournament_model.update_players_points(
+                int(tournament_id),
                 last_round["round_id"]
             )
 
@@ -342,7 +340,7 @@ class MainController:
                     # Start the round
                     try:
                         clear_and_wait(delay=0, console_view=self.menu_view)
-                        round_ = self.tournament_controller.start_a_round(
+                        round_ = self.round_model.start_up(
                             tournament_id,
                             selected_round
                         )

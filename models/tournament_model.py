@@ -21,7 +21,7 @@ class TournamentModel:
             start_date: str = None,
             end_date: str = None,
             description: str = None,
-            number_of_rounds: int = None,
+            number_of_rounds: int = DEFAULT_NUMBER_OF_ROUNDS,
             round_number: int = None):
         """Initialize tournament with:
             tournament_id: Identifier of the tournament
@@ -77,7 +77,7 @@ class TournamentModel:
         # Validate the number of rounds
         if (tournament.number_of_rounds == "" or int(
                 tournament.number_of_rounds) < DEFAULT_NUMBER_OF_ROUNDS):
-            self.number_of_rounds = DEFAULT_NUMBER_OF_ROUNDS
+            tournament.number_of_rounds = self.number_of_rounds
 
         save_to_json(
             "tournaments",
