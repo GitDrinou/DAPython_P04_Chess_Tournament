@@ -1,7 +1,9 @@
 import random
 from typing import List
 
-from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
+from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES, \
+    DEFAULT_NUMBER_OF_ROUNDS, DEFAULT_SCORE, POINT_EQUALITY_VALUE, \
+    POINT_WIN_VALUE
 from models.match_model import MatchModel
 from models.player_model import PlayerModel
 from models.round_model import RoundModel
@@ -41,11 +43,25 @@ class TournamentModel:
         self.round_number = round_number
 
         # lists of rounds and players by tournament
-        self.rounds: List[RoundModel] = []
         self.players: List[PlayerModel] = []
+        self.rounds: List[RoundModel] = []
 
         # use for pairing players
         self.historical_pairs = set()
+
+    def to_dict(self):
+        return {
+            "tournament_id": self.tournament_id,
+            "name": self.name,
+            "location": self.location,
+            "start_date": self.start_date,
+            "end_date": self.end_date,
+            "description": self.description,
+            "number_of_rounds": self.number_of_rounds,
+            "round_number": self.round_number,
+            "players": self.players,
+            "rounds": self.rounds
+        }
 
     def create(self, tournament):
         """Create a new tournament and save it to JSON file
@@ -60,8 +76,8 @@ class TournamentModel:
 
         # Validate the number of rounds
         if (tournament.number_of_rounds == "" or int(
-                tournament.number_of_rounds) < 4):
-            self.number_of_rounds = 4
+                tournament.number_of_rounds) < DEFAULT_NUMBER_OF_ROUNDS):
+            self.number_of_rounds = DEFAULT_NUMBER_OF_ROUNDS
 
         save_to_json(
             "tournaments",
@@ -309,7 +325,7 @@ class TournamentModel:
         unscored_matchs = 0
         for match in round_data["matchs"]:
             for _, score in match["match"]:
-                if score == 0.0:
+                if score == DEFAULT_SCORE:
                     unscored_matchs += 1
 
         return (unscored_matchs / total_matchs == 2) or (round_data[
@@ -347,13 +363,13 @@ class TournamentModel:
                 player2_score = float(player2_score)
 
                 if player1_score == player2_score:
-                    players[player1_id]["points"] += 0.5
-                    players[player2_id]["points"] += 0.5
+                    players[player1_id]["points"] += POINT_EQUALITY_VALUE
+                    players[player2_id]["points"] += POINT_EQUALITY_VALUE
                 else:
                     if player1_score > player2_score:
-                        players[player1_id]["points"] += 1
+                        players[player1_id]["points"] += POINT_WIN_VALUE
                     else:
-                        players[player2_id]["points"] += 1
+                        players[player2_id]["points"] += POINT_WIN_VALUE
 
             # save to json file
             for p in tournament["players"]:

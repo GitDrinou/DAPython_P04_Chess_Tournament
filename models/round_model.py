@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES
+from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES, \
+    DEFAULT_SCORE, TAG_FINISHED
 from utils.console_utils import ConsoleDisplayer
 from utils.file_utils import read_json_file, update_tournament
 
@@ -150,7 +151,7 @@ class RoundModel:
                 player1_score = float(player1_score)
                 player2_score = float(player2_score)
 
-                if player1_score == 0.0 and player2_score == 0.0:
+                if player1_score == 0.0 and player2_score == DEFAULT_SCORE:
                     counter_match += 1
 
             if (counter_match == len(round_["matchs"])
@@ -162,7 +163,7 @@ class RoundModel:
             else:
                 finished_rounds.append({
                     "round_id": round_["round_id"],
-                    "is_finished": "X"
+                    "is_finished": TAG_FINISHED
                 })
 
         return finished_rounds

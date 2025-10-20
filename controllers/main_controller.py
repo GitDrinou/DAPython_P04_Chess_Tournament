@@ -9,7 +9,7 @@ from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
 from models.player_model import PlayerModel
 from models.tournament_model import TournamentModel
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
-    PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
+    PATH_DATA_PLAYERS_JSON_FILE, MESSAGES, DEFAULT_NUMBER_OF_PLAYERS
 from utils.file_utils import read_json_file, update_tournament
 from utils.console_utils import clear_and_wait, ConsoleDisplayer
 from utils.tournament_utils import load_tournament
@@ -148,8 +148,8 @@ class MainController:
             Args:
                 selected_tournament (tournament): data for a tournament
         """
-        if (len(selected_tournament["players"]) < 4 or len(
-                selected_tournament["players"]) % 2 != 0):
+        if (len(selected_tournament["players"]) < DEFAULT_NUMBER_OF_PLAYERS
+                or len(selected_tournament["players"]) % 2 != 0):
             raise RoundGenerationError(MESSAGES["no_generate_due_to_players"])
 
         today = datetime.today().date()

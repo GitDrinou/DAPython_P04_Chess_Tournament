@@ -2,8 +2,15 @@ PATH_DATA = "./data/tournaments/"
 PATH_DATA_PLAYERS_JSON_FILE = "./data/tournaments/players.json"
 PATH_DATA_TOURNAMENTS_JSON_FILE = "./data/tournaments/tournaments.json"
 PATH_REPORTS_FILES = "./reports/html/"
+DEFAULT_SCORE = 0.0
+TAG_FINISHED = "X"
+DEFAULT_NUMBER_OF_ROUNDS = 4
+DEFAULT_NUMBER_OF_PLAYERS = 4
 WIN_VALUE = "1"
 LOSE_VALUE = "0"
+POINT_WIN_VALUE = 1
+POINT_LOSE_VALUE = 0
+POINT_EQUALITY_VALUE = 0.5
 MESSAGES = {
     "all_rounds_reached": """
     ==============================================================
