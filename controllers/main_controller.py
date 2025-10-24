@@ -18,12 +18,13 @@ from utils.tournament_utils import load_tournament
 class MainController:
     """ Main class controller for the application"""
 
-    def __init__(self, tournament_model, round_model,
+    def __init__(self, tournament_model, player_model, round_model,
                  match_model, report_controller, menu_view, prompt_view,
                  display_view):
         """Initialize the main controller
             Args:
                 tournament_model (TournamentModel): Tournament model
+                player_model (PlayerModel): Player model
                 round_model (RoundModel): Round model
                 match_model (MatchModel): Match model
                 report_controller (ReportController)
@@ -32,6 +33,7 @@ class MainController:
                 display_view (DisplayView)
         """
         self.tournament_model = tournament_model
+        self.player_model = player_model
         self.round_model = round_model
         self.match_model = match_model
         self.report_controller = report_controller
@@ -101,15 +103,17 @@ class MainController:
 
         player = self.prompt_view.player_prompt()
         try:
+            new_player = PlayerModel(
+                player["national_id"],
+                player["lastname"],
+                player["firstname"],
+                player["birthdate"]
+            )
             self.tournament_model.register_a_player(
-                PlayerModel(
-                    player["national_id"],
-                    player["lastname"],
-                    player["firstname"],
-                    player["birthdate"]
-                ),
+                new_player,
                 tournament_id
             )
+            self.player_model.save_player_to_json(new_player)
             clear_and_wait(delay=2)
         except Exception as e:
             raise PlayerRegistrationError(

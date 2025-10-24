@@ -55,7 +55,6 @@ class RoundModel:
             )
 
             start_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-
             if round_:
                 tournament["round_number"] = round_["name"][-1]
                 round_["round_start_date"] = start_date
@@ -65,7 +64,6 @@ class RoundModel:
 
                 ConsoleDisplayer.log(MESSAGES["round_started"],
                                      level="INFO")
-
                 return round_
             else:
                 last_round = tournament["rounds"][-1]
@@ -76,7 +74,6 @@ class RoundModel:
                                   tournament["tournament_id"], tournament)
 
                 ConsoleDisplayer.log(MESSAGES["round_started"], level="INFO")
-
                 return last_round
         else:
             return None
