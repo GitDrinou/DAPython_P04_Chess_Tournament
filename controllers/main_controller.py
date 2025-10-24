@@ -152,21 +152,21 @@ class MainController:
 
         if ALLOW_BYES:
             # If number of rounds is odd, players = rounds
-            # if number of rounds id even, players = rounds + 1
+            # if number of rounds id even, players = rounds - 1
             if number_of_rounds % 2 == 1:
                 min_players = number_of_rounds
             else:
-                min_players = number_of_rounds + 1
+                min_players = number_of_rounds - 1
         else:
             # if no BYE, number of players must be even, and we round up
             # to the next even
-            number_of_players = number_of_rounds + 1
+            number_of_players = number_of_rounds - 1
             if number_of_players % 2 == 1:
                 min_players = number_of_players
             else:
-                min_players = number_of_players + 1
+                min_players = number_of_players - 1
 
-        if len(selected_tournament["players"]) < min_players:
+        if len(selected_tournament["players"]) > min_players:
             raise RoundGenerationError(
                 f"{MESSAGES['invalide_number_of_players']} {min_players}"
             )
