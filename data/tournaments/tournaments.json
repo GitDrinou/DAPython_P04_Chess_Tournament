@@ -1,0 +1,129 @@
+{
+    "tournaments": [
+        {
+            "tournament_id": 1,
+            "name": "LE TOURNOI DE LA BELLE \u00c9TOILE",
+            "location": "Salle de f\u00eate dark vador du b\u00e2timent b de l'\u00e9toile de la mort",
+            "start_date": "24/10/2025",
+            "end_date": "24/10/2025",
+            "description": "les portes ouvrironst \u00e0 8h",
+            "number_of_rounds": "4",
+            "round_number": "3",
+            "players": [
+                {
+                    "national_id": "W96059",
+                    "last_name": "WALKER",
+                    "first_name": "Texas ranger",
+                    "birth_date": "10/12/1980",
+                    "points": 1.0
+                },
+                {
+                    "national_id": "s96059",
+                    "last_name": "SKYWALKER",
+                    "first_name": "Luke",
+                    "birth_date": "31/12/1990",
+                    "points": 2.0
+                },
+                {
+                    "national_id": "O58493",
+                    "last_name": "KENOBI",
+                    "first_name": "Obiwan",
+                    "birth_date": "05/05/1978",
+                    "points": 3.0
+                }
+            ],
+            "rounds": [
+                {
+                    "round_id": 1,
+                    "name": "Round 1",
+                    "round_start_date": "24-10-2025 15:55:52",
+                    "round_end_date": "24-10-2025 15:56:03",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "O58493",
+                                    "1"
+                                ],
+                                [
+                                    "s96059",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "W96059",
+                                    "BYE"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 2,
+                    "name": "Round 2",
+                    "round_start_date": "24-10-2025 16:08:37",
+                    "round_end_date": "24-10-2025 16:08:42",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "W96059",
+                                    "0"
+                                ],
+                                [
+                                    "s96059",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "O58493",
+                                    "BYE"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 3,
+                    "name": "Round 3",
+                    "round_start_date": "24-10-2025 16:09:09",
+                    "round_end_date": "24-10-2025 16:09:13",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "O58493",
+                                    "1"
+                                ],
+                                [
+                                    "W96059",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "s96059",
+                                    "BYE"
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -194,7 +194,7 @@ class TournamentModel:
                 return tournament
 
             else:
-                self._terminate_current_round(tournament, round_id)
+                return self._terminate_current_round(tournament, round_id)
         return None
 
     def _generate_new_round(self, tournament, round_number, players):
@@ -257,11 +257,11 @@ class TournamentModel:
         """
         rounds = tournament["rounds"]
         current_round = next(
-            (r for r in rounds if r["round_id"] == round_id),
+            (r for r in rounds if r["round_id"] == int(round_id)),
             None
         )
-
-        if current_round:
+        if current_round is not None:
+            print("TOTO")
             if not self._is_round_ready_to_update(current_round):
                 return tournament
             else:
