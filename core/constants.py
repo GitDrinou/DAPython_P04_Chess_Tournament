@@ -13,6 +13,7 @@ LOSE_VALUE = "0"
 POINT_WIN_VALUE = 1
 POINT_LOSE_VALUE = 0
 POINT_EQUALITY_VALUE = 0.5
+ERROR_ROUND_ENDED = "round_already_ended"
 MESSAGES = {
     "all_rounds_reached": """
     ==============================================================

@@ -3,7 +3,7 @@ from typing import List
 
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, MESSAGES, \
     DEFAULT_NUMBER_OF_ROUNDS, DEFAULT_SCORE, POINT_EQUALITY_VALUE, \
-    POINT_WIN_VALUE
+    POINT_WIN_VALUE, ERROR_ROUND_ENDED
 from models.match_model import MatchModel
 from models.player_model import PlayerModel
 from models.round_model import RoundModel
@@ -261,11 +261,10 @@ class TournamentModel:
             None
         )
         if current_round is not None:
-            print("TOTO")
             if not self._is_round_ready_to_update(current_round):
                 return tournament
             else:
-                return "round_already_ended"
+                return ERROR_ROUND_ENDED
         return None
 
     def _have_played_before(self, player1, player2):
