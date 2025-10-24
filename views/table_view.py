@@ -47,10 +47,17 @@ class DisplayTableView:
             rows_round = []
             for entry in data_report:
                 match_id = entry["match_id"]
-                player1, score1 = entry["match"][0]
-                player2, score2 = entry["match"][1]
-                rows_round.append([match_id, player1, player2, score1, score2])
-            headers = ["Match n°", "Joueur 1", "Joueur 2", "Score1", "Score2"]
+                if len(entry["match"]) == 1:
+                    bye_player_id = entry["match"][0][0]
+                    bye_label = entry["match"][0][1]
+                    rows_round.append([match_id, bye_player_id, bye_label])
+                else:
+                    player1, score1 = entry["match"][0]
+                    player2, score2 = entry["match"][1]
+                    rows_round.append([match_id, player1, player2, score1,
+                                       score2])
+                headers = ["Match n°", "Joueur 1", "Joueur 2", "Score1",
+                           "Score2"]
 
             print("." * 60)
             print(f"** {round_name} **")

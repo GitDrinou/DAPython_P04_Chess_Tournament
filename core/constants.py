@@ -3,9 +3,12 @@ PATH_DATA_PLAYERS_JSON_FILE = "./data/tournaments/players.json"
 PATH_DATA_TOURNAMENTS_JSON_FILE = "./data/tournaments/tournaments.json"
 PATH_REPORTS_FILES = "./reports/html/"
 DEFAULT_SCORE = 0.0
+DEFAULT_BYE = "BYE"
+DEFAULT_DELAY = 3
 TAG_FINISHED = "X"
 DEFAULT_NUMBER_OF_ROUNDS = 4
-DEFAULT_NUMBER_OF_PLAYERS = 4
+DEFAULT_NUMBER_OF_PLAYERS = 2
+ALLOW_BYES = True
 WIN_VALUE = "1"
 LOSE_VALUE = "0"
 POINT_WIN_VALUE = 1
@@ -46,6 +49,7 @@ MESSAGES = {
                                     "générer le rapport",
     "failure_started_round": "Échec lors du démarrage du tour",
     "failure": "Erreur inattendue",
+    "have_win_point": "a un point automatique (BYE).",
     "invalid_choice": """
     ====================================
     Votre choix est invalide.
@@ -64,6 +68,8 @@ MESSAGES = {
     Format attendu : 1 lettre + 5 chiffres (ex. A12345)
     ====================================================
     """,
+    "invalide_number_of_players": "\nVous ne pouvez pas générer de tour.\nLe "
+                                  "nombre minimum de joueurs doit être de ",
     "label_start_round": "\tDébut du tour: ",
     "label_start_tournament": "\tDu: ",
     "label_end_round": "\tFin du tour: ",
@@ -84,9 +90,7 @@ MESSAGES = {
     """,
     "no_generate_due_to_players": """
     =============================================================
-    Vous ne pouvez pas générer de tour:
-    - soit le nombre de joueurs inscrits est inférieur à 4
-    - soit le total de joueurs inscrits est un nombre impair
+    Il faut au moins 2 joueurs pour créer un tournoi.
     =============================================================
     """,
     "no_generate_round": """
@@ -107,6 +111,7 @@ MESSAGES = {
     Vous ne pouvez plus inscrire de nouveaux joueurs
     ================================================
     """,
+    "number_of_players_is_odd": "Le nombre de joueur est impair:",
     "player_unregistered": """
     ===========================================
     Le joueur a bien été désinscrit du tournoi.
@@ -183,7 +188,8 @@ MESSAGES = {
     \t- [0] pour le perdant du match
     \t- En cas de match nul, saisissez [1] pour les 2 scores
     """,
-    "value_not_exist": "La valeur n'existe pas."
+    "value_not_exist": "La valeur n'existe pas.",
+    "will_be_bye": " sera BYE pour ce tour."
 }
 TITLES = {
     "title_application": "G E S T I O N N A I R E   D E   T O U R N O I S   "

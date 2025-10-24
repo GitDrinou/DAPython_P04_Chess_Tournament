@@ -1,5 +1,7 @@
 import time
 
+from core.constants import DEFAULT_DELAY
+
 
 class ConsoleDisplayer:
     """Class to manage console print messages"""
@@ -56,7 +58,8 @@ class ConsoleDisplayer:
         print(text)
 
 
-def clear_and_wait(message=None, level="WARNING", delay=2, console_view=None,
+def clear_and_wait(message=None, level="WARNING", delay=DEFAULT_DELAY,
+                   console_view=None,
                    clear_before=False):
     """Display a message, wait and clear the console
         Args:

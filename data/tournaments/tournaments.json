@@ -1,3 +1,225 @@
 {
-    "tournaments": []
+    "tournaments": [
+        {
+            "tournament_id": 1,
+            "name": "TEST",
+            "location": "Test",
+            "start_date": "24/10/2025",
+            "end_date": "24/10/2025",
+            "description": "test",
+            "number_of_rounds": "4",
+            "round_number": "4",
+            "players": [
+                {
+                    "national_id": "R45678",
+                    "last_name": "YOYO",
+                    "first_name": "Tata",
+                    "birth_date": "31/12/2000",
+                    "points": 3.5
+                },
+                {
+                    "national_id": "S34567",
+                    "last_name": "BARBA",
+                    "first_name": "Papa",
+                    "birth_date": "20/06/1999",
+                    "points": 2.5
+                },
+                {
+                    "national_id": "Z34567",
+                    "last_name": "LATETA",
+                    "first_name": "Toto",
+                    "birth_date": "10/05/2001",
+                    "points": 1.5
+                },
+                {
+                    "national_id": "F49585",
+                    "last_name": "BISOU",
+                    "first_name": "Nours",
+                    "birth_date": "04/09/2000",
+                    "points": 2.0
+                },
+                {
+                    "national_id": "P60594",
+                    "last_name": "DOLL",
+                    "first_name": "Barbie",
+                    "birth_date": "05/07/2000",
+                    "points": 2.5
+                }
+            ],
+            "rounds": [
+                {
+                    "round_id": 1,
+                    "name": "Round 1",
+                    "round_start_date": "24-10-2025 11:36:59",
+                    "round_end_date": "24-10-2025 11:37:13",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "F49585",
+                                    "1"
+                                ],
+                                [
+                                    "P60594",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "R45678",
+                                    "1"
+                                ],
+                                [
+                                    "S34567",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 3,
+                            "match": [
+                                [
+                                    "Z34567",
+                                    "BYE"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 2,
+                    "name": "Round 2",
+                    "round_start_date": "24-10-2025 11:42:28",
+                    "round_end_date": "24-10-2025 11:42:33",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "P60594",
+                                    "1"
+                                ],
+                                [
+                                    "Z34567",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "S34567",
+                                    "0"
+                                ],
+                                [
+                                    "R45678",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 3,
+                            "match": [
+                                [
+                                    "F49585",
+                                    "BYE"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 3,
+                    "name": "Round 3",
+                    "round_start_date": "24-10-2025 11:42:58",
+                    "round_end_date": "24-10-2025 12:47:11",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "P60594",
+                                    "0"
+                                ],
+                                [
+                                    "F49585",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "R45678",
+                                    "1"
+                                ],
+                                [
+                                    "Z34567",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 3,
+                            "match": [
+                                [
+                                    "S34567",
+                                    "BYE"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 4,
+                    "name": "Round 4",
+                    "round_start_date": "24-10-2025 12:49:26",
+                    "round_end_date": "24-10-2025 12:49:33",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "F49585",
+                                    "0"
+                                ],
+                                [
+                                    "P60594",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "Z34567",
+                                    "0"
+                                ],
+                                [
+                                    "S34567",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 3,
+                            "match": [
+                                [
+                                    "R45678",
+                                    "BYE"
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

@@ -9,7 +9,7 @@ from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
 from models.player_model import PlayerModel
 from models.tournament_model import TournamentModel
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
-    PATH_DATA_PLAYERS_JSON_FILE, MESSAGES, DEFAULT_NUMBER_OF_PLAYERS
+    PATH_DATA_PLAYERS_JSON_FILE, MESSAGES, ALLOW_BYES
 from utils.file_utils import read_json_file, update_tournament
 from utils.console_utils import clear_and_wait, ConsoleDisplayer
 from utils.tournament_utils import load_tournament
@@ -148,9 +148,28 @@ class MainController:
             Args:
                 selected_tournament (tournament): data for a tournament
         """
-        if (len(selected_tournament["players"]) < DEFAULT_NUMBER_OF_PLAYERS
-                or len(selected_tournament["players"]) % 2 != 0):
-            raise RoundGenerationError(MESSAGES["no_generate_due_to_players"])
+        number_of_rounds = int(selected_tournament["number_of_rounds"])
+
+        if ALLOW_BYES:
+            # If number of rounds is odd, players = rounds
+            # if number of rounds id even, players = rounds + 1
+            if number_of_rounds % 2 == 1:
+                min_players = number_of_rounds
+            else:
+                min_players = number_of_rounds + 1
+        else:
+            # if no BYE, number of players must be even, and we round up
+            # to the next even
+            number_of_players = number_of_rounds + 1
+            if number_of_players % 2 == 1:
+                min_players = number_of_players
+            else:
+                min_players = number_of_players + 1
+
+        if len(selected_tournament["players"]) < min_players:
+            raise RoundGenerationError(
+                f"{MESSAGES['invalide_number_of_players']} {min_players}"
+            )
 
         today = datetime.today().date()
         start_date = datetime.strptime(selected_tournament["start_date"],
@@ -300,6 +319,8 @@ class MainController:
             last_round = tournament["rounds"][-1]
             for match_id, match in enumerate(last_round["matchs"], start=1):
                 self.display_view.display_a_round(last_round)
+                if len(match["match"]) == 1:
+                    continue
                 match_score = self.prompt_view.match_prompt(match_id)
                 if not match_score:
                     raise MatchScoreError(MESSAGES["failure_invalid_score"],

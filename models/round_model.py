@@ -143,28 +143,33 @@ class RoundModel:
                 indicator (X).
         """
         finished_rounds = []
-        counter_match = 0
+
         for round_ in rounds:
+            total_matchs = len(round_["matchs"])
+            finished_matchs = 0
+
             for match_ in round_["matchs"]:
+                match_data = match_["match"]
+
+                if len(match_data) == 1:
+                    finished_matchs += 1
+                    continue
+
                 player1_id, player1_score = match_["match"][0]
                 player2_id, player2_score = match_["match"][1]
                 player1_score = float(player1_score)
                 player2_score = float(player2_score)
 
-                if player1_score == 0.0 and player2_score == DEFAULT_SCORE:
-                    counter_match += 1
+                if not (player1_score == DEFAULT_SCORE and player2_score ==
+                        DEFAULT_SCORE):
+                    finished_matchs += 1
 
-            if (counter_match == len(round_["matchs"])
-                    or round_["round_end_date"] == ""):
-                finished_rounds.append({
-                    "round_id": round_["round_id"],
-                    "is_finished": ""
-                })
-            else:
-                finished_rounds.append({
-                    "round_id": round_["round_id"],
-                    "is_finished": TAG_FINISHED
-                })
+            is_done = finished_matchs == total_matchs or round_[
+                "round_end_date"] != ""
+            finished_rounds.append({
+                "round_id": round_["round_id"],
+                "is_finished": TAG_FINISHED if is_done else ""
+            })
 
         return finished_rounds
 

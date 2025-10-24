@@ -195,7 +195,7 @@ class TournamentModel:
 
                 # Generate pairing
                 try:
-                    pairings = self._generate_pairings(players)
+                    pairings, bye_player = self._generate_pairings(players)
                 except ValueError as e:
                     ConsoleDisplayer.log(str(e), level="ERROR")
                     return None
@@ -209,6 +209,16 @@ class TournamentModel:
                         score2=0.0).to_dict()
                     for i, (p1, p2) in enumerate(pairings)
                 ]
+
+                # if player BYE exist
+                if bye_player:
+                    bye_match = {
+                        "match_id": len(round_.matchs) + 1,
+                        "match": [
+                            (bye_player["national_id"], "BYE"),
+                        ]
+                    }
+                    round_.matchs.append(bye_match)
 
                 data_round = {
                     "round_id": round_number,
@@ -237,7 +247,7 @@ class TournamentModel:
                 )
 
                 if current_round:
-                    if self._is_round_ready_to_update(current_round):
+                    if not self._is_round_ready_to_update(current_round):
                         return tournament
                     else:
                         return "round_already_ended"
@@ -276,6 +286,18 @@ class TournamentModel:
         """
         pairs = []
         used = set()
+        bye_player = None
+
+        # odd management with bye
+        if len(players) % 2 == 1:
+            bye_player = random.choice(players)
+            ConsoleDisplayer.log(f"{MESSAGES['number_of_players_is_odd']}\n"
+                                 f"{bye_player['last_name']}"
+                                 f" {bye_player['first_name']}"
+                                 f" {MESSAGES['will_be_bye']}", level="INFO")
+
+            players = [p for p in players if p["national_id"] != bye_player[
+                "national_id"]]
 
         # Pairing logic
         i = 0
@@ -315,21 +337,25 @@ class TournamentModel:
 
             i += 1
 
-        return pairs
+        return pairs, bye_player
 
     @staticmethod
     def _is_round_ready_to_update(round_data: dict):
         """Check if a round is ready to update"""
-        total_matchs = 0
-        total_matchs += len(round_data["matchs"])
         unscored_matchs = 0
-        for match in round_data["matchs"]:
-            for _, score in match["match"]:
-                if score == DEFAULT_SCORE:
-                    unscored_matchs += 1
 
-        return (unscored_matchs / total_matchs == 2) or (round_data[
-            "round_start_date"] == "")
+        for match in round_data["matchs"]:
+            match_entries = match.get("match", [])
+            if len(match_entries) == 1:
+                continue
+
+            player1_id, score1 = match_entries[0]
+            player2_id, score2 = match_entries[1]
+
+            if score1 == DEFAULT_SCORE and score2 == DEFAULT_SCORE:
+                unscored_matchs += 1
+
+        return unscored_matchs == 0 or round_data["round_start_date"] == ""
 
     @staticmethod
     def update_players_points(tournament_id, round_id):
@@ -357,19 +383,30 @@ class TournamentModel:
                 None
             )
             for match_detail in round_["matchs"]:
-                player1_id, player1_score = match_detail["match"][0]
-                player2_id, player2_score = match_detail["match"][1]
-                player1_score = float(player1_score)
-                player2_score = float(player2_score)
-
-                if player1_score == player2_score:
-                    players[player1_id]["points"] += POINT_EQUALITY_VALUE
-                    players[player2_id]["points"] += POINT_EQUALITY_VALUE
+                if len(match_detail["match"]) == 1:
+                    bye_player_id = match_detail["match"][0][0]
+                    if bye_player_id in players:
+                        players[bye_player_id]["points"] += POINT_WIN_VALUE
+                        ConsoleDisplayer.log(
+                            f"{players[bye_player_id]['first_name']} "
+                            f"{players[bye_player_id]['last_name']} "
+                            f"{MESSAGES['have_win_point']}",
+                            level="INFO"
+                        )
                 else:
-                    if player1_score > player2_score:
-                        players[player1_id]["points"] += POINT_WIN_VALUE
+                    player1_id, player1_score = match_detail["match"][0]
+                    player2_id, player2_score = match_detail["match"][1]
+                    player1_score = float(player1_score)
+                    player2_score = float(player2_score)
+
+                    if player1_score == player2_score:
+                        players[player1_id]["points"] += POINT_EQUALITY_VALUE
+                        players[player2_id]["points"] += POINT_EQUALITY_VALUE
                     else:
-                        players[player2_id]["points"] += POINT_WIN_VALUE
+                        if player1_score > player2_score:
+                            players[player1_id]["points"] += POINT_WIN_VALUE
+                        else:
+                            players[player2_id]["points"] += POINT_WIN_VALUE
 
             # save to json file
             for p in tournament["players"]:
