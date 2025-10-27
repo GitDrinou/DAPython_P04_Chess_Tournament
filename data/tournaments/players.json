@@ -1,28 +1,3 @@
 {
-    "players": [
-        {
-            "national_id": "W96059",
-            "last_name": "WALKER",
-            "first_name": "Texas ranger",
-            "birth_date": "10/12/1980"
-        },
-        {
-            "national_id": "s96059",
-            "last_name": "SKYWALKER",
-            "first_name": "Luke",
-            "birth_date": "31/12/1990"
-        },
-        {
-            "national_id": "O58493",
-            "last_name": "KENOBI",
-            "first_name": "Obiwan",
-            "birth_date": "05/05/1978"
-        },
-        {
-            "national_id": "T69584",
-            "last_name": "TEST",
-            "first_name": "Test",
-            "birth_date": "01/02/2000"
-        }
-    ]
+    "players": []
 }
