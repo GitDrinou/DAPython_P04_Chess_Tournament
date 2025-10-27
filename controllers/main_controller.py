@@ -170,7 +170,7 @@ class MainController:
             else:
                 min_players = number_of_players - 1
 
-        if len(selected_tournament["players"]) > min_players or len(
+        if len(selected_tournament["players"]) < min_players or len(
                 selected_tournament["players"]) == 0:
             raise RoundGenerationError(
                 f"{MESSAGES['invalide_number_of_players']} {min_players}"
