@@ -4,6 +4,7 @@ import os
 
 from controllers.main_controller import MainController
 from controllers.report_controller import ReportController
+from controllers.tournament_controller import TournamentController
 from core.constants import PATH_DATA
 from models.match_model import MatchModel
 from models.player_model import PlayerModel
@@ -37,6 +38,7 @@ def init_json_file():
 
 def main():
     """Main entry point of the application."""
+    tournament_controller = TournamentController()
     tournament_model = TournamentModel()
     player_model = PlayerModel()
     round_model = RoundModel()
@@ -45,13 +47,15 @@ def main():
     main_view = MenusView()
     prompt_view = PromptView()
     display_view = DisplayTableView()
-    application_controller = MainController(tournament_model,
-                                            player_model,
-                                            round_model,
-                                            match_model,
-                                            report_controller,
-                                            main_view, prompt_view,
-                                            display_view)
+    application_controller = MainController(
+        tournament_controller,
+        tournament_model,
+        player_model,
+        round_model,
+        match_model,
+        report_controller,
+        main_view, prompt_view,
+        display_view)
     application_controller.run()
 
 

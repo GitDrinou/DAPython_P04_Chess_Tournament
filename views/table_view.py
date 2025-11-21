@@ -1,7 +1,9 @@
 from tabulate import tabulate
 
-from core.constants import MESSAGES, TITLES
+from core.constants import MESSAGES, TITLES, PATH_DATA_PLAYERS_JSON_FILE
 from utils.console_utils import ConsoleDisplayer
+from utils.file_utils import read_json_file
+from utils.player_utils import get_player_detail
 
 
 class DisplayTableView:
@@ -80,19 +82,21 @@ class DisplayTableView:
         start_date = tournament["start_date"]
         end_date = tournament["end_date"]
         total_players = len(tournament["players"])
-        data_report = sorted(tournament["players"], key=lambda x: (-x[
-            "points"], x["last_name"]))
+        players = sorted(tournament["players"], key=lambda x: (-x[
+            "points"]))
+
 
         rows = []
-        for entry in data_report:
+        headers = ["Identifiant national", "Nom", "Prénom", "Points"]
+        for entry in players:
             national_id = entry["national_id"]
-            lastname = entry["last_name"]
-            firstname = entry["first_name"]
-            birthdate = entry["birth_date"]
             points = entry["points"]
-            rows.append([national_id, lastname, firstname, birthdate, points])
-        headers = ["Identifiant national", "Nom de famille", "Prénom",
-                   "Date de naissance", "Points"]
+
+            player_info = get_player_detail(national_id)
+            last_name = player_info["last_name"]
+            first_name = player_info["first_name"]
+
+            rows.append([national_id, last_name, first_name, points])
 
         print("." * 70)
         print(f"** {tournament_name} **\n")

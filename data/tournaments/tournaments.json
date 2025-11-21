@@ -1,0 +1,21 @@
+{
+    "tournaments": [
+        {
+            "tournament_id": 1,
+            "name": "LE TOURNOI DE LA SECONDE CHANCE",
+            "location": "Salle des f\u00eates de la mairie de paris",
+            "start_date": "20/11/2025",
+            "end_date": "20/11/2025",
+            "description": "tournoi exclusivement r\u00e9serv\u00e9e aux d\u00e9butants.",
+            "number_of_rounds": "4",
+            "round_number": 0,
+            "players": [
+                {
+                    "national_id": "IJ39405",
+                    "points": 0.0
+                }
+            ],
+            "rounds": []
+        }
+    ]
+}

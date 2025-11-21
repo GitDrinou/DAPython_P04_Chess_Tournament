@@ -96,36 +96,7 @@ class TournamentModel:
         return ConsoleDisplayer.log(MESSAGES["tournament_created"],
                                     level="INFO")
 
-    @staticmethod
-    def register_a_player(player: PlayerModel, tournament_id: int):
-        """Register a player to a specific tournament and save it to JSON file
-        Args:
-            player (PlayerModel): player info to add and save
-            tournament_id (int): Identifier of a specific tournament
-        """
-        data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        tournaments = data_tournaments["tournaments"]
-        tournament = next(
-            (t for t in tournaments if t["tournament_id"] == tournament_id),
-            None
-        )
 
-        if tournament:
-            tournament["players"].append({
-                "national_id": player.national_id,
-                "last_name": player.last_name.upper(),
-                "first_name": player.first_name.capitalize(),
-                "birth_date": player.birth_date,
-                "points": DEFAULT_SCORE
-            })
-
-            update_tournament(
-                PATH_DATA_TOURNAMENTS_JSON_FILE,
-                tournament["tournament_id"],
-                tournament
-            )
-
-            ConsoleDisplayer.log(MESSAGES["player_registered"], level="INFO")
 
     @staticmethod
     def unregister_a_player(tournament_id, national_id):

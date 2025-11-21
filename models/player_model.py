@@ -43,8 +43,8 @@ class PlayerModel:
             save_to_json(
                 "players",
                 national_id=player.national_id,
-                last_name=player.last_name.upper(),
-                first_name=player.first_name.capitalize(),
+                lastname=player.last_name,
+                first_name=player.first_name,
                 birth_date=player.birth_date)
 
     def __str__(self):
