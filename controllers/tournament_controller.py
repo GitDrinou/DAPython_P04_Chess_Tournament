@@ -1,57 +1,75 @@
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, DEFAULT_SCORE, \
     MESSAGES
+from core.exceptions import PlayerRegistrationError, PlayerDeletionError
 from models.player_model import PlayerModel
 from models.tournament_model import TournamentModel
-from utils.console_utils import ConsoleDisplayer
+from utils.console_utils import ConsoleDisplayer, clear_and_wait
 from utils.file_utils import read_json_file, update_tournament
 from utils.tournament_helpers import get_tournament_details
+from views.menu_view import MenusView
+from views.prompt_view import PromptView
+from views.table_view import DisplayTableView
 
 
 class TournamentController():
     def __init__(self):
         self.tournament = TournamentModel()
+        self.menu_view = MenusView()
+        self.prompt_view = PromptView()
+        self.player_model = PlayerModel()
+        self.display_view = DisplayTableView()
 
-
-    def register_a_player(self, selected_tournament_id, player_id):
-        """Register a player to a specific tournament and save it to JSON file
-        Args:
-            selected_tournament_id (int): tournament id
-            player_id (string): player national id
-        """
-        self.tournament.tournament_id = selected_tournament_id
-        tournament = get_tournament_details(self.tournament.tournament_id)
-
-        if tournament:
-            tournament["players"].append({
-                "national_id": player_id,
-                "points": DEFAULT_SCORE
-            })
-
-            update_tournament(
-                PATH_DATA_TOURNAMENTS_JSON_FILE,
-                tournament["tournament_id"],
-                tournament
-            )
-
-        ConsoleDisplayer.log(MESSAGES["player_registered"], level="INFO")
-
-    def unregister_a_player(self, selected_tournament_id, player_id):
-        """Unregister an identified player from the tournament
+    def handle_player_registration(self, selected_tournament):
+        """Handle a player registration request
             Args:
-                selected_tournament_id (int): Identifier of the tournament
-                player_id (str): Identifier of the player
+                selected_tournament (tournament): data for a tournament
+                selected by the user
         """
-        self.tournament.tournament_id = selected_tournament_id
-        tournament = get_tournament_details(self.tournament.tournament_id)
+        clear_and_wait(delay=0, console_view=self.menu_view)
+        if len(selected_tournament["rounds"]) > 0:
+            raise PlayerRegistrationError(MESSAGES["no_registration_players"])
 
-        if tournament:
-            tournament["players"] = [player for player in tournament[
-                "players"] if player.get("national_id") != player_id]
-
-            update_tournament(
-                PATH_DATA_TOURNAMENTS_JSON_FILE,
-                tournament["tournament_id"],
-                tournament
+        player = self.prompt_view.player_prompt()
+        try:
+            new_player = PlayerModel(
+                player["national_id"],
+                player["last_name"],
+                player["first_name"],
+                player["birthdate"]
+            )
+            self.player_model.save_player_to_json(new_player)
+            self.tournament.register_a_player(
+                selected_tournament["tournament_id"],
+                new_player.national_id,
+            )
+            clear_and_wait(delay=2)
+        except Exception as e:
+            raise PlayerRegistrationError(
+                f"{MESSAGES['failure_registration']} : {str(e)}"
             )
 
-            ConsoleDisplayer.log(MESSAGES["player_unregistered"], level="INFO")
+    def handle_player_deletion(self, selected_tournament):
+        """Handle a player deletion request
+            Args:
+                selected_tournament (tournament): data for a tournament
+                selected by the user
+        """
+        clear_and_wait(delay=0, console_view=self.menu_view)
+        if len(selected_tournament["rounds"]) > 0 or len(
+                selected_tournament["players"]) == 0:
+            raise PlayerDeletionError(MESSAGES["no_deletion_possible"])
+
+        self.display_view.display_players(selected_tournament)
+        national_id = self.prompt_view.delete_player_prompt()
+        tournament_id = selected_tournament["tournament_id"]
+
+        try:
+            self.tournament.unregister_a_player(
+                tournament_id,
+                national_id
+            )
+            clear_and_wait(delay=2)
+        except Exception as e:
+            raise PlayerDeletionError(
+                f"{MESSAGES['failure_deletion']} : {str(e)}"
+            )

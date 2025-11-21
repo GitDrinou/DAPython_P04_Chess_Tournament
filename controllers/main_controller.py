@@ -92,62 +92,6 @@ class MainController:
                 clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
                                console_view=self.menu_view, clear_before=True)
 
-    def _handle_player_registration(self, selected_tournament):
-        """Handle a player registration request
-            Args:
-                selected_tournament (tournament): data for a tournament
-                selected by the user
-        """
-        clear_and_wait(delay=0, console_view=self.menu_view)
-        if len(selected_tournament["rounds"]) > 0:
-            raise PlayerRegistrationError(MESSAGES["no_registration_players"])
-
-        player = self.prompt_view.player_prompt()
-        try:
-            new_player = PlayerModel(
-                player["national_id"],
-                player["last_name"],
-                player["first_name"],
-                player["birthdate"]
-            )
-            self.player_model.save_player_to_json(new_player)
-            self.tournament_controller.register_a_player(
-                selected_tournament["tournament_id"],
-                new_player.national_id,
-            )
-
-            clear_and_wait(delay=2)
-        except Exception as e:
-            raise PlayerRegistrationError(
-                f"{MESSAGES['failure_registration']} : {str(e)}"
-            )
-
-    def _handle_player_deletion(self, selected_tournament):
-        """Handle a player deletion request
-            Args:
-                selected_tournament (tournament): data for a tournament
-                selected by the user
-        """
-        clear_and_wait(delay=0, console_view=self.menu_view)
-        if len(selected_tournament["rounds"]) > 0 or len(
-                selected_tournament["players"]) == 0:
-            raise PlayerDeletionError(MESSAGES["no_deletion_possible"])
-
-        self.display_view.display_players(selected_tournament)
-        national_id = self.prompt_view.delete_player_prompt()
-        tournament_id = selected_tournament["tournament_id"]
-
-        try:
-            self.tournament_controller.unregister_a_player(
-                tournament_id,
-                national_id
-            )
-            clear_and_wait(delay=2)
-        except Exception as e:
-            raise PlayerDeletionError(
-                f"{MESSAGES['failure_deletion']} : {str(e)}"
-            )
-
     def _handle_round_generation(self, selected_tournament):
         """Handle a round generation request
             Args:
@@ -218,10 +162,12 @@ class MainController:
                 if tournament_choice is not None:
                     if tournament_choice == "1":
                         # Register a player
-                        self._handle_player_registration(selected_tournament)
+                        self.tournament_controller.handle_player_registration(
+                            selected_tournament)
                     elif tournament_choice == "2":
                         # Deletion a specific player
-                        self._handle_player_deletion(selected_tournament)
+                        self.tournament_controller.handle_player_deletion(
+                            selected_tournament)
                     elif tournament_choice == "3":
                         # Generate a round or continue a started round
                         self._handle_round_generation(selected_tournament)
