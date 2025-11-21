@@ -1,23 +1,19 @@
 from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
-                             RoundGenerationError, InvalidTournamentStateError,
-                             InvalidTournamentError, RoundEndError,
-                             MatchScoreError, RoundStartError, NoPlayersError,
-                             NoTournamentsError,
+                             RoundGenerationError, InvalidTournamentError,
+                             NoPlayersError, NoTournamentsError,
                              InvalidTournamentsSelectionError)
-from models.player_model import PlayerModel
 from models.tournament_model import TournamentModel
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
     PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
-from utils.file_utils import read_json_file, update_tournament
-from utils.console_utils import clear_and_wait, ConsoleDisplayer
-from utils.round_helpers import validate_round_generation
+from utils.file_utils import read_json_file
+from utils.console_utils import clear_and_wait
 from utils.tournament_utils import load_tournament
 
 
 class MainController:
     """ Main class controller for the application"""
 
-    def __init__(self, tournament_controller, tournament_model, player_model,
+    def __init__(self, tournament_controller, tournament_model,
                  round_model,
                  match_model, report_controller, menu_view, prompt_view,
                  display_view):
@@ -25,7 +21,6 @@ class MainController:
             Args:
                 tournament_controller (TournamentController)
                 tournament_model (TournamentModel): Tournament model
-                player_model (PlayerModel): Player model
                 round_model (RoundModel): Round model
                 match_model (MatchModel): Match model
                 report_controller (ReportController)
@@ -35,7 +30,6 @@ class MainController:
         """
         self.tournament_controller = tournament_controller
         self.tournament_model = tournament_model
-        self.player_model = player_model
         self.round_model = round_model
         self.match_model = match_model
         self.report_controller = report_controller
@@ -92,52 +86,6 @@ class MainController:
                 clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
                                console_view=self.menu_view, clear_before=True)
 
-    def _handle_round_generation(self, selected_tournament):
-        """Handle a round generation request
-            Args:
-                selected_tournament (tournament): data for a tournament
-                selected by the user
-        """
-        clear_and_wait(delay=0, console_view=self.menu_view)
-        rounds = selected_tournament["rounds"]
-        validate_round_generation(selected_tournament)
-
-        total_of_rounds = len(rounds)
-        finished_rounds = self.round_model.is_finished(
-            selected_tournament["rounds"])
-        self.display_view.display_rounds(selected_tournament["rounds"],
-                                         finished_rounds)
-
-        selected_round = self.prompt_view.select_round_prompt()
-
-        if selected_round < 0:
-            return
-
-        generation = (
-            self.tournament_model.generate_a_round(
-                round_number=total_of_rounds,
-                players=selected_tournament["players"],
-                tournament_id=selected_tournament["tournament_id"],
-                round_id=selected_round
-            )
-        )
-
-        if generation == "round_already_ended":
-            ConsoleDisplayer.log(MESSAGES["round_already_ended"],
-                                 level="WARNING")
-            return
-
-        if generation is None:
-            clear_and_wait(console_view=self.menu_view)
-            raise RoundGenerationError(MESSAGES["no_generate_round"])
-
-        if int(selected_tournament["number_of_rounds"]) < total_of_rounds:
-            raise InvalidTournamentStateError(MESSAGES["all_rounds_reached"])
-
-        clear_and_wait(delay=0, console_view=self.menu_view)
-        self._handle_round_choice(selected_tournament["tournament_id"],
-                                  selected_round)
-
     def _handle_tournament_choice(self, tournament_id):
         """Handle a tournament choice request
             Args:
@@ -170,7 +118,8 @@ class MainController:
                             selected_tournament)
                     elif tournament_choice == "3":
                         # Generate a round or continue a started round
-                        self._handle_round_generation(selected_tournament)
+                        self.tournament_controller.handle_round_generation(
+                            selected_tournament)
                         clear_and_wait(delay=2, console_view=self.menu_view)
                     elif tournament_choice in ["4", "5"]:
                         # [4] Pause the tournament [5] Return to the main menu
@@ -200,123 +149,6 @@ class MainController:
                 clear_and_wait(f"Erreur inattendue : {str(e)}",
                                level="ERROR",
                                console_view=self.menu_view)
-
-    def _check_round_started(self, tournament):
-        last_round = tournament["rounds"][-1]
-        if last_round["round_start_date"] == "":
-            clear_and_wait(delay=0, console_view=self.menu_view)
-            last_round["round_end_date"] = ""
-            update_tournament(
-                PATH_DATA_TOURNAMENTS_JSON_FILE,
-                tournament["tournament_id"],
-                tournament
-            )
-            raise RoundEndError(MESSAGES["round_not_started"])
-
-    def _handle_round_end(self, tournament_id, selected_round):
-        """Handle a round end request
-            Args:
-                tournament_id (str): identifier of the tournament
-                selected_round (int): identifier of the selected round
-        """
-        try:
-            round_ = self.round_model.end_up(
-                tournament_id,
-                selected_round
-            )
-
-            if not round_:
-                raise RoundEndError(MESSAGES["failure_end_of_round"])
-
-            self.display_view.display_a_round(round_)
-            tournament = load_tournament(PATH_DATA_TOURNAMENTS_JSON_FILE,
-                                         tournament_id)
-
-            self._check_round_started(tournament)
-            last_round = tournament["rounds"][-1]
-            for match_id, match in enumerate(last_round["matchs"], start=1):
-                self.display_view.display_a_round(last_round)
-                if len(match["match"]) == 1:
-                    continue
-                match_score = self.prompt_view.match_prompt(match_id)
-                if not match_score:
-                    raise MatchScoreError(MESSAGES["failure_invalid_score"],
-                                          match_id=match_id)
-
-                try:
-                    self.match_model.save_scores(
-                        tournament, last_round["round_id"],
-                        match_id=match_id, score1=match_score["score1"],
-                        score2=match_score["score2"])
-                except Exception as e:
-                    raise MatchScoreError(
-                        f"{MESSAGES['failure_saved_score']}: {str(e)}",
-                        match_id=match_id)
-
-            self.tournament_model.update_players_points(
-                int(tournament_id),
-                last_round["round_id"]
-            )
-
-            return True
-
-        except RoundEndError:
-            raise
-        except Exception as e:
-            raise RoundEndError(f"{MESSAGES['failure_saved_round']}: {str(e)}")
-
-    def _handle_round_choice(self, tournament_id, selected_round):
-        """Handle a round choice request
-            Args:
-                tournament_id (str): identifier of the tournament
-                selected_round (int): identifier of the selected round
-        """
-        while True:
-            try:
-                round_choice = self.menu_view.show_round_menu()
-                if round_choice == "1":
-                    # Start the round
-                    try:
-                        clear_and_wait(delay=0, console_view=self.menu_view)
-                        round_ = self.round_model.start_up(
-                            tournament_id,
-                            selected_round
-                        )
-                        if not round_:
-                            raise RoundStartError(
-                                MESSAGES["failure_started_round"]
-                            )
-                        clear_and_wait(delay=3, console_view=self.menu_view)
-                        self.display_view.display_a_round(round_)
-                    except RoundStartError as e:
-                        clear_and_wait(str(e), level="ERROR",
-                                       console_view=self.menu_view)
-                elif round_choice == "2":
-                    # Terminate the round
-                    try:
-                        if self._handle_round_end(tournament_id,
-                                                  selected_round):
-                            break
-                    except RoundEndError as e:
-                        clear_and_wait(str(e), level="ERROR",
-                                       console_view=self.menu_view)
-                    except MatchScoreError as e:
-                        clear_and_wait(str(e), level="ERROR",
-                                       console_view=self.menu_view)
-                elif round_choice == "3":
-                    # Return to the previous menu
-                    break
-                else:
-                    clear_and_wait(message=MESSAGES["invalid_choice"], delay=3,
-                                   console_view=self.menu_view,
-                                   clear_before=True)
-
-            except Exception as e:
-                clear_and_wait(
-                    f"Erreur inattendue : {str(e)}",
-                    level="ERROR",
-                    console_view=self.menu_view
-                )
 
     def _select_tournament_and_generate_report(self, report_type):
         """Select a tournament and generate a specific report.

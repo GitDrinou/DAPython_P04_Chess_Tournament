@@ -7,7 +7,6 @@ from controllers.report_controller import ReportController
 from controllers.tournament_controller import TournamentController
 from core.constants import PATH_DATA
 from models.match_model import MatchModel
-from models.player_model import PlayerModel
 from models.round_model import RoundModel
 from models.tournament_model import TournamentModel
 from views.menu_view import MenusView
@@ -40,7 +39,6 @@ def main():
     """Main entry point of the application."""
     tournament_controller = TournamentController()
     tournament_model = TournamentModel()
-    player_model = PlayerModel()
     round_model = RoundModel()
     match_model = MatchModel()
     report_controller = ReportController()
@@ -50,7 +48,6 @@ def main():
     application_controller = MainController(
         tournament_controller,
         tournament_model,
-        player_model,
         round_model,
         match_model,
         report_controller,

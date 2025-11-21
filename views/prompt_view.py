@@ -4,7 +4,8 @@ from utils.console_utils import ConsoleDisplayer
 from core.constants import MESSAGES, TITLES, INSTRUCTIONS, LOSE_VALUE, \
     WIN_VALUE
 from utils.date_utils import validate_date, checks_dates
-from utils.player_utils import check_format_national_id, check_player_is_exist
+from utils.player_helpers import (check_format_national_id,
+                                  check_player_is_exist)
 
 
 class PromptView:

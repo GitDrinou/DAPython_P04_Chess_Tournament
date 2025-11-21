@@ -8,34 +8,176 @@
             "end_date": "20/11/2025",
             "description": "tournoi exclusivement r\u00e9serv\u00e9e aux d\u00e9butants.",
             "number_of_rounds": "4",
-            "round_number": 0,
+            "round_number": "3",
             "players": [
                 {
                     "national_id": "KL85948",
-                    "points": 0.0
+                    "points": 2.5
                 },
                 {
                     "national_id": "JL37283",
-                    "points": 0.0
+                    "points": 2.0
                 },
                 {
                     "national_id": "BS56790",
-                    "points": 0.0
+                    "points": 1.5
                 },
                 {
                     "national_id": "WH49384",
-                    "points": 0.0
+                    "points": 1.0
                 },
                 {
                     "national_id": "CB58493",
-                    "points": 0.0
+                    "points": 1.0
                 },
                 {
                     "national_id": "MP23059",
-                    "points": 0.0
+                    "points": 1.0
                 }
             ],
-            "rounds": []
+            "rounds": [
+                {
+                    "round_id": 1,
+                    "name": "Round 1",
+                    "round_start_date": "21-11-2025 14:56:58",
+                    "round_end_date": "21-11-2025 14:58:43",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "WH49384",
+                                    "0"
+                                ],
+                                [
+                                    "CB58493",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "KL85948",
+                                    "1"
+                                ],
+                                [
+                                    "MP23059",
+                                    "0"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 3,
+                            "match": [
+                                [
+                                    "JL37283",
+                                    "1"
+                                ],
+                                [
+                                    "BS56790",
+                                    "1"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 2,
+                    "name": "Round 2",
+                    "round_start_date": "21-11-2025 15:01:16",
+                    "round_end_date": "21-11-2025 15:03:37",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "CB58493",
+                                    "0"
+                                ],
+                                [
+                                    "KL85948",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "JL37283",
+                                    "1"
+                                ],
+                                [
+                                    "BS56790",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 3,
+                            "match": [
+                                [
+                                    "WH49384",
+                                    "1"
+                                ],
+                                [
+                                    "MP23059",
+                                    "1"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "round_id": 3,
+                    "name": "Round 3",
+                    "round_start_date": "21-11-2025 15:05:31",
+                    "round_end_date": "21-11-2025 15:05:37",
+                    "matchs": [
+                        {
+                            "match_id": 1,
+                            "match": [
+                                [
+                                    "KL85948",
+                                    "1"
+                                ],
+                                [
+                                    "BS56790",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 2,
+                            "match": [
+                                [
+                                    "CB58493",
+                                    "0"
+                                ],
+                                [
+                                    "JL37283",
+                                    "1"
+                                ]
+                            ]
+                        },
+                        {
+                            "match_id": 3,
+                            "match": [
+                                [
+                                    "MP23059",
+                                    "1"
+                                ],
+                                [
+                                    "WH49384",
+                                    "1"
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

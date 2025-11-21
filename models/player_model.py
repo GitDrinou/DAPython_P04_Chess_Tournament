@@ -1,5 +1,5 @@
 from utils.file_utils import save_to_json
-from utils.player_utils import check_player_is_exist
+from utils.player_helpers import check_player_is_exist
 
 
 class PlayerModel:

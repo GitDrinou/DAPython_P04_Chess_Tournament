@@ -1,9 +1,8 @@
 from tabulate import tabulate
 
-from core.constants import MESSAGES, TITLES, PATH_DATA_PLAYERS_JSON_FILE
+from core.constants import MESSAGES, TITLES
 from utils.console_utils import ConsoleDisplayer
-from utils.file_utils import read_json_file
-from utils.player_utils import get_player_detail
+from utils.player_helpers import get_player_detail
 
 
 class DisplayTableView:
@@ -84,7 +83,6 @@ class DisplayTableView:
         total_players = len(tournament["players"])
         players = sorted(tournament["players"], key=lambda x: (-x[
             "points"]))
-
 
         rows = []
         headers = ["Identifiant national", "Nom", "Prénom", "Points"]

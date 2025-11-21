@@ -21,6 +21,7 @@ def tournament_is_finished(tournament):
     else:
         return False
 
+
 def get_tournament_details(tournament_id):
     """Get tournament details
         Args:

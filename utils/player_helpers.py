@@ -37,6 +37,7 @@ def check_player_is_exist(national_id):
             }
     return None
 
+
 def get_player_detail(national_id):
     """Get the details of a player by national id"""
     data = read_json_file(PATH_DATA_PLAYERS_JSON_FILE)
