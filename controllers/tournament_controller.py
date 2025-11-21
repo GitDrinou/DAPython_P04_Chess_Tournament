@@ -24,7 +24,7 @@ class TournamentController():
              self.tournament.tournament_id),
             None
         )
-        print(tournament)
+
         if tournament:
             tournament["players"].append({
                 "national_id": player_id,

@@ -108,8 +108,8 @@ class MainController:
         try:
             new_player = PlayerModel(
                 player["national_id"],
-                player["lastname"],
-                player["firstname"],
+                player["last_name"],
+                player["first_name"],
                 player["birthdate"]
             )
             self.player_model.save_player_to_json(new_player)

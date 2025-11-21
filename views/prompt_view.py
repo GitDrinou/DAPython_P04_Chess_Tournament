@@ -40,21 +40,21 @@ class PromptView:
                                                   "%d/%m/%Y")
                     player = {
                         "national_id": national_id,
-                        "lastname": player["last_name"],
-                        "firstname": player["first_name"],
+                        "last_name": player["last_name"],
+                        "first_name": player["first_name"],
                         "birthdate": birthdate.strftime("%d/%m/%Y"),
                     }
                     break
                 else:
-                    lastname = ConsoleDisplayer.display_prompt(
+                    last_name = ConsoleDisplayer.display_prompt(
                         text=INSTRUCTIONS["last_name_input"])
-                    firstname = ConsoleDisplayer.display_prompt(
+                    first_name = ConsoleDisplayer.display_prompt(
                         text=INSTRUCTIONS["first_name_input"])
                     birthdate = self.birthdate_player_prompt()
                     player = {
                         "national_id": national_id,
-                        "lastname": lastname,
-                        "firstname": firstname,
+                        "last_name": last_name,
+                        "first_name": first_name,
                         "birthdate": birthdate.strftime("%d/%m/%Y"),
                     }
                     break

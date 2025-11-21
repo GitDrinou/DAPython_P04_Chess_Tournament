@@ -63,10 +63,10 @@ MESSAGES = {
     ==================================================================
     """,
     "invalid_national_id": """
-    ====================================================
+    ======================================================
     Le format de l'identitifant national est incorrect.
-    Format attendu : 1 lettre + 5 chiffres (ex. A12345)
-    ====================================================
+    Format attendu : 2 lettres + 5 chiffres (ex. AB12345)
+    ======================================================
     """,
     "invalide_number_of_players": "\nVous ne pouvez pas générer de tour.\nLe "
                                   "nombre minimum de joueurs doit être de ",

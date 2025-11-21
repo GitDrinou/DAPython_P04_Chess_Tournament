@@ -43,7 +43,7 @@ class PlayerModel:
             save_to_json(
                 "players",
                 national_id=player.national_id,
-                lastname=player.last_name,
+                last_name=player.last_name,
                 first_name=player.first_name,
                 birth_date=player.birth_date)
 

@@ -5,6 +5,36 @@
             "last_name": "JONES",
             "first_name": "Indiana",
             "birth_date": "13/11/1999"
+        },
+        {
+            "national_id": "KL85948",
+            "last_name": "LAMAR",
+            "first_name": "Kendrik",
+            "birth_date": "20/09/2000"
+        },
+        {
+            "national_id": "JL37283",
+            "last_name": "LEGEND",
+            "first_name": "John",
+            "birth_date": "05/09/1980"
+        },
+        {
+            "national_id": "MP23059",
+            "last_name": "POPPINS",
+            "first_name": "Mary",
+            "birth_date": "10/05/1978"
+        },
+        {
+            "national_id": "BS56790",
+            "last_name": "STREISAND",
+            "first_name": "Barbra",
+            "birth_date": "10/09/1970"
+        },
+        {
+            "national_id": "WH49384",
+            "last_name": "HOUSTON",
+            "first_name": "Whitney",
+            "birth_date": "03/07/1975"
         }
     ]
 }
