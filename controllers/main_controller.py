@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
                              RoundGenerationError, InvalidTournamentStateError,
                              InvalidTournamentError, RoundEndError,
@@ -9,9 +7,10 @@ from core.exceptions import (PlayerRegistrationError, PlayerDeletionError,
 from models.player_model import PlayerModel
 from models.tournament_model import TournamentModel
 from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE, \
-    PATH_DATA_PLAYERS_JSON_FILE, MESSAGES, ALLOW_BYES
+    PATH_DATA_PLAYERS_JSON_FILE, MESSAGES
 from utils.file_utils import read_json_file, update_tournament
 from utils.console_utils import clear_and_wait, ConsoleDisplayer
+from utils.round_helpers import validate_round_generation
 from utils.tournament_utils import load_tournament
 
 
@@ -100,7 +99,6 @@ class MainController:
                 selected by the user
         """
         clear_and_wait(delay=0, console_view=self.menu_view)
-        tournament_id = selected_tournament["tournament_id"]
         if len(selected_tournament["rounds"]) > 0:
             raise PlayerRegistrationError(MESSAGES["no_registration_players"])
 
@@ -140,7 +138,7 @@ class MainController:
         tournament_id = selected_tournament["tournament_id"]
 
         try:
-            self.tournament_model.unregister_a_player(
+            self.tournament_controller.unregister_a_player(
                 tournament_id,
                 national_id
             )
@@ -150,43 +148,6 @@ class MainController:
                 f"{MESSAGES['failure_deletion']} : {str(e)}"
             )
 
-    @staticmethod
-    def _validate_round_generation(selected_tournament):
-        """Validate a round generation
-            Args:
-                selected_tournament (tournament): data for a tournament
-        """
-        number_of_rounds = int(selected_tournament["number_of_rounds"])
-
-        if ALLOW_BYES:
-            # If number of rounds is odd, players = rounds
-            # if number of rounds id even, players = rounds - 1
-            if number_of_rounds % 2 == 1:
-                min_players = number_of_rounds
-            else:
-                min_players = number_of_rounds - 1
-        else:
-            # if no BYE, number of players must be even, and we round up
-            # to the next even
-            number_of_players = number_of_rounds + 1
-            if number_of_players % 2 == 1:
-                min_players = number_of_players
-            else:
-                min_players = number_of_players + 1
-
-        total_players = len(selected_tournament["players"])
-        if ((total_players < min_players)
-                or total_players == 0):
-            raise RoundGenerationError(
-                f"{MESSAGES['invalide_number_of_players']} {min_players}"
-            )
-
-        today = datetime.today().date()
-        start_date = datetime.strptime(selected_tournament["start_date"],
-                                       "%d/%m/%Y")
-        if start_date.date() > today:
-            raise RoundGenerationError(MESSAGES["no_generate_due_to_date"])
-
     def _handle_round_generation(self, selected_tournament):
         """Handle a round generation request
             Args:
@@ -195,7 +156,7 @@ class MainController:
         """
         clear_and_wait(delay=0, console_view=self.menu_view)
         rounds = selected_tournament["rounds"]
-        self._validate_round_generation(selected_tournament)
+        validate_round_generation(selected_tournament)
 
         total_of_rounds = len(rounds)
         finished_rounds = self.round_model.is_finished(

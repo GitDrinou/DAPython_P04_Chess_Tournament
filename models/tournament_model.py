@@ -96,35 +96,6 @@ class TournamentModel:
         return ConsoleDisplayer.log(MESSAGES["tournament_created"],
                                     level="INFO")
 
-
-
-    @staticmethod
-    def unregister_a_player(tournament_id, national_id):
-        """Unregister an identified player from the tournament
-            Args:
-                tournament_id (int): Identifier of the tournament
-                national_id (str): Identifier of the player
-        """
-        data = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
-        tournaments = data["tournaments"]
-        tournament = next(
-            (t for t in tournaments if t["tournament_id"] == int(
-                tournament_id)),
-            None
-        )
-
-        if tournament:
-            tournament["players"] = [player for player in tournament[
-                "players"] if player.get("national_id") != national_id]
-
-            update_tournament(
-                PATH_DATA_TOURNAMENTS_JSON_FILE,
-                tournament["tournament_id"],
-                tournament
-            )
-
-            ConsoleDisplayer.log(MESSAGES["player_unregistered"], level="INFO")
-
     def generate_a_round(self, round_number, players,
                          tournament_id, round_id=None):
         """Generate a tournament round

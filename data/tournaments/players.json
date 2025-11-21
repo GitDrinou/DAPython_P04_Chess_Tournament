@@ -35,6 +35,12 @@
             "last_name": "HOUSTON",
             "first_name": "Whitney",
             "birth_date": "03/07/1975"
+        },
+        {
+            "national_id": "CB58493",
+            "last_name": "BROWN",
+            "first_name": "Chris",
+            "birth_date": "09/10/1987"
         }
     ]
 }

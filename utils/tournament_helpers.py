@@ -1,4 +1,6 @@
+from core.constants import PATH_DATA_TOURNAMENTS_JSON_FILE
 from models.round_model import RoundModel
+from utils.file_utils import read_json_file
 
 
 def tournament_is_finished(tournament):
@@ -18,3 +20,15 @@ def tournament_is_finished(tournament):
         return True
     else:
         return False
+
+def get_tournament_details(tournament_id):
+    """Get tournament details
+        Args:
+            tournament_id (int): tournament identifier
+    """
+    data_tournaments = read_json_file(PATH_DATA_TOURNAMENTS_JSON_FILE)
+    tournaments = data_tournaments["tournaments"]
+    return next(
+        (t for t in tournaments if t["tournament_id"] == tournament_id),
+        None
+    )
